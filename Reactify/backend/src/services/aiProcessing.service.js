@@ -1,6 +1,6 @@
 import OpenAI from 'openai';
 import AIJob from '../models/AIJob.js';
-import { AIJobStatus, ContentType, PollType, GeneratedPoll } from '../types/index.js';
+import { AIJobStatus, ContentType, PollType } from '../types/index.js';
 import { emitAIProgress } from '../events/aiProgressEmitter.js';
 import {
     parsePDF,
@@ -36,23 +36,23 @@ export const processAIContent = async (jobId) => {
 
         switch (job.contentType) {
             case ContentType.PDF:
-                const pdfData = await parsePDF(job.fileUrl!);
+                const pdfData = await parsePDF(job.fileUrl);
                 parsedContent = pdfData.text;
                 break;
             case ContentType.DOCX:
-                const docxData = await parseDOCX(job.fileUrl!);
+                const docxData = await parseDOCX(job.fileUrl);
                 parsedContent = docxData.text;
                 break;
             case ContentType.PPTX:
-                const pptxData = await parsePPTX(job.fileUrl!);
+                const pptxData = await parsePPTX(job.fileUrl);
                 parsedContent = pptxData.text;
                 break;
             case ContentType.TXT:
-                const txtData = await parseTXT(job.fileUrl!);
+                const txtData = await parseTXT(job.fileUrl);
                 parsedContent = txtData.text;
                 break;
             case ContentType.YOUTUBE:
-                const ytData = await parseYouTubeTranscript(job.fileUrl!);
+                const ytData = await parseYouTubeTranscript(job.fileUrl);
                 parsedContent = ytData.text;
                 break;
             default:
@@ -145,8 +145,8 @@ Guidelines:
         const rawPolls = JSON.parse(jsonText);
 
         // Format polls with IDs
-        const formattedPolls: GeneratedPoll[] = rawPolls.map((poll) => ({
-            type: poll.type as PollType,
+        const formattedPolls = rawPolls.map((poll) => ({
+            type: poll.type,
             question: poll.question,
             options: poll.options?.map((text) => ({
                 id: nanoid(8),

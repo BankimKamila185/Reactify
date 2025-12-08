@@ -1,16 +1,15 @@
-import { Server, Socket } from 'socket.io';
 import Participant from '../models/Participant.js';
 import Response from '../models/Response.js';
 import Feedback from '../models/Feedback.js';
 import Poll from '../models/Poll.js';
 import Session from '../models/Session.js';
 
-export const setupSocketHandlers = (io: Server) => {
-    io.on('connection', (socket: Socket) => {
+export const setupSocketHandlers = (io) => {
+    io.on('connection', (socket) => {
         console.log(`✅ Client connected: ${socket.id}`);
 
         // Join session room
-        socket.on('join-session', async (data: { sessionId; participantId? }) => {
+        socket.on('join-session', async (data) => {
             try {
                 const { sessionId, participantId } = data;
 
@@ -52,12 +51,7 @@ export const setupSocketHandlers = (io: Server) => {
         });
 
         // Submit answer
-        socket.on('submit-answer', async (data: {
-            pollId;
-            participantId;
-            answer | string[];
-            sessionId;
-        }) => {
+        socket.on('submit-answer', async (data) => {
             try {
                 const { pollId, participantId, answer, sessionId } = data;
 
@@ -87,7 +81,7 @@ export const setupSocketHandlers = (io: Server) => {
                 let results = { totalResponses: responses.length };
 
                 if (poll?.type === 'single' || poll?.type === 'multiple') {
-                    const voteCounts: { [key] } = {};
+                    const voteCounts = {};
 
                     responses.forEach(response => {
                         const answers = Array.isArray(response.answer) ? response.answer : [response.answer];
@@ -127,13 +121,7 @@ export const setupSocketHandlers = (io: Server) => {
         });
 
         // Submit feedback
-        socket.on('submit-feedback', async (data: {
-            pollId;
-            sessionId;
-            participantId;
-            content;
-            isPublic;
-        }) => {
+        socket.on('submit-feedback', async (data) => {
             try {
                 const { pollId, sessionId, participantId, content, isPublic } = data;
 
@@ -161,10 +149,7 @@ export const setupSocketHandlers = (io: Server) => {
         });
 
         // Navigate to poll (host)
-        socket.on('navigate-poll', async (data: {
-            sessionId;
-            pollIndex;
-        }) => {
+        socket.on('navigate-poll', async (data) => {
             try {
                 const { sessionId, pollIndex } = data;
 
@@ -184,7 +169,7 @@ export const setupSocketHandlers = (io: Server) => {
         });
 
         // End session (host)
-        socket.on('end-session', async (data: { sessionId }) => {
+        socket.on('end-session', async (data) => {
             try {
                 const { sessionId } = data;
 

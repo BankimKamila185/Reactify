@@ -1,9 +1,8 @@
-import { Server } from 'socket.io';
 import AIJob from '../models/AIJob.js';
 
-let io: Server;
+let io;
 
-export const setIO = (ioInstance: Server) => {
+export const setIO = (ioInstance) => {
     io = ioInstance;
 };
 

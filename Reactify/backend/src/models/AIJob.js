@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 import { AIJobStatus, ContentType } from '../types/index.js';
-import type { GeneratedPoll } from '../types/index.js';
 
+const { Schema } = mongoose;
 
 const AIJobSchema = new Schema({
     sessionId: {
-        type.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Session',
         required: true
     },
@@ -26,7 +26,7 @@ const AIJobSchema = new Schema({
         type: String
     },
     result: {
-        type.Types.Mixed
+        type: Schema.Types.Mixed
     },
     progress: {
         type: Number,
@@ -42,12 +42,12 @@ const AIJobSchema = new Schema({
         type: String
     },
     createdAt: {
-        type,
-        default.now
+        type: Date,
+        default: Date.now
     },
     updatedAt: {
-        type,
-        default.now
+        type: Date,
+        default: Date.now
     }
 });
 

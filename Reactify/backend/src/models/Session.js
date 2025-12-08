@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+const { Schema } = mongoose;
 
 const SessionSchema = new Schema({
     sessionCode: {
@@ -17,8 +18,8 @@ const SessionSchema = new Schema({
         required: true
     },
     createdAt: {
-        type,
-        default.now
+        type: Date,
+        default: Date.now
     },
     isActive: {
         type: Boolean,

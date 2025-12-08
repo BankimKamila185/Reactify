@@ -35,11 +35,11 @@ const UserSchema = new Schema({
         trim: true
     },
     createdAt: {
-        type,
-        default.now
+        type: Date,
+        default: Date.now
     },
     lastLogin: {
-        type
+        type: Date
     },
     isActive: {
         type: Boolean,

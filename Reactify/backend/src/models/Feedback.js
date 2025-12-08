@@ -1,19 +1,20 @@
 import mongoose from 'mongoose';
 
+const { Schema } = mongoose;
 
 const FeedbackSchema = new Schema({
     pollId: {
-        type.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Poll',
         required: true
     },
     sessionId: {
-        type.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Session',
         required: true
     },
     participantId: {
-        type.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Participant',
         required: true
     },
@@ -26,8 +27,8 @@ const FeedbackSchema = new Schema({
         default: false
     },
     timestamp: {
-        type,
-        default.now
+        type: Date,
+        default: Date.now
     }
 });
 

@@ -1,24 +1,25 @@
 import mongoose from 'mongoose';
 
+const { Schema } = mongoose;
 
 const ResponseSchema = new Schema({
     pollId: {
-        type.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Poll',
         required: true
     },
     participantId: {
-        type.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Participant',
         required: true
     },
     answer: {
-        type.Types.Mixed,
+        type: Schema.Types.Mixed,
         required: true
     },
     timestamp: {
-        type,
-        default.now
+        type: Date,
+        default: Date.now
     }
 });
 

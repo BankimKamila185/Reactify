@@ -1,12 +1,7 @@
 import mongoose from 'mongoose';
 import { PollType } from '../types/index.js';
 
-export // 
-    id;
-    text;
-    votes;
-}
-
+const { Schema } = mongoose;
 
 const PollOptionSchema = new Schema({
     id: { type: String, required: true },
@@ -16,7 +11,7 @@ const PollOptionSchema = new Schema({
 
 const PollSchema = new Schema({
     sessionId: {
-        type.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Session',
         required: true
     },
@@ -35,8 +30,8 @@ const PollSchema = new Schema({
         default: false
     },
     createdAt: {
-        type,
-        default.now
+        type: Date,
+        default: Date.now
     },
     order: {
         type: Number,

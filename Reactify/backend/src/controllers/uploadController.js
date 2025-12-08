@@ -1,4 +1,3 @@
-import { Request, Response } from 'express';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
@@ -24,7 +23,7 @@ const storage = multer.diskStorage({
 });
 
 // File filter
-const fileFilter = (req, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
+const fileFilter = (req, file, cb) => {
     const allowedTypes = ['.pdf', '.docx', '.pptx', '.txt'];
     const ext = path.extname(file.originalname).toLowerCase();
 
@@ -44,7 +43,7 @@ export const upload = multer({
     }
 });
 
-export const uploadContent = async (req, res: Response) => {
+export const uploadContent = async (req, res) => {
     try {
         const { sessionId, youtubeUrl } = req.body;
         const file = req.file;
@@ -65,9 +64,9 @@ export const uploadContent = async (req, res: Response) => {
             return;
         }
 
-        let contentType: ContentType;
-        let fileUrl | undefined;
-        let fileName | undefined;
+        let contentType;
+        let fileUrl;
+        let fileName;
 
         if (youtubeUrl) {
             contentType = ContentType.YOUTUBE;
@@ -140,7 +139,7 @@ export const uploadContent = async (req, res: Response) => {
     }
 };
 
-export const getAIJobStatus = async (req, res: Response) => {
+export const getAIJobStatus = async (req, res) => {
     try {
         const { jobId } = req.params;
 

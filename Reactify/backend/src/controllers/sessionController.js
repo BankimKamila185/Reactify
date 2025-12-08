@@ -1,4 +1,3 @@
-import { Request, Response } from 'express';
 import Session from '../models/Session.js';
 import Participant from '../models/Participant.js';
 import Poll from '../models/Poll.js';
@@ -10,7 +9,7 @@ const generateSessionCode = () => {
     return Math.floor(100000 + Math.random() * 900000).toString();
 };
 
-export const createSession = async (req, res: Response) => {
+export const createSession = async (req, res) => {
     try {
         const { title } = req.body;
 
@@ -65,7 +64,7 @@ export const createSession = async (req, res: Response) => {
     }
 };
 
-export const getSession = async (req, res: Response) => {
+export const getSession = async (req, res) => {
     try {
         const { id } = req.params;
 
@@ -110,7 +109,7 @@ export const getSession = async (req, res: Response) => {
     }
 };
 
-export const joinSession = async (req, res: Response) => {
+export const joinSession = async (req, res) => {
     try {
         const { sessionCode } = req.params;
         const { name } = req.body;

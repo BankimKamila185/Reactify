@@ -4,11 +4,6 @@ import mammoth from 'mammoth';
 // @ts-ignore - no types available
 import { YoutubeTranscript } from 'youtube-transcript';
 
-export // 
-    text;
-    pageCount?;
-    wordCount?;
-}
 
 export const parsePDF = async (filePath) => {
     try {

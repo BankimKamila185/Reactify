@@ -1,12 +1,11 @@
-import { Request, Response } from 'express';
 import Poll from '../models/Poll.js';
-import Response as ResponseModel from '../models/Response.js';
+import ResponseModel from '../models/Response.js';
 import Feedback from '../models/Feedback.js';
 import Session from '../models/Session.js';
 import { PollType } from '../types/index.js';
 import { nanoid } from 'nanoid';
 
-export const createPoll = async (req, res: Response) => {
+export const createPoll = async (req, res) => {
     try {
         const { sessionId } = req.params;
         const { type, question, options } = req.body;
@@ -70,7 +69,7 @@ export const createPoll = async (req, res: Response) => {
     }
 };
 
-export const getPollResults = async (req, res: Response) => {
+export const getPollResults = async (req, res) => {
     try {
         const { pollId } = req.params;
 
@@ -90,7 +89,7 @@ export const getPollResults = async (req, res: Response) => {
 
         if (poll.type === PollType.SINGLE_CHOICE || poll.type === PollType.MULTIPLE_CHOICE) {
             // Count votes for each option
-            const voteCounts: { [key] } = {};
+            const voteCounts = {};
 
             responses.forEach(response => {
                 const answers = Array.isArray(response.answer) ? response.answer : [response.answer];
@@ -140,7 +139,7 @@ export const getPollResults = async (req, res: Response) => {
     }
 };
 
-export const submitFeedback = async (req, res: Response) => {
+export const submitFeedback = async (req, res) => {
     try {
         const { pollId } = req.params;
         const { participantId, content, isPublic } = req.body;
@@ -183,7 +182,7 @@ export const submitFeedback = async (req, res: Response) => {
     }
 };
 
-export const getSessionFeedback = async (req, res: Response) => {
+export const getSessionFeedback = async (req, res) => {
     try {
         const { sessionId } = req.params;
         const { publicOnly } = req.query;

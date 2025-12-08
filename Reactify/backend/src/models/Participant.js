@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
 
+const { Schema } = mongoose;
 
 const ParticipantSchema = new Schema({
     sessionId: {
-        type.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Session',
         required: true
     },
@@ -15,8 +16,8 @@ const ParticipantSchema = new Schema({
         type: String
     },
     joinedAt: {
-        type,
-        default.now
+        type: Date,
+        default: Date.now
     }
 });
 
