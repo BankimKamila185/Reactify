@@ -1,0 +1,41 @@
+{
+    "name": "reactify-backend",
+    "version": "1.0.0",
+    "description": "Real-time polling platform backend with AI-powered content generation",
+    "main": "src/index.js",
+    "type": "module",
+    "scripts": {
+        "dev": "nodemon src/index.js",
+        "start": "node src/index.js",
+        "test": "echo \"Tests not yet implemented\" && exit 0"
+    },
+    "keywords": [
+        "polling",
+        "realtime",
+        "ai",
+        "websocket"
+    ],
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "cors": "^2.8.5",
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "jsonwebtoken": "^9.0.2",
+        "mammoth": "^1.6.0",
+        "mongodb": "^7.0.0",
+        "mongoose": "^8.0.3",
+        "multer": "^1.4.5-lts.1",
+        "nanoid": "^5.0.4",
+        "openai": "^4.24.1",
+        "pdf-parse": "^1.1.1",
+        "pptx-parser": "^1.0.0",
+        "socket.io": "^4.7.2",
+        "youtube-transcript": "^1.0.6",
+        "zod": "^3.22.4"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.2"
+    }
+}
