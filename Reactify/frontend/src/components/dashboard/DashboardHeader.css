@@ -1,0 +1,121 @@
+/* Dashboard Header */
+.dashboard-header-new {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 32px;
+    background: #ffffff;
+    border-bottom: none;
+    gap: 24px;
+}
+
+/* Search Container */
+.header-search-container {
+    flex: 1;
+    max-width: 600px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon-new {
+    position: absolute;
+    left: 16px;
+    color: #9CA3AF;
+    pointer-events: none;
+}
+
+.search-input-new {
+    width: 100%;
+    padding: 10px 16px 10px 44px;
+    font-size: 14px;
+    color: #111827;
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.search-input-new::placeholder {
+    color: #9CA3AF;
+}
+
+.search-input-new:focus {
+    background: #ffffff;
+    border-color: #D1D5DB;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Header Actions */
+.header-actions-new {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-icon-btn-new {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: #6B7280;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.header-icon-btn-new:hover {
+    background: #F3F4F6;
+    color: #111827;
+}
+
+/* User Avatar */
+.user-avatar-new {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #E5E7EB;
+    color: #374151;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.user-avatar-new:hover {
+    background: #D1D5DB;
+}
+
+/* Responsive */
+@media (max-width: 1023px) {
+    .dashboard-header-new {
+        padding: 14px 20px;
+    }
+
+    .header-search-container {
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 767px) {
+    .dashboard-header-new {
+        padding: 12px 16px;
+    }
+
+    .header-search-container {
+        max-width: none;
+    }
+
+    .search-input-new {
+        font-size: 13px;
+        padding: 9px 14px 9px 40px;
+    }
+}

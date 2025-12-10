@@ -7,6 +7,8 @@ import { Login } from './pages/Login';
 import { Signup } from './pages/Signup';
 import { HostDashboard } from './pages/HostDashboard';
 import { AudienceJoin } from './pages/AudienceJoin';
+import { Dashboard } from './pages/Dashboard';
+import { MyPresentations } from './pages/MyPresentations';
 
 function App() {
     return (
@@ -17,6 +19,8 @@ function App() {
                     <Route path="/home" element={<><Navbar /><Home /></>} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/my-presentations" element={<MyPresentations />} />
                     <Route path="/host" element={<><Navbar /><HostDashboard /></>} />
                     <Route path="/join" element={<><Navbar /><AudienceJoin /></>} />
                     {/* Additional routes will be added */}

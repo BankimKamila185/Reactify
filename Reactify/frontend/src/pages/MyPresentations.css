@@ -1,0 +1,383 @@
+/* My Presentations Content */
+.my-presentations-content {
+    flex: 1;
+    padding: 32px 48px;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    animation: fadeInUp 0.4s ease-out;
+}
+
+/* Presentations Header */
+.presentations-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+}
+
+.presentations-title-section {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.presentations-title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.presentations-subtitle {
+    font-size: 14px;
+    color: #6B7280;
+    margin: 0;
+}
+
+/* Action Buttons */
+.presentations-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-new-presentation {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    background: #111827;
+    color: #ffffff;
+    border: 1px solid #111827;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-new-presentation:hover {
+    background: #000000;
+    border-color: #000000;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Controls Section */
+.presentations-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 16px;
+}
+
+.controls-left {
+    display: flex;
+    gap: 12px;
+    flex: 1;
+    align-items: center;
+}
+
+.controls-right {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+/* Search Box */
+.search-box {
+    position: relative;
+    flex: 1;
+    max-width: 400px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9CA3AF;
+    pointer-events: none;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 14px 10px 40px;
+    font-size: 14px;
+    color: #374151;
+    background: #ffffff;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: #6B7280;
+    box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.1);
+}
+
+.search-input::placeholder {
+    color: #9CA3AF;
+}
+
+/* Filter and Sort Buttons */
+.filter-btn,
+.sort-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    background: #ffffff;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.filter-btn:hover,
+.sort-btn:hover {
+    background: #F9FAFB;
+    border-color: #9CA3AF;
+}
+
+/* View Toggle */
+.view-toggle {
+    display: flex;
+    gap: 4px;
+    background: #F3F4F6;
+    padding: 4px;
+    border-radius: 8px;
+}
+
+.view-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #6B7280;
+}
+
+.view-btn:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.view-btn.active {
+    background: #ffffff;
+    color: #111827;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Presentations Grid */
+.presentations-grid {
+    display: grid;
+    gap: 20px;
+    margin-bottom: 48px;
+}
+
+.presentations-grid.grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.presentations-grid.list {
+    grid-template-columns: 1fr;
+}
+
+/* Empty State */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.empty-state-icon {
+    margin-bottom: 24px;
+}
+
+.empty-state-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 8px 0;
+}
+
+.empty-state-text {
+    font-size: 15px;
+    color: #6B7280;
+    margin: 0 0 24px 0;
+}
+
+.btn-create-first {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    background: #111827;
+    color: #ffffff;
+    border: 1px solid #111827;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-create-first:hover {
+    background: #000000;
+    border-color: #000000;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+
+/* Large tablets and small desktops (1024px - 1279px) */
+@media (max-width: 1279px) {
+    .my-presentations-content {
+        padding: 28px 40px;
+    }
+
+    .presentations-grid.grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+}
+
+/* Tablets (768px - 1023px) */
+@media (max-width: 1023px) {
+    .my-presentations-content {
+        padding: 24px 32px;
+    }
+
+    .presentations-title {
+        font-size: 28px;
+    }
+
+    .presentations-controls {
+        flex-wrap: wrap;
+    }
+
+    .controls-left {
+        width: 100%;
+        order: 2;
+    }
+
+    .controls-right {
+        order: 1;
+        margin-left: auto;
+    }
+
+    .search-box {
+        max-width: 100%;
+    }
+
+    .presentations-grid.grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+}
+
+/* Mobile (max 767px) */
+@media (max-width: 767px) {
+    .my-presentations-content {
+        padding: 20px 16px;
+    }
+
+    .presentations-header {
+        flex-direction: column;
+        gap: 20px;
+        margin-bottom: 24px;
+    }
+
+    .presentations-actions {
+        width: 100%;
+    }
+
+    .btn-new-presentation {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .presentations-title {
+        font-size: 24px;
+    }
+
+    .presentations-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .controls-left {
+        flex-wrap: wrap;
+        order: 1;
+    }
+
+    .controls-right {
+        order: 2;
+        justify-content: flex-end;
+    }
+
+    .search-box {
+        width: 100%;
+        max-width: 100%;
+        order: 1;
+    }
+
+    .filter-dropdown,
+    .sort-dropdown {
+        flex: 1;
+    }
+
+    .filter-btn,
+    .sort-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .presentations-grid.grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .empty-state {
+        padding: 60px 20px;
+    }
+
+    .empty-state-title {
+        font-size: 18px;
+    }
+
+    .empty-state-text {
+        font-size: 14px;
+    }
+
+    .btn-create-first {
+        width: 100%;
+        justify-content: center;
+    }
+}

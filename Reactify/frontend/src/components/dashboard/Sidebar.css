@@ -1,0 +1,147 @@
+/* Sidebar Container */
+.sidebar-new {
+    position: fixed;
+    left: 38px;
+    top: 38px;
+    height: calc(100vh - 76px);
+    width: 240px;
+    background: #FFFFFF;
+    border-right: none;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    overflow-y: auto;
+}
+
+/* Logo Section */
+.sidebar-logo-section {
+    padding: 20px 16px;
+    border-bottom: none;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Sidebar Navigation */
+.sidebar-nav-new {
+    flex: 1;
+    padding: 20px 16px;
+    overflow-y: auto;
+}
+
+.nav-list-new {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.nav-item-new {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    color: #6B7280;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 400;
+    transition: all 0.15s ease;
+    cursor: pointer;
+}
+
+.nav-item-new:hover {
+    background: #F9FAFB;
+    color: #111827;
+}
+
+.nav-item-new.active {
+    background: #F3F4F6;
+    color: #111827;
+    font-weight: 500;
+    border-left: 3px solid #6366F1;
+    padding-left: 9px;
+}
+
+.nav-icon-new {
+    font-size: 18px;
+    flex-shrink: 0;
+    width: 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+}
+
+.sidebar-icon-svg {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
+
+.nav-label-new {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+}
+
+/* Section Divider */
+.nav-section-divider {
+    padding: 12px 12px 12px 12px;
+    margin-top: 4px;
+}
+
+.section-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #9CA3AF;
+    text-transform: none;
+    letter-spacing: 0.02em;
+}
+
+/* Bottom Navigation */
+.sidebar-bottom {
+    padding: 12px 12px 20px 12px;
+    border-top: none;
+}
+
+.bottom-list {
+    gap: 0;
+}
+
+/* Scrollbar Styling */
+.sidebar-new::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sidebar-new::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar-new::-webkit-scrollbar-thumb {
+    background: #E5E7EB;
+    border-radius: 2px;
+}
+
+.sidebar-new::-webkit-scrollbar-thumb:hover {
+    background: #D1D5DB;
+}
+
+/* Mobile Responsive */
+@media (max-width: 1023px) {
+    .sidebar-new {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar-new.mobile-open {
+        transform: translateX(0);
+    }
+}

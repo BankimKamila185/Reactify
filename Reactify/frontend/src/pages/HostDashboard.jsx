@@ -1,105 +1,66 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Plus } from 'lucide-react';
-import { Input } from '../components/ui/Input';
-import { Button } from '../components/ui/Button';
-import { Card } from '../components/ui/Card';
-import { sessionApi } from '../api/session.api';
-import { useSessionStore } from '../stores/sessionStore';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-export const HostDashboard = () => {
-    const navigate = useNavigate();
-    const { setSession, setToken } = useSessionStore();
-    const [title, setTitle] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
-
-    const handleCreateSession = async (e) => {
-        e.preventDefault();
-        setError('');
-
-        if (!title.trim()) {
-            setError('Please enter a session title');
-            return;
-        }
-
-        setLoading(true);
-
-        try {
-            const response = await sessionApi.createSession({ title: title.trim() });
-
-            // Store session and token
-            setSession(response.data.session);
-            setToken(response.data.token);
-
-            // Navigate to presenter view
-            navigate(`/present/${response.data.session._id}`);
-        } catch (err) {
-            setError(err.response?.data?.error?.message || 'Failed to create session');
-        } finally {
-            setLoading(false);
-        }
-    };
-
+export function HostDashboard() {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-primary-50 to-secondary-50 py-12 px-4">
-            <div className="max-w-4xl mx-auto">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4 }}
-                >
-                    <h1 className="text-4xl font-bold text-center mb-2">
-                        <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                            Create New Session
-                        </span>
+        <div className="min-h-screen bg-gray-50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div className="mb-8">
+                    <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                        Host Dashboard
                     </h1>
-                    <p className="text-gray-600 text-center mb-8">
-                        Set up your polling session and start engaging with your audience
+                    <p className="text-gray-600">
+                        Create and manage your polls
                     </p>
+                </div>
 
-                    <Card className="p-8 mb-8">
-                        <h2 className="text-2xl font-bold mb-6 flex items-center">
-                            <Plus className="w-6 h-6 mr-2 text-primary-600" />
-                            Session Details
-                        </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {/* Create New Poll Card */}
+                    <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                        <div className="flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
+                            <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                            </svg>
+                        </div>
+                        <h3 className="text-xl font-semibold text-gray-900 mb-2">Create New Poll</h3>
+                        <p className="text-gray-600 mb-4">Start creating an interactive poll for your audience</p>
+                        <button className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            Create Poll
+                        </button>
+                    </div>
 
-                        <form onSubmit={handleCreateSession} className="space-y-4">
-                            <Input
-                                label="Session Title"
-                                placeholder="e.g., Weekly Team Standup, Product Launch Q&A"
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                                fullWidth
-                            />
+                    {/* My Polls Card */}
+                    <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                        <div className="flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+                            <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                            </svg>
+                        </div>
+                        <h3 className="text-xl font-semibold text-gray-900 mb-2">My Polls</h3>
+                        <p className="text-gray-600 mb-4">View and manage all your created polls</p>
+                        <Link
+                            to="/dashboard"
+                            className="block w-full px-4 py-2 bg-green-600 text-white text-center rounded-lg hover:bg-green-700 transition-colors"
+                        >
+                            View Polls
+                        </Link>
+                    </div>
 
-                            {error && (
-                                <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
-                                    {error}
-                                </div>
-                            )}
-
-                            <Button
-                                type="submit"
-                                fullWidth
-                                size="lg"
-                                disabled={loading}
-                            >
-                                {loading ? 'Creating...' : 'Create Session'}
-                            </Button>
-                        </form>
-                    </Card>
-
-                    <Card className="p-6 bg-gradient-to-r from-primary-50 to-secondary-50 border-2 border-primary-200">
-                        <h3 className="font-semibold text-gray-900 mb-2">💡 Pro Tip</h3>
-                        <p className="text-gray-700">
-                            After creating your session, you can add polls manually or upload content (YouTube, PDF, DOCX)
-                            to generate polls automatically using AI.
-                        </p>
-                    </Card>
-                </motion.div>
+                    {/* Analytics Card */}
+                    <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                        <div className="flex items-center justify-center w-16 h-16 bg-purple-100 rounded-full mb-4">
+                            <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
+                        </div>
+                        <h3 className="text-xl font-semibold text-gray-900 mb-2">Analytics</h3>
+                        <p className="text-gray-600 mb-4">View detailed analytics and insights</p>
+                        <button className="w-full px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+                            View Analytics
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     );
-};
+}

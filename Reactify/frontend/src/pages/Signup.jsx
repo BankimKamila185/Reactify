@@ -1,24 +1,16 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { UserPlus, Mail, Lock, User, Building, Phone, Briefcase, ArrowRight } from 'lucide-react';
-import { Input } from '../components/ui/Input';
-import { Button } from '../components/ui/Button';
-import { Card } from '../components/ui/Card';
-import { authApi } from '../api/auth.api';
+import { Eye, EyeOff } from 'lucide-react';
+import './Signup.css';
 
 export const Signup = () => {
     const navigate = useNavigate();
-    const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
-        email: '',
-        password: '',
-        confirmPassword: '',
         fullName: '',
-        organization: '',
-        role: 'individual',
-        phoneNumber: ''
+        email: '',
+        password: ''
     });
+    const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -29,264 +21,190 @@ export const Signup = () => {
         });
     };
 
-    const handleNext = () => {
-        setError('');
-
-        if (step === 1) {
-            if (!formData.email || !formData.password || !formData.confirmPassword) {
-                setError('Please fill in all fields');
-                return;
-            }
-            if (formData.password.length < 6) {
-                setError('Password must be at least 6 characters');
-                return;
-            }
-            if (formData.password !== formData.confirmPassword) {
-                setError('Passwords do not match');
-                return;
-            }
-            setStep(2);
-        }
-    };
-
-    const handleBack = () => {
-        setStep(1);
-        setError('');
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
 
-        if (!formData.fullName) {
-            setError('Please enter your full name');
+        if (!formData.fullName || !formData.email || !formData.password) {
+            setError('Please fill in all fields');
+            return;
+        }
+
+        if (formData.password.length < 6) {
+            setError('Password must be at least 6 characters');
             return;
         }
 
         setLoading(true);
 
         try {
-            await authApi.signup(formData);
-            navigate('/dashboard');
+            // API call would go here
+            console.log('Signup:', formData);
+            // navigate('/home');
         } catch (err) {
-            setError(err.response?.data?.error?.message || 'Signup failed');
+            setError('Signup failed. Please try again.');
         } finally {
             setLoading(false);
         }
     };
 
+    const handleSocialLogin = (provider) => {
+        console.log(`${provider} login clicked`);
+        // Handle social login
+    };
+
     return (
-        <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 flex items-center justify-center p-4">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="w-full max-w-md"
-            >
-                <div className="text-center mb-8">
-                    <motion.div
-                        initial={{ scale: 0.9 }}
-                        animate={{ scale: 1 }}
-                        transition={{ duration: 0.3 }}
-                        className="inline-flex items-center justify-center w-16 h-16 rounded-2xl gradient-secondary mb-4"
-                    >
-                        <UserPlus className="w-8 h-8 text-white" />
-                    </motion.div>
-                    <h1 className="text-4xl font-bold mb-2">
-                        <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                            Create Account
-                        </span>
-                    </h1>
-                    <p className="text-gray-600">Join Reactify and start creating interactive polls</p>
-                </div>
-
-                {/* Progress Indicator */}
-                <div className="mb-6">
-                    <div className="flex items-center justify-center space-x-2">
-                        <div className={`h-2 w-16 rounded-full transition-colors ${step >= 1 ? 'bg-primary-600' : 'bg-gray-200'}`} />
-                        <div className={`h-2 w-16 rounded-full transition-colors ${step >= 2 ? 'bg-primary-600' : 'bg-gray-200'}`} />
+        <div className="signup-container">
+            {/* Left Section */}
+            <div className="signup-left">
+                <div className="signup-content">
+                    {/* Logo */}
+                    <div className="signup-logo">
+                        <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="38" height="38" rx="8" fill="#131313" />
+                            <path d="M19 10L28 16V26L19 32L10 26V16L19 10Z" fill="#F6F1EB" />
+                            <circle cx="19" cy="21" r="4" fill="#131313" />
+                        </svg>
                     </div>
-                    <p className="text-center text-sm text-gray-500 mt-2">
-                        Step {step} of 2
-                    </p>
-                </div>
 
-                <Card className="p-6 sm:p-8">
-                    <form onSubmit={step === 2 ? handleSubmit : (e) => e.preventDefault()} className="space-y-5">
-                        {step === 1 && (
-                            <motion.div
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: 20 }}
-                                className="space-y-5"
-                            >
-                                <div className="relative">
-                                    <Input
-                                        label="Email Address"
-                                        type="email"
-                                        name="email"
-                                        placeholder="you@example.com"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        fullWidth
-                                    />
-                                    <Mail className="w-5 h-5 text-gray-400 absolute left-3 top-9" />
-                                </div>
-
-                                <div className="relative">
-                                    <Input
-                                        label="Password"
-                                        type="password"
-                                        name="password"
-                                        placeholder="At least 6 characters"
-                                        value={formData.password}
-                                        onChange={handleChange}
-                                        fullWidth
-                                    />
-                                    <Lock className="w-5 h-5 text-gray-400 absolute left-3 top-9" />
-                                </div>
-
-                                <div className="relative">
-                                    <Input
-                                        label="Confirm Password"
-                                        type="password"
-                                        name="confirmPassword"
-                                        placeholder="Re-enter password"
-                                        value={formData.confirmPassword}
-                                        onChange={handleChange}
-                                        fullWidth
-                                    />
-                                    <Lock className="w-5 h-5 text-gray-400 absolute left-3 top-9" />
-                                </div>
-                            </motion.div>
-                        )}
-
-                        {step === 2 && (
-                            <motion.div
-                                initial={{ opacity: 0, x: 20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                className="space-y-5"
-                            >
-                                <div className="relative">
-                                    <Input
-                                        label="Full Name"
-                                        type="text"
-                                        name="fullName"
-                                        placeholder="John Doe"
-                                        value={formData.fullName}
-                                        onChange={handleChange}
-                                        fullWidth
-                                    />
-                                    <User className="w-5 h-5 text-gray-400 absolute left-3 top-9" />
-                                </div>
-
-                                <div className="relative">
-                                    <Input
-                                        label="Organization (Optional)"
-                                        type="text"
-                                        name="organization"
-                                        placeholder="Company or School"
-                                        value={formData.organization}
-                                        onChange={handleChange}
-                                        fullWidth
-                                    />
-                                    <Building className="w-5 h-5 text-gray-400 absolute left-3 top-9" />
-                                </div>
-
-                                <div className="relative">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                                        I am a...
-                                    </label>
-                                    <div className="relative">
-                                        <Briefcase className="w-5 h-5 text-gray-400 absolute left-3 top-3 pointer-events-none" />
-                                        <select
-                                            name="role"
-                                            value={formData.role}
-                                            onChange={handleChange}
-                                            className="block w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-smooth appearance-none bg-white"
-                                        >
-                                            <option value="educator">Educator / Teacher</option>
-                                            <option value="business">Business Professional</option>
-                                            <option value="individual">Individual</option>
-                                            <option value="other">Other</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div className="relative">
-                                    <Input
-                                        label="Phone Number (Optional)"
-                                        type="tel"
-                                        name="phoneNumber"
-                                        placeholder="+1 (555) 000-0000"
-                                        value={formData.phoneNumber}
-                                        onChange={handleChange}
-                                        fullWidth
-                                    />
-                                    <Phone className="w-5 h-5 text-gray-400 absolute left-3 top-9" />
-                                </div>
-                            </motion.div>
-                        )}
-
-                        {error && (
-                            <motion.div
-                                initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm"
-                            >
-                                {error}
-                            </motion.div>
-                        )}
-
-                        <div className="flex gap-3">
-                            {step === 2 && (
-                                <Button
-                                    type="button"
-                                    onClick={handleBack}
-                                    variant="outline"
-                                    size="lg"
-                                    className="flex-1"
-                                >
-                                    Back
-                                </Button>
-                            )}
-
-                            <Button
-                                type={step === 2 ? 'submit' : 'button'}
-                                onClick={step === 1 ? handleNext : undefined}
-                                fullWidth={step === 1}
-                                size="lg"
-                                disabled={loading}
-                                className={`${step === 2 ? 'flex-1' : ''} group`}
-                            >
-                                {loading ? 'Creating...' : step === 1 ? 'Next' : 'Create Account'}
-                                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                            </Button>
-                        </div>
-                    </form>
-
-                    <div className="mt-6 text-center">
-                        <p className="text-gray-600">
-                            Already have an account?{' '}
-                            <Link
-                                to="/login"
-                                className="text-primary-600 hover:text-primary-700 font-semibold transition-colors"
-                            >
-                                Sign in
-                            </Link>
+                    {/* Title & Subtitle */}
+                    <div className="signup-header">
+                        <h1 className="signup-title">Create your account</h1>
+                        <p className="signup-subtitle">
+                            Start creating polls, collect feedback, and interact with your audience in real-time.
                         </p>
                     </div>
-                </Card>
 
-                <div className="mt-6 text-center">
-                    <Link
-                        to="/"
-                        className="text-gray-500 hover:text-gray-700 text-sm transition-colors"
-                    >
-                        ← Back to Home
-                    </Link>
+                    {/* Form */}
+                    <form onSubmit={handleSubmit} className="signup-form">
+                        {/* Full Name */}
+                        <div className="form-group">
+                            <label htmlFor="fullName" className="form-label">Full name</label>
+                            <input
+                                type="text"
+                                id="fullName"
+                                name="fullName"
+                                placeholder="Enter your full name"
+                                value={formData.fullName}
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </div>
+
+                        {/* Email */}
+                        <div className="form-group">
+                            <label htmlFor="email" className="form-label">Email address</label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Enter your email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </div>
+
+                        {/* Password */}
+                        <div className="form-group">
+                            <label htmlFor="password" className="form-label">Password</label>
+                            <div className="password-input-wrapper">
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    id="password"
+                                    name="password"
+                                    placeholder="Create a strong password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    className="form-input"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="password-toggle"
+                                >
+                                    {showPassword ? (
+                                        <EyeOff size={20} />
+                                    ) : (
+                                        <Eye size={20} />
+                                    )}
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Error Message */}
+                        {error && (
+                            <div className="error-message">
+                                {error}
+                            </div>
+                        )}
+
+                        {/* Submit Button */}
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="btn-primary"
+                        >
+                            {loading ? 'Creating...' : 'Create Account'}
+                        </button>
+
+                        {/* Divider */}
+                        <div className="divider">
+                            <span className="divider-text">Or continue with</span>
+                        </div>
+
+                        {/* Social Buttons */}
+                        <div className="social-buttons">
+                            <button
+                                type="button"
+                                onClick={() => handleSocialLogin('Google')}
+                                className="btn-social"
+                            >
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19.6 10.227c0-.709-.064-1.39-.182-2.045H10v3.868h5.382a4.6 4.6 0 01-1.996 3.018v2.51h3.232c1.891-1.742 2.982-4.305 2.982-7.35z" fill="#4285F4" />
+                                    <path d="M10 20c2.7 0 4.964-.895 6.618-2.423l-3.232-2.509c-.895.6-2.04.955-3.386.955-2.605 0-4.81-1.76-5.595-4.123H1.064v2.59A9.996 9.996 0 0010 20z" fill="#34A853" />
+                                    <path d="M4.405 11.9c-.2-.6-.314-1.24-.314-1.9 0-.66.114-1.3.314-1.9V5.51H1.064A9.996 9.996 0 000 10c0 1.614.386 3.14 1.064 4.49l3.34-2.59z" fill="#FBBC05" />
+                                    <path d="M10 3.977c1.468 0 2.786.505 3.823 1.496l2.868-2.868C14.959.99 12.695 0 10 0 6.09 0 2.71 2.24 1.064 5.51l3.34 2.59C5.19 5.736 7.395 3.977 10 3.977z" fill="#EA4335" />
+                                </svg>
+                                <span>Google</span>
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => handleSocialLogin('Github')}
+                                className="btn-social"
+                            >
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fillRule="evenodd" clipRule="evenodd" d="M10 0C4.477 0 0 4.477 0 10c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0110 4.844c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C17.137 18.163 20 14.418 20 10c0-5.523-4.477-10-10-10z" fill="#131313" />
+                                </svg>
+                                <span>Github</span>
+                            </button>
+                        </div>
+
+                        {/* Footer Links */}
+                        <div className="signup-footer">
+                            <p className="footer-text">
+                                Already have an account?{' '}
+                                <Link to="/login" className="footer-link">Sign in</Link>
+                            </p>
+                        </div>
+                    </form>
                 </div>
-            </motion.div>
+            </div>
+
+            {/* Right Section */}
+            <div className="signup-right">
+                <div className="illustration-container">
+                    <img
+                        src="/illustration.png"
+                        alt="Communication illustration"
+                        className="illustration-image"
+                        onError={(e) => {
+                            // Fallback to generated illustration if custom image not found
+                            e.target.style.display = 'none';
+                        }}
+                    />
+                </div>
+            </div>
         </div>
     );
 };

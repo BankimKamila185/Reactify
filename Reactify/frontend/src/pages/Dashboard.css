@@ -1,0 +1,225 @@
+/* Dashboard Wrapper */
+.dashboard-wrapper {
+    display: flex;
+    min-height: 100vh;
+    background: #F9FAFB;
+    overflow-x: hidden;
+}
+
+/* Dashboard Main Content */
+.dashboard-main-new {
+    flex: 1;
+    margin-left: 316px;
+    margin-top: 38px;
+    margin-right: 38px;
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    overflow-x: hidden;
+    max-width: calc(100vw - 354px);
+}
+
+/* Dashboard Content */
+.dashboard-content-new {
+    flex: 1;
+    padding: 40px 48px;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Welcome Section */
+.welcome-section {
+    margin-bottom: 56px;
+}
+
+.welcome-title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 24px 0;
+    line-height: 1.2;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn-action {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.btn-primary-action {
+    background: #111827;
+    color: #ffffff;
+    border-color: #111827;
+}
+
+.btn-primary-action:hover {
+    background: #000000;
+    border-color: #000000;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary-action {
+    background: #ffffff;
+    color: #374151;
+    border-color: #D1D5DB;
+}
+
+.btn-secondary-action:hover {
+    background: #F9FAFB;
+    border-color: #9CA3AF;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary-action svg {
+    color: #6B7280;
+}
+
+/* Section Heading - Clean */
+.section-heading {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 20px 0;
+    letter-spacing: -0.01em;
+}
+
+/* Features Section - Clean Layout */
+.features-section {
+    margin-bottom: 64px;
+    background: #F5F3FF;
+    padding: 32px;
+    border-radius: 24px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 16px;
+    max-width: 100%;
+}
+
+/* Recent Section */
+.recent-section {
+    margin-bottom: 48px;
+}
+
+.recent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Responsive Design */
+
+/* Large tablets and small desktops (1024px - 1279px) */
+@media (max-width: 1279px) {
+    .dashboard-content-new {
+        padding: 28px 40px;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Tablets (768px - 1023px) */
+@media (max-width: 1023px) {
+    .dashboard-main-new {
+        margin-left: 0;
+    }
+
+    .dashboard-content-new {
+        padding: 24px 32px;
+    }
+
+    .welcome-title {
+        font-size: 28px;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .recent-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+}
+
+/* Mobile (max 767px) */
+@media (max-width: 767px) {
+    .dashboard-content-new {
+        padding: 20px 16px;
+    }
+
+    .welcome-section {
+        margin-bottom: 32px;
+    }
+
+    .welcome-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .btn-action {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 20px;
+    }
+
+    .features-section {
+        margin-bottom: 32px;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .section-heading {
+        font-size: 16px;
+        margin-bottom: 16px;
+    }
+
+    .recent-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dashboard-content-new {
+    animation: fadeInUp 0.4s ease-out;
+}

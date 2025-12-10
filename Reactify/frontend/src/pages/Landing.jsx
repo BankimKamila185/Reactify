@@ -1,279 +1,235 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Sparkles, Users, Zap, BarChart3, MessageSquare, Brain, ArrowRight, CheckCircle, Star } from 'lucide-react';
-import { Button } from '../components/ui/Button';
-import { authApi } from '../api/auth.api';
+import styles from './Landing.module.css';
 
 export const Landing = () => {
     const navigate = useNavigate();
-    const isAuthenticated = authApi.isAuthenticated();
-
-    const handleGetStarted = () => {
-        if (isAuthenticated) {
-            navigate('/dashboard');
-        } else {
-            navigate('/signup');
-        }
-    };
 
     return (
-        <div className="min-h-screen bg-white">
-            {/* Hero Section */}
-            <section className="relative overflow-hidden bg-gradient-to-br from-primary-50 via-white to-secondary-50">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24 sm:pt-24 sm:pb-32">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7 }}
-                        className="text-center max-w-4xl mx-auto"
-                    >
-                        <motion.div
-                            initial={{ scale: 0.8, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            transition={{ duration: 0.5, delay: 0.2 }}
-                            className="inline-flex items-center px-4 py-2 rounded-full bg-primary-100 text-primary-700 text-sm font-medium mb-6"
-                        >
-                            <Sparkles className="w-4 h-4 mr-2" />
-                            AI-Powered Interactive Polling Platform
-                        </motion.div>
-
-                        <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-                            <span className="bg-gradient-to-r from-primary-600 via-secondary-600 to-accent-500 bg-clip-text text-transparent">
-                                Engage Your Audience
-                            </span>
-                            <br />
-                            <span className="text-gray-900">In Real-Time</span>
-                        </h1>
-
-                        <p className="text-xl sm:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed">
-                            Create interactive polls, collect instant feedback, and generate questions automatically with AI.
-                            Perfect for classrooms, presentations, and events.
-                        </p>
-
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                            <Button
-                                size="lg"
-                                onClick={handleGetStarted}
-                                className="min-w-[200px] text-lg group"
-                            >
-                                Get Started Free
-                                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                            </Button>
-
-                            <Link to="/login">
-                                <Button
-                                    size="lg"
-                                    variant="outline"
-                                    className="min-w-[200px] text-lg"
-                                >
-                                    Sign In
-                                </Button>
-                            </Link>
-                        </div>
-
-                        {/* Social Proof */}
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.8 }}
-                            className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-gray-600"
-                        >
-                            <div className="flex items-center">
-                                <div className="flex -space-x-2 mr-3">
-                                    {[1, 2, 3, 4].map((i) => (
-                                        <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-400 to-secondary-400 border-2 border-white" />
-                                    ))}
-                                </div>
-                                <span>Trusted by 10,000+ users</span>
-                            </div>
-                            <div className="flex items-center">
-                                <div className="flex text-yellow-400 mr-2">
-                                    {[1, 2, 3, 4, 5].map((i) => (
-                                        <Star key={i} className="w-4 h-4 fill-current" />
-                                    ))}
-                                </div>
-                                <span>4.9/5 rating</span>
-                            </div>
-                        </motion.div>
-                    </motion.div>
+        <div className={styles.page}>
+            {/* Navbar */}
+            <nav className={styles.navbar}>
+                <div className={styles.container}>
+                    <Link to="/" className={styles.logo}>Reactify</Link>
+                    <div className={styles.menu}>
+                        <a href="#features">Features</a>
+                        <a href="#ai-tools">AI Tools</a>
+                        <a href="#templates">Templates</a>
+                        <a href="#how-it-works">How it Works</a>
+                    </div>
+                    <div className={styles.actions}>
+                        <button className={styles.btnLogin} onClick={() => navigate('/login')}>
+                            Log in
+                        </button>
+                        <button className={styles.btnPrimary} onClick={() => navigate('/signup')}>
+                            Start Free
+                        </button>
+                    </div>
                 </div>
+            </nav>
 
-                {/* Decorative Elements */}
-                <div className="absolute top-0 right-0 -mt-20 -mr-20 w-64 h-64 bg-primary-200 rounded-full opacity-20 blur-3xl" />
-                <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-64 h-64 bg-secondary-200 rounded-full opacity-20 blur-3xl" />
+            {/* Hero */}
+            <section className={styles.hero}>
+                <div className={styles.container}>
+                    <div className={styles.heroGrid}>
+                        <div className={styles.heroLeft}>
+                            <div className={styles.badge}>
+                                ✨ Trusted by 10,000+ educators worldwide
+                            </div>
+                            <h1>Create Interactive Polls & Feedback Instantly with AI.</h1>
+                            <p>Upload text, videos, or files and Reactify generates polls, quizzes, and real-time feedback automatically.</p>
+                            <div className={styles.heroBtns}>
+                                <button className={styles.btnPrimary} onClick={() => navigate('/signup')}>
+                                    Start with AI
+                                </button>
+                                <button className={styles.btnSecondary} onClick={() => navigate('/login')}>
+                                    Try Demo
+                                </button>
+                            </div>
+                        </div>
+                        <div className={styles.heroRight}>
+                            <div className={styles.previewCard}>
+                                <div className={styles.pollHeader}>
+                                    <span>Live Poll</span>
+                                    <span className={styles.liveIndicator}>● Live</span>
+                                </div>
+                                <div className={styles.pollQuestion}>What's your preferred learning method?</div>
+                                <div className={styles.pollOptions}>
+                                    <div className={styles.pollOption}>
+                                        <span>Visual content</span>
+                                        <div className={styles.pollBarWrapper}>
+                                            <div className={styles.pollBar} style={{ width: '68%' }}></div>
+                                            <span className={styles.pollPercent}>68%</span>
+                                        </div>
+                                    </div>
+                                    <div className={styles.pollOption}>
+                                        <span>Interactive exercises</span>
+                                        <div className={styles.pollBarWrapper}>
+                                            <div className={styles.pollBar} style={{ width: '52%' }}></div>
+                                            <span className={styles.pollPercent}>52%</span>
+                                        </div>
+                                    </div>
+                                    <div className={styles.pollOption}>
+                                        <span>Reading materials</span>
+                                        <div className={styles.pollBarWrapper}>
+                                            <div className={styles.pollBar} style={{ width: '41%' }}></div>
+                                            <span className={styles.pollPercent}>41%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
-            {/* Features Section */}
-            <section className="py-20 sm:py-24">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                        className="text-center mb-16"
-                    >
-                        <h2 className="text-4xl sm:text-5xl font-bold mb-4">
-                            Everything You Need to
-                            <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent"> Engage</span>
-                        </h2>
-                        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                            Powerful features designed to make your presentations interactive and memorable
-                        </p>
-                    </motion.div>
+            {/* Features */}
+            <section id="features" className={styles.features}>
+                <div className={styles.container}>
+                    <div className={styles.featuresGrid}>
+                        <div className={styles.featureCard}>
+                            <div className={`${styles.featureIcon} ${styles.iconMint}`}>
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                                    <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
+                                </svg>
+                            </div>
+                            <h3>AI Poll Generation</h3>
+                            <p>Upload any content and let AI create relevant, engaging poll questions automatically in seconds.</p>
+                        </div>
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <FeatureCard
-                            icon={<Zap className="w-10 h-10" />}
-                            title="Real-time Results"
-                            description="Watch responses flow in instantly with beautiful animated charts that update in real-time"
-                            gradient="from-yellow-400 to-orange-500"
-                            delay={0.1}
-                        />
-                        <FeatureCard
-                            icon={<Brain className="w-10 h-10" />}
-                            title="AI-Powered Generation"
-                            description="Upload content and let AI automatically generate relevant poll questions for you"
-                            gradient="from-purple-400 to-pink-500"
-                            delay={0.2}
-                        />
-                        <FeatureCard
-                            icon={<Users className="w-10 h-10" />}
-                            title="Easy Participation"
-                            description="Participants join with a simple code - no signup or app download required"
-                            gradient="from-blue-400 to-cyan-500"
-                            delay={0.3}
-                        />
-                        <FeatureCard
-                            icon={<BarChart3 className="w-10 h-10" />}
-                            title="Beautiful Charts"
-                            description="Visualize responses with stunning, animated charts that captivate your audience"
-                            gradient="from-green-400 to-emerald-500"
-                            delay={0.4}
-                        />
-                        <FeatureCard
-                            icon={<MessageSquare className="w-10 h-10" />}
-                            title="Live Feedback"
-                            description="Collect both public and private feedback to understand your audience better"
-                            gradient="from-red-400 to-rose-500"
-                            delay={0.5}
-                        />
-                        <FeatureCard
-                            icon={<Sparkles className="w-10 h-10" />}
-                            title="Multiple Formats"
-                            description="Create single choice, multiple choice, open text, and rating polls effortlessly"
-                            gradient="from-indigo-400 to-purple-500"
-                            delay={0.6}
-                        />
+                        <div className={styles.featureCard}>
+                            <div className={`${styles.featureIcon} ${styles.iconGold}`}>
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                                </svg>
+                            </div>
+                            <h3>Real-Time Voting</h3>
+                            <p>Collect instant responses from your audience with live updates and beautiful visualizations.</p>
+                        </div>
+
+                        <div className={styles.featureCard}>
+                            <div className={`${styles.featureIcon} ${styles.iconMint}`}>
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                                    <line x1="9" y1="9" x2="15" y2="15" />
+                                    <line x1="9" y1="15" x2="15" y2="9" />
+                                </svg>
+                            </div>
+                            <h3>Instant Analytics</h3>
+                            <p>Get deep insights with comprehensive analytics and exportable reports for all your polls.</p>
+                        </div>
+
+                        <div className={styles.featureCard}>
+                            <div className={`${styles.featureIcon} ${styles.iconGold}`}>
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                                </svg>
+                            </div>
+                            <h3>Integrated Feedback System</h3>
+                            <p>Capture qualitative feedback alongside quantitative data for complete audience understanding.</p>
+                        </div>
                     </div>
                 </div>
             </section>
 
             {/* How It Works */}
-            <section className="py-20 sm:py-24 bg-gray-50">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-center mb-16"
-                    >
-                        <h2 className="text-4xl sm:text-5xl font-bold mb-4">
-                            Get Started in
-                            <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent"> 3 Easy Steps</span>
-                        </h2>
-                    </motion.div>
-
-                    <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
-                        <StepCard
-                            number="1"
-                            title="Create Your Session"
-                            description="Sign up and create a new polling session in seconds. Choose to create polls manually or upload content for AI generation."
-                            delay={0.1}
-                        />
-                        <StepCard
-                            number="2"
-                            title="Share the Code"
-                            description="Get a unique 6-digit code and share it with your audience. They can join instantly from any device."
-                            delay={0.2}
-                        />
-                        <StepCard
-                            number="3"
-                            title="See Results Live"
-                            description="Watch responses come in real-time with stunning visualizations. Engage your audience like never before."
-                            delay={0.3}
-                        />
+            <section id="how-it-works" className={styles.howItWorks}>
+                <div className={styles.container}>
+                    <h2>How it works</h2>
+                    <div className={styles.stepsGrid}>
+                        <div className={styles.step}>
+                            <div className={styles.stepNumber}>01</div>
+                            <h3>Upload content</h3>
+                            <p>Upload YouTube videos, PowerPoint presentations, or text documents</p>
+                        </div>
+                        <div className={styles.stepNumber}>02</div>
+                        <div className={styles.step}>
+                            <h3>Reactify's AI generates polls</h3>
+                            <p>Our AI analyzes your content and creates engaging poll questions automatically</p>
+                        </div>
+                        <div className={styles.stepNumber}>03</div>
+                        <div className={styles.step}>
+                            <h3>Share link & collect results</h3>
+                            <p>Share a simple link and watch real-time responses flow in with beautiful analytics</p>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* CTA Section */}
-            <section className="py-20 sm:py-24">
-                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        className="bg-gradient-to-r from-primary-600 to-secondary-600 rounded-3xl p-12 sm:p-16 text-white"
-                    >
-                        <h2 className="text-4xl sm:text-5xl font-bold mb-6">
-                            Ready to Transform Your Presentations?
-                        </h2>
-                        <p className="text-xl mb-8 text-primary-50">
-                            Join thousands of educators and professionals using Reactify
-                        </p>
-                        <Button
-                            size="lg"
-                            onClick={handleGetStarted}
-                            className="bg-white text-primary-600 hover:bg-gray-100 text-lg min-w-[200px] group"
-                        >
-                            Start Free Today
-                            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                        </Button>
-                    </motion.div>
+            {/* Testimonials */}
+            <section className={styles.testimonials}>
+                <div className={styles.container}>
+                    <div className={styles.testimonialsGrid}>
+                        <div className={styles.testimonialCard}>
+                            <div className={styles.quote}>Reactify transformed how we engage students. The AI saves hours of prep time and the real-time feedback is incredible.</div>
+                            <div className={styles.author}>
+                                <strong>Dr. Sarah Mitchell</strong>
+                                <span>Professor, Stanford University</span>
+                            </div>
+                            <div className={styles.accent}></div>
+                        </div>
+
+                        <div className={styles.testimonialCard}>
+                            <div className={styles.quote}>The best polling tool we've used. Simple, powerful, and our team actually enjoys using it during presentations.</div>
+                            <div className={styles.author}>
+                                <strong>James Chen</strong>
+                                <span>Head of Training, Microsoft</span>
+                            </div>
+                            <div className={styles.accent}></div>
+                        </div>
+
+                        <div className={styles.testimonialCard}>
+                            <div className={styles.quote}>Game-changer for our virtual events. Audience engagement went up 300% since we started using Reactify.</div>
+                            <div className={styles.author}>
+                                <strong>Maria Garcia</strong>
+                                <span>Event Director, TechConf</span>
+                            </div>
+                            <div className={styles.accent}></div>
+                        </div>
+                    </div>
                 </div>
             </section>
+
+            {/* Footer */}
+            <footer className={styles.footer}>
+                <div className={styles.container}>
+                    <div className={styles.footerGrid}>
+                        <div className={styles.footerBrand}>
+                            <div className={styles.footerLogo}>Reactify</div>
+                            <p>Create interactive polls and feedback with AI</p>
+                        </div>
+
+                        <div className={styles.footerColumn}>
+                            <h4>Product</h4>
+                            <Link to="/features">Features</Link>
+                            <Link to="/ai-tools">AI Tools</Link>
+                            <Link to="/templates">Templates</Link>
+                            <Link to="/integrations">Integrations</Link>
+                        </div>
+
+                        <div className={styles.footerColumn}>
+                            <h4>Resources</h4>
+                            <Link to="/docs">Documentation</Link>
+                            <Link to="/guides">Guides</Link>
+                            <Link to="/blog">Blog</Link>
+                            <Link to="/support">Support</Link>
+                        </div>
+
+                        <div className={styles.footerColumn}>
+                            <h4>Company</h4>
+                            <Link to="/about">About</Link>
+                            <Link to="/careers">Careers</Link>
+                            <Link to="/contact">Contact</Link>
+                            <Link to="/privacy">Privacy</Link>
+                        </div>
+                    </div>
+
+                    <div className={styles.footerBottom}>
+                        <p>© 2024 Reactify. All rights reserved.</p>
+                    </div>
+                </div>
+            </footer>
         </div>
-    );
-};
-
-const FeatureCard = ({ icon, title, description, gradient, delay }) => {
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay }}
-            className="relative group"
-        >
-            <div className="h-full bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
-                <div className={`inline-flex p-3 rounded-xl bg-gradient-to-r ${gradient} text-white mb-4`}>
-                    {icon}
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{title}</h3>
-                <p className="text-gray-600 leading-relaxed">{description}</p>
-            </div>
-        </motion.div>
-    );
-};
-
-const StepCard = ({ number, title, description, delay }) => {
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay }}
-            className="relative"
-        >
-            <div className="flex flex-col items-center text-center">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-r from-primary-600 to-secondary-600 text-white text-2xl font-bold flex items-center justify-center mb-6 shadow-lg">
-                    {number}
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">{title}</h3>
-                <p className="text-gray-600 leading-relaxed">{description}</p>
-            </div>
-        </motion.div>
     );
 };
