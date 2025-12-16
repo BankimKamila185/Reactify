@@ -1,50 +1,80 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Input } from '../components/ui/Input';
-import { Button } from '../components/ui/Button';
-import { Card } from '../components/ui/Card';
 import { sessionApi } from '../api/session.api';
 import { useSessionStore } from '../stores/sessionStore';
+import './AudienceJoin.css';
 
 export const AudienceJoin = () => {
     const navigate = useNavigate();
     const { setSession } = useSessionStore();
     const [sessionCode, setSessionCode] = useState('');
+    const [step, setStep] = useState('code'); // 'code' or 'name'
     const [name, setName] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+
+    // Format the code with space (e.g., "123 456" for 6-digit or "1234 5678" for 8-digit)
+    const handleCodeChange = (e) => {
+        const value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/g, '');
+        if (value.length <= 8) {
+            // For 6-digit codes (backend format): "XXX XXX"
+            // For 8-digit codes: "XXXX XXXX"
+            if (value.length <= 6) {
+                if (value.length > 3) {
+                    setSessionCode(value.slice(0, 3) + ' ' + value.slice(3));
+                } else {
+                    setSessionCode(value);
+                }
+            } else {
+                // 7-8 digit: format as XXXX XXXX for legacy support
+                setSessionCode(value.slice(0, 4) + ' ' + value.slice(4));
+            }
+        }
+    };
 
     const handleJoin = async (e) => {
         e.preventDefault();
         setError('');
 
-        if (!sessionCode || !name) {
-            setError('Please enter both session code and your name');
+        const cleanCode = sessionCode.replace(/\s/g, '');
+
+        if (!cleanCode) {
+            setError('Please enter a code');
+            return;
+        }
+
+        if (step === 'code') {
+            // Move to name step
+            setStep('name');
+            return;
+        }
+
+        if (!name.trim()) {
+            setError('Please enter your name');
             return;
         }
 
         setLoading(true);
 
         try {
-            const response = await sessionApi.joinSession(sessionCode, { name });
+            const response = await sessionApi.joinSession(cleanCode, { name: name.trim() });
 
             // Store participant info
-            localStorage.setItem('participantId', response.data.participant._id);
+            localStorage.setItem('participantId', response.data.participant.id);
             localStorage.setItem('participantName', response.data.participant.name);
 
             // Set session
             setSession({
-                _id: response.data.session._id,
+                _id: response.data.session.id,
                 title: response.data.session.title,
                 currentPollIndex: response.data.session.currentPollIndex,
-                sessionCode,
+                sessionCode: cleanCode,
                 createdAt: new Date().toISOString(),
                 isActive: true
             });
 
             // Navigate to voting view
-            navigate(`/vote/${response.data.session._id}`);
+            navigate(`/vote/${response.data.session.id}`);
         } catch (err) {
             setError(err.response?.data?.error?.message || 'Failed to join session');
         } finally {
@@ -53,56 +83,89 @@ export const AudienceJoin = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-primary-50 to-secondary-50 flex items-center justify-center p-4">
-            <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3 }}
-                className="w-full max-w-md"
-            >
-                <Card className="p-8">
-                    <h2 className="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                        Join Session
-                    </h2>
-                    <p className="text-gray-600 text-center mb-6">
-                        Enter the session code to participate
+        <div className="join-page">
+            <div className="join-container">
+                {/* Logo */}
+                <div className="join-logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect x="2" y="8" width="8" height="16" rx="2" fill="#3B82F6" />
+                        <rect x="12" y="4" width="8" height="24" rx="2" fill="#1E3A5F" />
+                        <rect x="22" y="12" width="8" height="12" rx="2" fill="#EF4444" />
+                    </svg>
+                    <span className="logo-text">Reactify</span>
+                </div>
+
+                {/* Main Content */}
+                <div className="join-content">
+                    <h1 className="join-title">
+                        {step === 'code' ? 'Enter the code to join' : 'What\'s your name?'}
+                    </h1>
+                    <p className="join-subtitle">
+                        {step === 'code'
+                            ? 'It\'s on the screen in front of you'
+                            : 'This will be visible to the presenter'
+                        }
                     </p>
 
-                    <form onSubmit={handleJoin} className="space-y-4">
-                        <Input
-                            label="Session Code"
-                            placeholder="e.g., 123456"
-                            value={sessionCode}
-                            onChange={(e) => setSessionCode(e.target.value.trim())}
-                            fullWidth
-                            maxLength={6}
-                        />
-
-                        <Input
-                            label="Your Name"
-                            placeholder="Enter your name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            fullWidth
-                        />
+                    <form onSubmit={handleJoin} className="join-form">
+                        {step === 'code' ? (
+                            <input
+                                type="text"
+                                className="code-input"
+                                placeholder="123 456"
+                                value={sessionCode}
+                                onChange={handleCodeChange}
+                                autoFocus
+                                autoComplete="off"
+                            />
+                        ) : (
+                            <input
+                                type="text"
+                                className="name-input"
+                                placeholder="Your name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                autoFocus
+                                autoComplete="off"
+                            />
+                        )}
 
                         {error && (
-                            <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+                            <div className="join-error">
                                 {error}
                             </div>
                         )}
 
-                        <Button
+                        <button
                             type="submit"
-                            fullWidth
-                            size="lg"
-                            disabled={loading}
+                            className="join-button"
+                            disabled={loading || (step === 'code' && !sessionCode)}
                         >
-                            {loading ? 'Joining...' : 'Join Session'}
-                        </Button>
+                            {loading ? 'Joining...' : step === 'code' ? 'Join' : 'Continue'}
+                        </button>
+
+                        {step === 'name' && (
+                            <button
+                                type="button"
+                                className="back-button"
+                                onClick={() => setStep('code')}
+                            >
+                                ← Back
+                            </button>
+                        )}
                     </form>
-                </Card>
-            </motion.div>
+                </div>
+
+                {/* Footer */}
+                <div className="join-footer">
+                    <p className="footer-cta">
+                        Create your own polls at <a href="/" className="footer-link">reactify.com</a>
+                    </p>
+                    <p className="footer-legal">
+                        By using Reactify you accept our <a href="#">terms of use</a> and <a href="#">policies</a>.
+                    </p>
+                </div>
+            </div>
         </div>
     );
 };

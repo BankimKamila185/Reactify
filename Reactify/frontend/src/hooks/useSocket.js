@@ -1,43 +1,45 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 
 const SOCKET_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
+// Singleton socket instance
+let socketInstance = null;
+
 export const useSocket = () => {
-    const socketRef = useRef(null);
+    const [socket, setSocket] = useState(null);
 
     useEffect(() => {
-        // Initialize socket connection
-        socketRef.current = io(SOCKET_URL, {
-            transports: ['websocket', 'polling'],
-            reconnection: true,
-            reconnectionDelay: 1000,
-            reconnectionAttempts: 5
-        });
+        // Create singleton socket if it doesn't exist
+        if (!socketInstance) {
+            socketInstance = io(SOCKET_URL, {
+                transports: ['websocket', 'polling'],
+                reconnection: true,
+                reconnectionDelay: 1000,
+                reconnectionAttempts: 5
+            });
 
-        const socket = socketRef.current;
+            socketInstance.on('connect', () => {
+                console.log('✅ Socket connected:', socketInstance.id);
+            });
 
-        socket.on('connect', () => {
-            console.log('✅ Socket connected:', socket.id);
-        });
+            socketInstance.on('disconnect', () => {
+                console.log('❌ Socket disconnected');
+            });
 
-        socket.on('disconnect', () => {
-            console.log('❌ Socket disconnected');
-        });
+            socketInstance.on('error', (error) => {
+                console.error('Socket error:', error);
+            });
+        }
 
-        socket.on('error', (error) => {
-            console.error('Socket error:', error);
-        });
+        // Set the socket to trigger re-render
+        setSocket(socketInstance);
 
-        // Cleanup on unmount
-        return () => {
-            if (socket) {
-                socket.disconnect();
-            }
-        };
+        // No cleanup - keep socket alive for app lifetime
     }, []);
 
-    return socketRef.current;
+    return socket;
 };
 
 export default useSocket;
+

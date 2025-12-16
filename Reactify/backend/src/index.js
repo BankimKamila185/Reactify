@@ -11,33 +11,74 @@ import sessionRoutes from './routes/session.routes.js';
 import pollRoutes from './routes/poll.routes.js';
 import uploadRoutes from './routes/upload.routes.js';
 import authRoutes from './routes/auth.routes.js';
+import aiRoutes from './routes/ai.routes.js';
 
 // Load environment variables
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
-const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:5173'];
+const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS?.split(',') || [
+    'http://localhost:5173',
+    'http://localhost:5174',
+    'http://localhost:5175',
+    'http://localhost:5176',
+    'http://127.0.0.1:5173',
+    'http://127.0.0.1:5174',
+    'http://127.0.0.1:5175'
+];
 
 // Initialize Express app
 const app = express();
 const httpServer = createServer(app);
 
-// Initialize Socket.IO with CORS
+// Initialize Socket.IO with CORS and optimized settings for high concurrency
 const io = new Server(httpServer, {
     cors: {
         origin: ALLOWED_ORIGINS,
         methods: ['GET', 'POST']
-    }
+    },
+    // Optimizations for handling 700+ concurrent connections
+    pingTimeout: 60000,           // 60 seconds before considering connection dead
+    pingInterval: 25000,          // Ping every 25 seconds to keep connections alive
+    maxHttpBufferSize: 1e6,       // 1MB max message size
+    transports: ['websocket', 'polling'], // Prefer websocket
+    allowUpgrades: true,
+    perMessageDeflate: {          // Enable compression for efficiency
+        threshold: 1024           // Compress messages larger than 1KB
+    },
+    connectTimeout: 45000         // 45 second connection timeout
 });
 
 // Set Socket.IO instance for AI progress updates
 setIO(io);
 
-// Middleware
-app.use(cors({
-    origin: ALLOWED_ORIGINS,
-    credentials: true
-}));
+// Middleware - CORS with preflight handling
+const corsOptions = {
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps, curl, postman)
+        if (!origin) return callback(null, true);
+
+        // In development, allow all localhost origins
+        if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
+            return callback(null, true);
+        }
+
+        // Check against allowed origins list
+        if (ALLOWED_ORIGINS.includes(origin)) {
+            return callback(null, true);
+        }
+
+        callback(new Error('Not allowed by CORS'));
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+};
+
+app.use(cors(corsOptions));
+
+// Handle preflight requests explicitly
+app.options('*', cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -52,6 +93,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/session', sessionRoutes);
 app.use('/api/poll', pollRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/ai', aiRoutes);
 
 // Error handling
 app.use(notFoundHandler);
@@ -66,8 +108,8 @@ const startServer = async () => {
         // Connect to database
         await connectDB();
 
-        // Start listening
-        httpServer.listen(PORT, () => {
+        // Start listening - bind to 0.0.0.0 for cloud deployments
+        httpServer.listen(PORT, '0.0.0.0', () => {
             console.log(`
 ╔═══════════════════════════════════════╗
 ║   🚀 Reactify Backend Server         ║

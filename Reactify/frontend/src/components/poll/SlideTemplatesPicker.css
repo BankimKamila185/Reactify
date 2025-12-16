@@ -1,0 +1,489 @@
+/* SlideTemplatesPicker - Mentimeter Style */
+
+.templates-picker-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 40px;
+}
+
+.templates-picker-modal {
+    background: white;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 1100px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Header */
+.picker-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 32px 0;
+    border-bottom: none;
+}
+
+.header-tabs {
+    display: flex;
+    gap: 32px;
+}
+
+.header-tab {
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: #9CA3AF;
+    cursor: pointer;
+    padding: 0 0 16px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-tab.active {
+    color: #111827;
+    border-bottom-color: #111827;
+}
+
+.header-tab:hover:not(.active) {
+    color: #6B7280;
+}
+
+.pro-badge {
+    background: #1a1a1a;
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.picker-close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    color: #6B7280;
+    transition: all 0.2s;
+}
+
+.picker-close-btn:hover {
+    background: #F3F4F6;
+    color: #111827;
+}
+
+/* Category Pills */
+.category-pills {
+    display: flex;
+    gap: 12px;
+    padding: 24px 32px;
+    flex-wrap: wrap;
+}
+
+.category-pill {
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 24px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.category-pill:hover {
+    border-color: #D1D5DB;
+    background: #F9FAFB;
+}
+
+.category-pill.active {
+    background: #111827;
+    color: white;
+    border-color: #111827;
+}
+
+.category-pill.more-btn {
+    background: white;
+    border-style: dashed;
+}
+
+/* Templates Grid */
+.templates-grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding: 0 32px 32px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* Template Card */
+.template-card {
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 280px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.template-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Blank Template */
+.blank-template {
+    background: #F9FAFB !important;
+    border: 2px dashed #E5E7EB;
+}
+
+.blank-template:hover {
+    border-color: #D1D5DB;
+    background: #F3F4F6 !important;
+}
+
+.blank-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    color: #9CA3AF;
+    font-size: 14px;
+}
+
+/* Template Preview Area */
+.template-preview-area {
+    flex: 1;
+    padding: 24px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.preview-visual {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.preview-question {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* Bar Chart Preview */
+.preview-chart-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-right: 20px;
+}
+
+.chart-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.bar-number {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6B7280;
+    min-width: 20px;
+}
+
+.chart-bar-fill {
+    height: 20px;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+/* Word Cloud Preview */
+.preview-wordcloud {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 0;
+}
+
+.wc-word {
+    font-weight: 700;
+}
+
+.wc-large {
+    font-size: 22px;
+}
+
+.wc-medium {
+    font-size: 16px;
+}
+
+.wc-small {
+    font-size: 12px;
+}
+
+/* Open Ended Preview */
+.preview-open-ended {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.open-ended-card {
+    background: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: #6B7280;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Donut Chart Preview */
+.preview-donut {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 16px;
+}
+
+.donut-chart {
+    width: 100px;
+    height: 100px;
+}
+
+.donut-label {
+    position: absolute;
+    font-size: 24px;
+    font-weight: 700;
+    color: #4CAF50;
+}
+
+/* Ranking Preview */
+.preview-ranking {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ranking-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ranking-num {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6B7280;
+    min-width: 20px;
+}
+
+.ranking-bar {
+    height: 20px;
+    border-radius: 4px;
+}
+
+/* Q&A Preview */
+.preview-qa {
+    display: flex;
+    justify-content: center;
+    padding: 16px 0;
+}
+
+.qa-bubble {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    border-radius: 24px;
+    padding: 12px 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-size: 13px;
+    color: #6B7280;
+}
+
+.qa-icon {
+    font-size: 16px;
+}
+
+/* Type Answer Preview */
+.preview-type-answer {
+    display: flex;
+    justify-content: center;
+    padding: 16px 0;
+}
+
+.type-input-box {
+    background: white;
+    border: 1px dashed #D1D5DB;
+    border-radius: 8px;
+    padding: 16px 24px;
+    font-size: 13px;
+    color: #9CA3AF;
+    width: 100%;
+    text-align: center;
+}
+
+/* Text Slide Preview */
+.preview-visual.text-slide {
+    text-align: center;
+    justify-content: center;
+    padding: 24px 16px;
+}
+
+.text-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 8px;
+}
+
+.text-subtitle {
+    font-size: 13px;
+    color: #6B7280;
+    margin: 0;
+}
+
+/* Template Footer */
+.template-footer {
+    background: white;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.template-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111827;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.template-slides {
+    font-size: 13px;
+    color: #9CA3AF;
+}
+
+/* Empty State */
+.picker-empty-state {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px;
+    gap: 20px;
+    color: #9CA3AF;
+}
+
+.picker-empty-state p {
+    font-size: 15px;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .templates-grid-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        padding: 0 24px 24px;
+    }
+
+    .template-card {
+        min-height: 240px;
+    }
+}
+
+@media (max-width: 600px) {
+    .templates-picker-overlay {
+        padding: 20px;
+    }
+
+    .templates-grid-container {
+        grid-template-columns: 1fr;
+    }
+
+    .category-pills {
+        padding: 16px 20px;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+    }
+
+    .picker-header {
+        padding: 20px 20px 0;
+    }
+
+    .header-tabs {
+        gap: 20px;
+    }
+
+    .header-tab {
+        font-size: 14px;
+    }
+}
+
+/* Scrollbar */
+.templates-grid-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.templates-grid-container::-webkit-scrollbar-track {
+    background: #F3F4F6;
+    border-radius: 4px;
+}
+
+.templates-grid-container::-webkit-scrollbar-thumb {
+    background: #D1D5DB;
+    border-radius: 4px;
+}
+
+.templates-grid-container::-webkit-scrollbar-thumb:hover {
+    background: #9CA3AF;
+}

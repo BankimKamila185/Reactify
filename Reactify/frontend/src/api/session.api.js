@@ -11,6 +11,16 @@ export const sessionApi = {
         return response.data;
     },
 
+    updateSession: async (sessionId, data) => {
+        const response = await apiClient.put(`/session/${sessionId}`, data);
+        return response.data;
+    },
+
+    deleteSession: async (sessionId) => {
+        const response = await apiClient.delete(`/session/${sessionId}`);
+        return response.data;
+    },
+
     joinSession: async (sessionCode, data) => {
         const response = await apiClient.post(`/session/join/${sessionCode}`, data);
         return response.data;

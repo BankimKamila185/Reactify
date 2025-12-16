@@ -1,0 +1,215 @@
+.settings-panel {
+    background: white;
+    border-left: 1px solid #E8E8E8;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    width: 340px;
+}
+
+.settings-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.settings-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #E8E8E8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.settings-back-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+}
+
+.settings-back-btn:hover {
+    color: #1A1A1A;
+}
+
+.settings-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1A1A1A;
+    margin: 0;
+    flex: 1;
+    text-align: center;
+}
+
+.settings-close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: #999;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+}
+
+.settings-close-btn:hover {
+    color: #1A1A1A;
+}
+
+.settings-content {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.settings-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.settings-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1A1A1A;
+}
+
+/* Visualization Type Grid */
+.viz-type-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.viz-type-btn {
+    aspect-ratio: 1;
+    background: white;
+    border: 1.5px solid #E8E8E8;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    transition: all 0.2s;
+}
+
+.viz-type-btn:hover {
+    border-color: #D0D0D0;
+    color: #666;
+}
+
+.viz-type-btn.active {
+    border-color: #5B7FFF;
+    background: #F0F4FF;
+    color: #5B7FFF;
+}
+
+/* Options List */
+.options-list-settings {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.add-option-btn-settings {
+    background: white;
+    border: 1.5px dashed #D0D0D0;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.add-option-btn-settings:hover {
+    border-color: #5B7FFF;
+    color: #5B7FFF;
+    background: #F0F4FF;
+}
+
+/* Section Header */
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.apply-all-btn {
+    background: none;
+    border: none;
+    color: #5B7FFF;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 4px 8px;
+    transition: opacity 0.2s;
+}
+
+.apply-all-btn:hover {
+    opacity: 0.8;
+}
+
+/* Radio Group */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px;
+    border: 1.5px solid #E8E8E8;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.radio-option:hover {
+    border-color: #D0D0D0;
+    background: #FAFAFA;
+}
+
+.radio-option input[type="radio"] {
+    margin-top: 2px;
+    accent-color: #5B7FFF;
+    cursor: pointer;
+}
+
+.radio-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.radio-label {
+    font-size: 14px;
+    color: #1A1A1A;
+}
+
+.recommended-badge {
+    background: #E8F5E9;
+    color: #2E7D32;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}

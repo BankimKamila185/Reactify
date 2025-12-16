@@ -1,0 +1,171 @@
+/* Template Card */
+.template-card {
+    background: white;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.template-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    border-color: #CBD5E1;
+}
+
+/* Template Preview */
+.template-preview {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F8FAFC;
+    position: relative;
+    padding: 16px;
+}
+
+/* Blank Preview */
+.blank-preview {
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+}
+
+/* Chart Preview */
+.chart-preview {
+    background: white;
+    padding: 12px;
+}
+
+.mini-chart {
+    width: 100%;
+    height: 100%;
+}
+
+.chart-title {
+    font-size: 10px;
+    color: #64748B;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.chart-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.chart-bar {
+    background: linear-gradient(90deg, #8B9FFF 0%, #6B7FDF 100%);
+    height: 16px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding: 0 6px;
+    min-width: 40px;
+}
+
+.bar-label {
+    font-size: 8px;
+    color: white;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* Dark Preview for Time Travel */
+.dark-preview {
+    background: #1E293B;
+    color: white;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px;
+}
+
+.image-question {
+    font-size: 10px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.image-options {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.image-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-size: 9px;
+}
+
+.image-box {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.image-box.backwards {
+    background: linear-gradient(135deg, #FF9B9B 0%, #FF7B7B 100%);
+}
+
+.image-box.forwards {
+    background: linear-gradient(135deg, #8B9FFF 0%, #6B7FDF 100%);
+}
+
+/* Scale Preview */
+.scale-preview {
+    background: #FEFEFE;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+}
+
+.scale-question {
+    font-size: 10px;
+    color: #1E293B;
+    text-align: center;
+    font-weight: 500;
+}
+
+.scale-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.scale-label {
+    font-size: 8px;
+    color: #64748B;
+    font-weight: 500;
+}
+
+.scale-bar {
+    flex: 1;
+    height: 6px;
+    background: linear-gradient(90deg, #E2E8F0 0%, #CBD5E1 50%, #E2E8F0 100%);
+    border-radius: 3px;
+}
+
+/* Template Title */
+.template-title {
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #1E293B;
+    font-weight: 500;
+    border-top: 1px solid #E2E8F0;
+    background: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .template-preview {
+        height: 140px;
+    }
+}

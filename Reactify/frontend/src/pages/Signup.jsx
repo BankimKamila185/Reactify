@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import './Signup.css';
 
 export const Signup = () => {
     const navigate = useNavigate();
+    const { signup, loginWithGoogle, loading: authLoading } = useAuth();
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -38,19 +40,65 @@ export const Signup = () => {
         setLoading(true);
 
         try {
-            // API call would go here
-            console.log('Signup:', formData);
-            // navigate('/home');
+            await signup(formData.email, formData.password, formData.fullName);
+            navigate('/dashboard');
         } catch (err) {
-            setError('Signup failed. Please try again.');
+            // Firebase error messages
+            const errorCode = err.code;
+            let errorMessage = 'Signup failed. Please try again.';
+
+            switch (errorCode) {
+                case 'auth/email-already-in-use':
+                    errorMessage = 'An account with this email already exists.';
+                    break;
+                case 'auth/invalid-email':
+                    errorMessage = 'Invalid email address.';
+                    break;
+                case 'auth/weak-password':
+                    errorMessage = 'Password is too weak. Please use at least 6 characters.';
+                    break;
+                case 'auth/operation-not-allowed':
+                    errorMessage = 'Email/password accounts are not enabled.';
+                    break;
+                default:
+                    errorMessage = err.message || 'Signup failed. Please try again.';
+            }
+
+            setError(errorMessage);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleGoogleSignup = async () => {
+        setError('');
+        setLoading(true);
+
+        try {
+            await loginWithGoogle();
+            navigate('/dashboard');
+        } catch (err) {
+            const errorCode = err.code;
+            let errorMessage = 'Google signup failed. Please try again.';
+
+            if (errorCode === 'auth/popup-closed-by-user') {
+                errorMessage = 'Signup cancelled.';
+            } else if (errorCode === 'auth/popup-blocked') {
+                errorMessage = 'Popup was blocked. Please allow popups for this site.';
+            }
+
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
     };
 
     const handleSocialLogin = (provider) => {
-        console.log(`${provider} login clicked`);
-        // Handle social login
+        if (provider === 'Google') {
+            handleGoogleSignup();
+        } else {
+            setError(`${provider} signup is coming soon.`);
+        }
     };
 
     return (
@@ -142,7 +190,7 @@ export const Signup = () => {
                         {/* Submit Button */}
                         <button
                             type="submit"
-                            disabled={loading}
+                            disabled={loading || authLoading}
                             className="btn-primary"
                         >
                             {loading ? 'Creating...' : 'Create Account'}
@@ -158,6 +206,7 @@ export const Signup = () => {
                             <button
                                 type="button"
                                 onClick={() => handleSocialLogin('Google')}
+                                disabled={loading || authLoading}
                                 className="btn-social"
                             >
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -171,6 +220,7 @@ export const Signup = () => {
                             <button
                                 type="button"
                                 onClick={() => handleSocialLogin('Github')}
+                                disabled={loading || authLoading}
                                 className="btn-social"
                             >
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

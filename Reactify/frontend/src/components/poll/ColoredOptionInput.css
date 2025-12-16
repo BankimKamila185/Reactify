@@ -1,0 +1,56 @@
+.colored-option-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background: white;
+    border: 1px solid #E8E8E8;
+    border-radius: 8px;
+    transition: border-color 0.2s;
+}
+
+.colored-option-input:hover {
+    border-color: #D0D0D0;
+}
+
+.option-color-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.option-text-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: #1A1A1A;
+    background: transparent;
+}
+
+.option-text-input::placeholder {
+    color: #999;
+}
+
+.option-image-btn,
+.option-delete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    transition: color 0.2s;
+    flex-shrink: 0;
+}
+
+.option-image-btn:hover {
+    color: #5B7FFF;
+}
+
+.option-delete-btn:hover {
+    color: #FF6B6B;
+}

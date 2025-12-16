@@ -1,86 +1,44 @@
 import User from '../models/User.js';
-import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
-
-// Generate JWT token
-const generateToken = (userId) => {
-    return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '7d' });
-};
-
-export const signup = async (req, res) => {
+// Sync Firebase user with MongoDB
+export const syncUser = async (req, res) => {
     try {
-        const { email, password, fullName, organization, role, phoneNumber } = req.body;
+        const { email, fullName, firebaseUid, organization, role, phoneNumber, photoURL } = req.body;
 
-        // Check if user already exists
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
+        if (!firebaseUid || !email) {
             return res.status(400).json({
                 success: false,
-                error: { message: 'Email already registered' }
+                error: { message: 'Firebase UID and email are required' }
             });
         }
 
-        // Create new user
-        const user = await User.create({
-            email,
-            password,
-            fullName,
-            organization,
-            role,
-            phoneNumber
+        // Try to find existing user by Firebase UID or email
+        let user = await User.findOne({
+            $or: [{ firebaseUid }, { email }]
         });
 
-        const token = generateToken(user._id);
-
-        res.status(201).json({
-            success: true,
-            data: {
-                user: {
-                    id: user._id,
-                    email: user.email,
-                    fullName: user.fullName,
-                    role: user.role
-                },
-                token
-            }
-        });
-    } catch (error) {
-        console.error('Signup error:', error);
-        res.status(500).json({
-            success: false,
-            error: { message: 'Failed to create account' }
-        });
-    }
-};
-
-export const login = async (req, res) => {
-    try {
-        const { email, password } = req.body;
-
-        // Find user
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(401).json({
-                success: false,
-                error: { message: 'Invalid email or password' }
+        if (user) {
+            // Update existing user
+            user.firebaseUid = firebaseUid;
+            user.fullName = fullName || user.fullName;
+            user.photoURL = photoURL || user.photoURL;
+            if (organization) user.organization = organization;
+            if (role) user.role = role;
+            if (phoneNumber) user.phoneNumber = phoneNumber;
+            user.lastLogin = new Date();
+            await user.save();
+        } else {
+            // Create new user
+            user = await User.create({
+                email,
+                fullName: fullName || email.split('@')[0],
+                firebaseUid,
+                organization,
+                role: role || 'individual',
+                phoneNumber,
+                photoURL
             });
         }
-
-        // Check password
-        const isMatch = await user.comparePassword(password);
-        if (!isMatch) {
-            return res.status(401).json({
-                success: false,
-                error: { message: 'Invalid email or password' }
-            });
-        }
-
-        // Update last login
-        user.lastLogin = new Date();
-        await user.save();
-
-        const token = generateToken(user._id);
 
         res.json({
             success: true,
@@ -89,16 +47,17 @@ export const login = async (req, res) => {
                     id: user._id,
                     email: user.email,
                     fullName: user.fullName,
-                    role: user.role
-                },
-                token
+                    role: user.role,
+                    organization: user.organization,
+                    photoURL: user.photoURL
+                }
             }
         });
     } catch (error) {
-        console.error('Login error:', error);
+        console.error('Sync user error:', error);
         res.status(500).json({
             success: false,
-            error: { message: 'Login failed' }
+            error: { message: 'Failed to sync user' }
         });
     }
 };
@@ -123,6 +82,47 @@ export const getProfile = async (req, res) => {
         res.status(500).json({
             success: false,
             error: { message: 'Failed to get profile' }
+        });
+    }
+};
+
+export const updateProfile = async (req, res) => {
+    try {
+        const { fullName, organization, role, phoneNumber } = req.body;
+
+        const user = await User.findById(req.userId);
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                error: { message: 'User not found' }
+            });
+        }
+
+        if (fullName) user.fullName = fullName;
+        if (organization) user.organization = organization;
+        if (role) user.role = role;
+        if (phoneNumber) user.phoneNumber = phoneNumber;
+
+        await user.save();
+
+        res.json({
+            success: true,
+            data: {
+                user: {
+                    id: user._id,
+                    email: user.email,
+                    fullName: user.fullName,
+                    role: user.role,
+                    organization: user.organization
+                }
+            }
+        });
+    } catch (error) {
+        console.error('Update profile error:', error);
+        res.status(500).json({
+            success: false,
+            error: { message: 'Failed to update profile' }
         });
     }
 };

@@ -8,6 +8,7 @@ export const useSessionStore = create((set) => ({
     participantCount: 0,
     token: localStorage.getItem('reactify_token'),
     currentPollResults: null,
+    feedbackList: [],
 
     setSession: (session) => set({ session }),
 
@@ -30,6 +31,15 @@ export const useSessionStore = create((set) => ({
 
     updatePollResults: (results) => set({ currentPollResults: results }),
 
+    // Feedback actions
+    addFeedback: (feedback) => set((state) => ({
+        feedbackList: [feedback, ...state.feedbackList].slice(0, 100) // Keep last 100
+    })),
+
+    setFeedbackList: (feedbackList) => set({ feedbackList }),
+
+    clearFeedback: () => set({ feedbackList: [] }),
+
     clearSession: () => {
         localStorage.removeItem('reactify_token');
         set({
@@ -39,7 +49,8 @@ export const useSessionStore = create((set) => ({
             currentPollIndex: 0,
             participantCount: 0,
             token: null,
-            currentPollResults: null
+            currentPollResults: null,
+            feedbackList: []
         });
     }
 }));

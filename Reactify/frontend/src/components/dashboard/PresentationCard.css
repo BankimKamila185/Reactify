@@ -34,6 +34,7 @@
     opacity: 0;
     transition: all 0.2s ease;
     color: #6B7280;
+    z-index: 10;
 }
 
 .presentation-card:hover .presentation-actions-btn {
@@ -50,11 +51,13 @@
 .presentation-thumbnail {
     width: 100%;
     aspect-ratio: 16 / 10;
-    background: #F9FAFB;
     display: flex;
     align-items: center;
     justify-content: center;
     border-bottom: 1px solid #E5E7EB;
+    position: relative;
+    overflow: hidden;
+    background: #F8F9FA;
 }
 
 .presentation-thumbnail img {
@@ -63,35 +66,310 @@
     object-fit: cover;
 }
 
-.thumbnail-placeholder {
+/* ================================================
+   MINI SLIDE - Exact replica of actual canvas
+   ================================================ */
+.mini-slide {
+    width: 100%;
+    height: 100%;
     display: flex;
+    flex-direction: column;
+    padding: 6px 8px;
+    position: relative;
+    border: 1px solid #E5E7EB;
+}
+
+/* Header - same as canvas header */
+.mini-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.mini-join-pill {
+    background: #F3F4F6;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 6px;
+    color: #374151;
+    font-weight: 500;
+}
+
+.mini-logo {
+    width: 14px;
+    height: 14px;
+    background: #5B7FFF;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    font-weight: 700;
+    color: white;
+}
+
+/* Question - dark text for white background */
+.mini-question {
+    color: #1A1A1A;
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.2;
+    margin: 4px 0 6px 0;
+    padding: 0 4px;
+}
+
+/* Visualization container */
+.mini-viz {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 0 8px;
+}
+
+/* BAR CHART - Multiple Choice */
+.mini-bars {
+    display: flex;
+    gap: 6px;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 4px;
+}
+
+.mini-bar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.mini-vote {
+    font-size: 6px;
+    color: #6B7280;
+    font-weight: 500;
+}
+
+.mini-bar {
+    width: 20px;
+    border-radius: 3px 3px 0 0;
+    transition: height 0.3s ease;
+}
+
+.mini-label {
+    font-size: 6px;
+    color: #374151;
+    font-weight: 600;
+}
+
+/* Participant badge */
+.mini-participant {
+    position: absolute;
+    bottom: 4px;
+    right: 6px;
+    background: #F3F4F6;
+    padding: 2px 5px;
+    border-radius: 8px;
+    font-size: 6px;
+    color: #374151;
+    font-weight: 500;
+}
+
+/* WORD CLOUD */
+.mini-wordcloud {
+    flex-wrap: wrap;
+    gap: 3px;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+}
+
+.mini-wordcloud span {
+    font-weight: 500;
+    font-style: italic;
+    font-family: Georgia, serif;
+}
+
+/* OPEN ENDED */
+.mini-openended {
+    flex-direction: column;
+    gap: 3px;
     align-items: center;
     justify-content: center;
 }
 
+.mini-response {
+    background: #F3F4F6;
+    color: #374151;
+    font-size: 6px;
+    padding: 3px 6px;
+    border-radius: 6px;
+    max-width: 85%;
+}
+
+/* SCALES */
+.mini-scales {
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+    justify-content: center;
+    padding: 8px 16px;
+}
+
+.mini-scale-track {
+    height: 6px;
+    background: #E5E7EB;
+    border-radius: 3px;
+    position: relative;
+    width: 100%;
+}
+
+.mini-scale-fill {
+    height: 100%;
+    width: 60%;
+    background: linear-gradient(90deg, #5B7FFF, #8B7FFF);
+    border-radius: 3px;
+}
+
+.mini-scale-thumb {
+    position: absolute;
+    top: 50%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background: white;
+    border: 2px solid #5B7FFF;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.mini-scale-labels {
+    display: flex;
+    justify-content: space-between;
+    color: #6B7280;
+    font-size: 6px;
+    font-weight: 500;
+}
+
+/* RANKING */
+.mini-ranking {
+    flex-direction: column;
+    gap: 3px;
+    align-items: stretch;
+    justify-content: center;
+    width: 100%;
+    padding: 0 12px;
+}
+
+.mini-rank-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: #F3F4F6;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 6px;
+    color: #374151;
+}
+
+.mini-rank-num {
+    width: 12px;
+    height: 12px;
+    background: #5B7FFF;
+    color: white;
+    font-size: 7px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Q&A */
+.mini-qa {
+    flex-direction: column;
+    gap: 3px;
+    align-items: stretch;
+    justify-content: center;
+    width: 100%;
+    padding: 0 10px;
+}
+
+.mini-qa-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #F3F4F6;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 6px;
+    color: #374151;
+}
+
+.mini-qa-item span {
+    color: #5B7FFF;
+    font-weight: 600;
+    font-size: 6px;
+}
+
 /* Presentation Details */
 .presentation-details {
-    padding: 16px;
+    padding: 12px 14px;
 }
 
 .presentation-question {
     font-size: 14px;
-    color: #374151;
-    line-height: 1.5;
-    margin: 0;
+    font-weight: 600;
+    color: #1F2937;
+    line-height: 1.4;
+    margin: 0 0 6px 0;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+.presentation-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #9CA3AF;
+}
+
+.meta-slides {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.meta-date {
+    color: #9CA3AF;
+}
+
+.meta-date::before {
+    content: '•';
+    margin-right: 8px;
 }
 
 /* Responsive */
 @media (max-width: 767px) {
     .presentation-details {
-        padding: 14px;
+        padding: 12px;
     }
 
     .presentation-question {
         font-size: 13px;
+    }
+
+    .mini-question {
+        font-size: 9px;
+    }
+
+    .mini-bar {
+        width: 16px;
     }
 }

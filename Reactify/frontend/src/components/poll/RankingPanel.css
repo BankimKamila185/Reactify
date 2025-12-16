@@ -1,0 +1,280 @@
+.ranking-panel {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f0;
+    gap: 12px;
+}
+
+.panel-back-btn,
+.panel-close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    padding: 4px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.panel-back-btn:hover,
+.panel-close-btn:hover {
+    background: #f5f5f5;
+    color: #333;
+}
+
+.panel-title {
+    flex: 1;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.panel-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+/* Ranking Section */
+.ranking-section {
+    margin-bottom: 20px;
+}
+
+.ranking-section-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+}
+
+/* Ranking Items List */
+.ranking-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ranking-item-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.item-color-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.item-input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333;
+    background: #F9FAFB;
+    transition: all 0.2s;
+}
+
+.item-input:hover {
+    border-color: #ccc;
+}
+
+.item-input:focus {
+    outline: none;
+    border-color: #5B7FFF;
+    box-shadow: 0 0 0 3px rgba(91, 127, 255, 0.1);
+    background: white;
+}
+
+.item-input::placeholder {
+    color: #9CA3AF;
+}
+
+.remove-item-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #9CA3AF;
+    padding: 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.remove-item-btn:hover {
+    background: #FEE2E2;
+    color: #EF4444;
+}
+
+.add-item-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    border: 1px dashed #e0e0e0;
+    border-radius: 8px;
+    background: transparent;
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.add-item-btn:hover {
+    background: #F9FAFB;
+    border-color: #5B7FFF;
+    color: #5B7FFF;
+}
+
+/* Section Divider */
+.section-divider {
+    height: 1px;
+    background: #f0f0f0;
+    margin: 20px 0;
+}
+
+/* Show responses header */
+.show-responses-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.apply-to-all-btn {
+    padding: 6px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    background: white;
+    font-size: 12px;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.apply-to-all-btn:hover {
+    background: #f5f5f5;
+    border-color: #ccc;
+}
+
+/* Radio Options */
+.radio-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.radio-option input[type="radio"] {
+    display: none;
+}
+
+.radio-circle {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.radio-option input[type="radio"]:checked+.radio-circle {
+    border-color: #5B7FFF;
+    background: #5B7FFF;
+}
+
+.radio-option input[type="radio"]:checked+.radio-circle::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+}
+
+.radio-label {
+    font-size: 14px;
+    color: #333;
+}
+
+.recommended-badge {
+    padding: 2px 8px;
+    background: #E8E8E8;
+    border-radius: 4px;
+    font-size: 11px;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Inline setting row */
+.setting-row-inline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.setting-row-inline label {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Color Picker Group */
+.color-picker-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.color-indicator {
+    font-size: 16px;
+}
+
+.color-input {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 2px;
+    cursor: pointer;
+}
+
+.color-input::-webkit-color-swatch-wrapper {
+    padding: 2px;
+}
+
+.color-input::-webkit-color-swatch {
+    border-radius: 4px;
+    border: none;
+}

@@ -5,7 +5,7 @@ import { useAIStore } from '../stores/aiStore';
 
 export const useRealtime = (sessionId) => {
     const socket = useSocket();
-    const { setCurrentPollIndex, setParticipantCount, updatePollResults } = useSessionStore();
+    const { setCurrentPollIndex, setParticipantCount, updatePollResults, addFeedback } = useSessionStore();
     const { updateAIJob } = useAIStore();
 
     useEffect(() => {
@@ -43,6 +43,9 @@ export const useRealtime = (sessionId) => {
         // Listen to new feedback
         socket.on('feedback-new', (data) => {
             console.log('New feedback received:', data);
+            if (data.feedback) {
+                addFeedback(data.feedback);
+            }
         });
 
         // Listen to AI progress updates
@@ -63,6 +66,24 @@ export const useRealtime = (sessionId) => {
             alert(data.message);
         });
 
+        // Listen to poll reset
+        socket.on('poll-reset', (data) => {
+            console.log('Poll reset:', data);
+            updatePollResults(data.results);
+        });
+
+        // Listen to poll lock/unlock
+        socket.on('poll-locked', (data) => {
+            console.log('Poll lock status changed:', data);
+        });
+
+        // Listen to session reset
+        socket.on('session-reset', (data) => {
+            console.log('Session reset:', data);
+            // Reset results to empty
+            updatePollResults({ totalResponses: 0, options: [] });
+        });
+
         // Cleanup listeners on unmount
         return () => {
             socket.off('session-state');
@@ -72,8 +93,11 @@ export const useRealtime = (sessionId) => {
             socket.off('feedback-new');
             socket.off('ai-progress-update');
             socket.off('session-ended');
+            socket.off('poll-reset');
+            socket.off('poll-locked');
+            socket.off('session-reset');
         };
-    }, [socket, sessionId, setCurrentPollIndex, setParticipantCount, updatePollResults, updateAIJob]);
+    }, [socket, sessionId, setCurrentPollIndex, setParticipantCount, updatePollResults, addFeedback, updateAIJob]);
 
     // Helper functions to emit events
     const joinSession = (participantId) => {
@@ -95,8 +119,12 @@ export const useRealtime = (sessionId) => {
     };
 
     const navigatePoll = (pollIndex) => {
+        console.log('navigatePoll called:', { socket: !!socket, sessionId, pollIndex });
         if (socket && sessionId) {
+            console.log('Emitting navigate-poll event');
             socket.emit('navigate-poll', { sessionId, pollIndex });
+        } else {
+            console.error('Cannot navigate poll - socket or sessionId missing', { socket: !!socket, sessionId });
         }
     };
 
@@ -106,11 +134,32 @@ export const useRealtime = (sessionId) => {
         }
     };
 
+    const resetPoll = (pollId) => {
+        if (socket && sessionId) {
+            socket.emit('reset-poll', { sessionId, pollId });
+        }
+    };
+
+    const lockPoll = (pollId, isLocked) => {
+        if (socket && sessionId) {
+            socket.emit('lock-poll', { sessionId, pollId, isLocked });
+        }
+    };
+
+    const resetSession = () => {
+        if (socket && sessionId) {
+            socket.emit('reset-session', { sessionId });
+        }
+    };
+
     return {
         joinSession,
         submitAnswer,
         submitFeedback,
         navigatePoll,
-        endSession
+        endSession,
+        resetPoll,
+        lockPoll,
+        resetSession
     };
 };

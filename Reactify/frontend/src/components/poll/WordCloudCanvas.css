@@ -1,0 +1,236 @@
+/* Animation Keyframes for Word Cloud Preview */
+@keyframes wordAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.3) rotate(-10deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+@keyframes floatIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Match PollCanvas structure and sizing exactly */
+.word-cloud-canvas {
+    background: #F5F5F5;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 12px;
+}
+
+/* Slide Container - Same as PollCanvas */
+.wc-slide-container {
+    background: #fff;
+    border: 2px solid transparent;
+    /* default transparent */
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+    box-sizing: border-box;
+}
+
+.wc-slide-container.selected {
+    border-color: transparent !important;
+    box-shadow: inset 0 0 0 3px #6366F1 !important;
+}
+
+.wc-slide-container:hover {
+    border-color: #4F46E5;
+}
+
+/* Header with Join Code and Logo - Same as PollCanvas */
+.canvas-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 20px 40px;
+}
+
+/* Centered Join Code Pill */
+.join-pill {
+    background: white;
+    border: 1px solid #E0E0E0;
+    border-radius: 30px;
+    padding: 10px 24px;
+    font-size: 14px;
+    color: #666;
+}
+
+.join-pill strong {
+    color: #1A1A1A;
+    font-weight: 600;
+}
+
+/* Mentimeter Logo - Top Right */
+.logo {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1A1A1A;
+}
+
+/* Canvas Content */
+.wc-canvas-content {
+    flex: 1;
+    padding: 24px 50px 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Question Input - Same as PollCanvas */
+.canvas-question {
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.canvas-question h1 {
+    font-size: 32px;
+    font-weight: 400;
+    color: #080808;
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    line-height: 1.2;
+    text-align: left;
+}
+
+.canvas-question .question-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 32px;
+    font-weight: 400;
+    color: #080808;
+    resize: none;
+    font-family: Georgia, 'Times New Roman', serif;
+    line-height: 1.2;
+    text-align: left;
+    padding: 0;
+}
+
+.canvas-question .question-input::placeholder {
+    color: #1A1A1A;
+}
+
+.canvas-question .question-input:focus {
+    color: #1A1A1A;
+    outline: none;
+    border: none;
+}
+
+/* Word Cloud Container - Takes remaining space */
+.word-cloud-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.word-cloud-container>div {
+    width: 100%;
+    height: 100%;
+    max-width: 600px;
+    max-height: 280px;
+}
+
+.empty-state {
+    text-align: center;
+    color: #888;
+}
+
+.empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.empty-state p {
+    font-size: 16px;
+    margin: 0;
+}
+
+/* Response count indicator - bottom right */
+.response-indicator {
+    position: absolute;
+    bottom: 20px;
+    right: 24px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #1a1a1a;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.response-count-badge {
+    font-weight: 600;
+}
+
+.response-indicator svg {
+    opacity: 0.8;
+}
+
+/* Speaker Notes - Same as PollCanvas */
+.canvas-speaker-notes {
+    background: #FAFAFA;
+    border: 1px solid #E0E0E0;
+    border-radius: 12px;
+    padding: 16px 20px;
+    flex-shrink: 0;
+}
+
+.speaker-notes-header {
+    font-size: 13px;
+    font-weight: 600;
+    color: #666;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .wc-slide-container {
+        min-height: 350px;
+        height: auto;
+    }
+
+    .wc-canvas-content {
+        padding: 20px 24px;
+    }
+
+    .canvas-question h1,
+    .canvas-question .question-input {
+        font-size: 24px;
+    }
+
+    .logo {
+        display: none;
+    }
+}

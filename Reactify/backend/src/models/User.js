@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
 
 const { Schema } = mongoose;
 
@@ -11,14 +10,19 @@ const UserSchema = new Schema({
         lowercase: true,
         trim: true
     },
-    password: {
+    firebaseUid: {
         type: String,
-        required: true,
-        minlength: 6
+        unique: true,
+        sparse: true,
+        index: true
     },
     fullName: {
         type: String,
         required: true,
+        trim: true
+    },
+    photoURL: {
+        type: String,
         trim: true
     },
     organization: {
@@ -46,23 +50,5 @@ const UserSchema = new Schema({
         default: true
     }
 });
-
-// Hash password before saving
-UserSchema.pre('save', async function (next) {
-    if (!this.isModified('password')) return next();
-
-    try {
-        const salt = await bcrypt.genSalt(10);
-        this.password = await bcrypt.hash(this.password, salt);
-        next();
-    } catch (error) {
-        next(error);
-    }
-});
-
-// Method to compare password
-UserSchema.methods.comparePassword = async function (candidatePassword) {
-    return await bcrypt.compare(candidatePassword, this.password);
-};
 
 export default mongoose.model('User', UserSchema);

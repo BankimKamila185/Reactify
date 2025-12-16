@@ -1,0 +1,901 @@
+/* Mentimeter-style Fullscreen Presentation */
+.menti-presentation {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #000;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.menti-presentation.loading {
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    color: #fff;
+}
+
+.menti-loader {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Top Black Bar */
+.menti-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: #000;
+    min-height: 56px;
+}
+
+.menti-close-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.menti-close-btn:hover {
+    opacity: 1;
+}
+
+/* Join Code Pill - Centered */
+.menti-join-pill {
+    background: #fff;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.menti-join-pill strong {
+    color: #1A1A1A;
+}
+
+.menti-code {
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+/* Logo and Fullscreen */
+.menti-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.menti-fullscreen-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px 8px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.menti-fullscreen-btn:hover {
+    opacity: 1;
+}
+
+/* White Content Area */
+.menti-content {
+    flex: 1;
+    background: #fff;
+    display: flex;
+    flex-direction: row;
+    padding: 30px 40px 30px 80px;
+    position: relative;
+}
+
+/* Main Content - Left side */
+.menti-main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* QR Section - Right side */
+.menti-qr-section {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding-left: 40px;
+}
+
+.menti-qr-code {
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    border: 3px solid #1A1A1A;
+}
+
+/* Side Tools */
+.menti-side-tools {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.menti-tool-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: #9CA3AF;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.menti-tool-btn:hover,
+.menti-tool-btn.active {
+    background: #F3F4F6;
+    color: #1A1A1A;
+}
+
+/* Question - Large Serif Font */
+.menti-question {
+    font-size: 42px;
+    font-weight: 400;
+    color: #1A1A1A;
+    font-family: Georgia, 'Times New Roman', serif;
+    line-height: 1.3;
+    margin: 0 0 40px 40px;
+    text-align: left;
+}
+
+/* Visualization Area */
+.menti-visualization {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0 60px;
+}
+
+/* Bar Chart - Mentimeter Style */
+.menti-bar-chart {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+    height: 300px;
+    padding-bottom: 20px;
+}
+
+.menti-bar-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    max-width: 150px;
+    height: 100%;
+}
+
+/* Vote Count */
+.menti-vote-count {
+    font-size: 28px;
+    font-weight: 400;
+    color: #4B5563;
+    margin-bottom: 8px;
+    min-height: 36px;
+}
+
+/* Growing Bar Wrapper */
+.menti-bar-wrapper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+/* The Actual Growing Bar */
+.menti-bar {
+    width: 80%;
+    max-width: 100px;
+    border-radius: 4px 4px 0 0;
+    min-height: 4px;
+}
+
+/* Colored Line Under Bar */
+.menti-bar-line {
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    margin-top: 4px;
+}
+
+/* Option Label */
+.menti-option-label {
+    font-size: 16px;
+    font-weight: 400;
+    color: #1A1A1A;
+    margin-top: 16px;
+    text-align: center;
+    max-width: 150px;
+    word-wrap: break-word;
+}
+
+/* No Poll State */
+.menti-no-poll {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: #9CA3AF;
+    font-size: 18px;
+}
+
+/* Bottom Black Bar - Always Visible like Mentimeter */
+.menti-bottom-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: #000;
+    min-height: 56px;
+}
+
+.menti-bottom-bar.visible {
+    /* Just ensures visibility class works but bar is always shown */
+}
+
+.menti-nav-left,
+.menti-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.menti-controls-center {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Navigation Buttons */
+.menti-nav-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.menti-nav-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.menti-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* Pointer Button */
+.menti-pointer-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.menti-pointer-btn:hover {
+    color: #fff;
+}
+
+/* End Presentation Button */
+.menti-end-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 13px;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.menti-end-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Next Slide Button - Mentimeter style */
+.menti-next-slide-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 13px;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.menti-next-slide-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.menti-next-slide-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* Control Buttons */
+.menti-control-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.menti-control-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.menti-control-btn.active {
+    background: rgba(239, 68, 68, 0.3);
+    color: #fff;
+}
+
+/* Thumbs Button */
+.menti-thumbs-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.menti-thumbs-btn:hover {
+    color: #fff;
+}
+
+/* Participant Count */
+.menti-participant-count {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #fff;
+    font-size: 14px;
+    padding: 0 8px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .menti-content {
+        padding: 30px 40px 50px;
+    }
+
+    .menti-question {
+        font-size: 32px;
+        margin-left: 20px;
+    }
+
+    .menti-bar-chart {
+        gap: 24px;
+        height: 250px;
+    }
+
+    .menti-side-tools {
+        left: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .menti-top-bar {
+        padding: 10px 12px;
+    }
+
+    .menti-join-pill {
+        font-size: 12px;
+        padding: 8px 14px;
+    }
+
+    .menti-code {
+        font-size: 14px;
+    }
+
+    .menti-logo span {
+        display: none;
+    }
+
+    .menti-content {
+        padding: 20px;
+    }
+
+    .menti-side-tools {
+        display: none;
+    }
+
+    .menti-question {
+        font-size: 24px;
+        margin: 0 0 30px 0;
+    }
+
+    .menti-visualization {
+        padding: 0;
+    }
+
+    .menti-bar-chart {
+        gap: 16px;
+        height: 200px;
+    }
+
+    .menti-bar-item {
+        max-width: 100px;
+    }
+
+    .menti-vote-count {
+        font-size: 22px;
+    }
+
+    .menti-option-label {
+        font-size: 13px;
+    }
+
+    .menti-bottom-bar {
+        padding: 10px 12px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .menti-controls-center {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ============================================
+   LIVE FEEDBACK PANEL STYLES
+   ============================================ */
+
+.feedback-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: #EF4444;
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+}
+
+.menti-control-btn {
+    position: relative;
+}
+
+.live-feedback-panel {
+    position: fixed;
+    top: 56px;
+    right: 0;
+    bottom: 56px;
+    width: 360px;
+    max-width: 100%;
+    background: #1A1A1A;
+    border-left: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.feedback-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #333;
+}
+
+.feedback-panel-header h3 {
+    margin: 0;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.close-feedback-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: #9CA3AF;
+    font-size: 24px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.close-feedback-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.feedback-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+}
+
+.no-feedback {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    color: #6B7280;
+}
+
+.no-feedback span {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.no-feedback p {
+    margin: 0 0 8px;
+    font-size: 16px;
+    color: #9CA3AF;
+}
+
+.no-feedback small {
+    font-size: 13px;
+    color: #6B7280;
+}
+
+.feedback-item {
+    background: #2A2A2A;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+}
+
+.feedback-item:last-child {
+    margin-bottom: 0;
+}
+
+.feedback-item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.feedback-author {
+    color: #60A5FA;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.feedback-time {
+    color: #6B7280;
+    font-size: 12px;
+}
+
+.feedback-content {
+    margin: 0;
+    color: #E5E7EB;
+    font-size: 14px;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+/* Responsive for feedback panel */
+@media (max-width: 768px) {
+    .live-feedback-panel {
+        width: 100%;
+        top: 0;
+        bottom: 0;
+        border-left: none;
+    }
+}
+
+/* ============================================
+   NEW MENTIMETER-STYLE CONTROLS
+   ============================================ */
+
+/* Slide Counter */
+.menti-slide-counter {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0 8px;
+}
+
+/* Countdown Display */
+.menti-countdown-display {
+    background: #EF4444;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+    animation: pulse-countdown 1s ease-in-out infinite;
+}
+
+@keyframes pulse-countdown {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Results Hidden State */
+.menti-results-hidden {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: #9CA3AF;
+}
+
+.menti-results-hidden span {
+    font-size: 64px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.menti-results-hidden p {
+    font-size: 18px;
+    margin: 0;
+}
+
+/* Modal Overlay */
+.menti-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+/* Countdown Modal */
+.menti-countdown-modal {
+    background: #1A1A1A;
+    border-radius: 16px;
+    padding: 24px;
+    min-width: 280px;
+    text-align: center;
+}
+
+.menti-countdown-modal h3 {
+    color: #fff;
+    font-size: 18px;
+    margin: 0 0 20px;
+}
+
+.menti-countdown-options {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.menti-countdown-options button {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.menti-countdown-options button:hover {
+    background: #3B82F6;
+}
+
+/* Reset Modal */
+.menti-reset-modal {
+    background: #1A1A1A;
+    border-radius: 16px;
+    padding: 24px;
+    min-width: 300px;
+    text-align: center;
+}
+
+.menti-reset-modal h3 {
+    color: #fff;
+    font-size: 18px;
+    margin: 0 0 20px;
+}
+
+.menti-reset-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.menti-reset-options button {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.menti-reset-options button:hover {
+    background: #EF4444;
+}
+
+/* Modal Cancel Button */
+.menti-modal-cancel {
+    background: transparent;
+    border: none;
+    color: #9CA3AF;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 8px 16px;
+}
+
+.menti-modal-cancel:hover {
+    color: #fff;
+}
+
+/* Join Instructions Overlay */
+.menti-join-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.menti-join-content {
+    text-align: center;
+    color: #fff;
+    position: relative;
+}
+
+.menti-overlay-close {
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 32px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.menti-overlay-close:hover {
+    opacity: 1;
+}
+
+.menti-join-content h2 {
+    font-size: 36px;
+    margin: 0 0 8px;
+    font-weight: 400;
+}
+
+.menti-join-content p {
+    font-size: 20px;
+    margin: 0 0 16px;
+    opacity: 0.7;
+}
+
+.menti-big-code {
+    font-size: 72px;
+    font-weight: 700;
+    letter-spacing: 8px;
+    margin-bottom: 32px;
+}
+
+.menti-qr-placeholder {
+    display: flex;
+    justify-content: center;
+}
+
+.menti-qr-placeholder img {
+    width: 200px;
+    height: 200px;
+    border-radius: 12px;
+    background: #fff;
+    padding: 8px;
+}

@@ -1,0 +1,306 @@
+.content-canvas {
+    background: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.canvas-header {
+    padding: 16px 24px;
+    background: #F9FAFB;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.canvas-header.large {
+    padding: 40px 24px;
+    text-align: center;
+    background: linear-gradient(135deg, #5B7FFF 0%, #8B5CF6 100%);
+    border: none;
+}
+
+.join-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 14px;
+    color: #6B7280;
+}
+
+.join-code {
+    background: #E5E7EB;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-family: monospace;
+    color: #374151;
+}
+
+.join-info-large {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: white;
+}
+
+.join-label {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+.join-url {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.join-code-large {
+    font-size: 48px;
+    font-weight: 800;
+    font-family: monospace;
+    letter-spacing: 4px;
+}
+
+.canvas-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+/* Text Canvas */
+.text-content-area {
+    width: 100%;
+    max-width: 700px;
+    text-align: center;
+}
+
+.title-input {
+    width: 100%;
+    font-size: 32px;
+    font-weight: 600;
+    text-align: center;
+    border: none;
+    border-bottom: 2px solid #E5E7EB;
+    padding: 12px;
+    margin-bottom: 24px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.title-input:focus {
+    border-color: #5B7FFF;
+}
+
+.content-textarea {
+    width: 100%;
+    min-height: 200px;
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: center;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 20px;
+    outline: none;
+    resize: none;
+    transition: border-color 0.2s;
+}
+
+.content-textarea:focus {
+    border-color: #5B7FFF;
+}
+
+.text-title {
+    font-size: 36px;
+    font-weight: 600;
+    color: #1F2937;
+    margin: 0 0 24px;
+}
+
+.text-content {
+    font-size: 20px;
+    color: #4B5563;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Image Canvas */
+.image-content-area {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+}
+
+.image-preview {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+.change-image-btn {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.2s;
+}
+
+.change-image-btn:hover {
+    background: rgba(0, 0, 0, 0.85);
+}
+
+.image-placeholder {
+    border: 2px dashed #D1D5DB;
+    border-radius: 12px;
+    padding: 60px 40px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.image-placeholder:hover {
+    border-color: #9CA3AF;
+    background: #F9FAFB;
+}
+
+.image-placeholder svg {
+    margin-bottom: 16px;
+}
+
+.image-placeholder p {
+    margin: 0;
+    color: #6B7280;
+    font-size: 14px;
+}
+
+.caption-input {
+    width: 100%;
+    font-size: 16px;
+    text-align: center;
+    border: none;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 12px;
+    margin-top: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.caption-input:focus {
+    border-color: #5B7FFF;
+}
+
+.image-caption {
+    margin: 16px 0 0;
+    font-size: 16px;
+    color: #6B7280;
+}
+
+/* Video Canvas */
+.video-content-area {
+    width: 100%;
+    max-width: 800px;
+}
+
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    /* 16:9 */
+    height: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.video-placeholder {
+    border: 2px dashed #D1D5DB;
+    border-radius: 12px;
+    padding: 60px 40px;
+    text-align: center;
+}
+
+.video-placeholder p {
+    margin: 16px 0 0;
+    color: #6B7280;
+    font-size: 14px;
+}
+
+.video-url-input {
+    width: 100%;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.video-url-input:focus {
+    border-color: #5B7FFF;
+}
+
+.video-caption {
+    margin: 16px 0 0;
+    font-size: 16px;
+    color: #6B7280;
+    text-align: center;
+}
+
+/* Instructions Canvas */
+.instructions-body {
+    flex-direction: column;
+    text-align: center;
+}
+
+.instructions-title-input {
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    border: none;
+    border-bottom: 2px solid #E5E7EB;
+    padding: 12px;
+    outline: none;
+    width: 100%;
+    max-width: 500px;
+}
+
+.instructions-title-input:focus {
+    border-color: #5B7FFF;
+}
+
+.instructions-title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #1F2937;
+    margin: 0 0 12px;
+}
+
+.instructions-subtitle {
+    font-size: 18px;
+    color: #6B7280;
+    margin: 0;
+}

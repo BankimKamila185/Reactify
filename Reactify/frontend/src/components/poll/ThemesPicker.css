@@ -1,0 +1,151 @@
+.themes-picker {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.themes-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.themes-header h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1F2937;
+}
+
+.themes-preview {
+    margin: 16px;
+    border-radius: 12px;
+    border: 2px solid;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.preview-header {
+    padding: 8px 12px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.preview-content {
+    padding: 16px;
+}
+
+.preview-content h4 {
+    margin: 0 0 12px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.preview-options {
+    display: flex;
+    gap: 8px;
+}
+
+.preview-option {
+    height: 24px;
+    border-radius: 4px;
+    flex: 1;
+}
+
+.themes-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 0 16px;
+    overflow-y: auto;
+}
+
+.theme-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 8px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    background: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.theme-item:hover {
+    background: #F9FAFB;
+}
+
+.theme-item.selected {
+    border-color: #5B7FFF;
+    background: #EEF2FF;
+}
+
+.theme-preview-mini {
+    width: 100%;
+    aspect-ratio: 16/10;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 3px;
+    padding: 6px;
+    border: 1px solid #E5E7EB;
+}
+
+.theme-bar {
+    height: 6px;
+    border-radius: 3px;
+}
+
+.theme-bar:last-child {
+    width: 70%;
+}
+
+.theme-name {
+    font-size: 11px;
+    color: #374151;
+    font-weight: 500;
+}
+
+.check-icon {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+}
+
+.themes-footer {
+    padding: 16px;
+    border-top: 1px solid #E5E7EB;
+}
+
+.customize-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    background: none;
+    border: 1px dashed #D1D5DB;
+    border-radius: 8px;
+    color: #6B7280;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.customize-btn:hover {
+    background: #F9FAFB;
+    border-color: #9CA3AF;
+    color: #374151;
+}

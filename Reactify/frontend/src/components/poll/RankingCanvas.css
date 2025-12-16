@@ -1,0 +1,262 @@
+/* Animation Keyframes for Ranking Preview */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes barExpand {
+    from {
+        width: 4px;
+    }
+
+    to {
+        width: var(--bar-width, 60%);
+    }
+}
+
+/* Match PollCanvas structure and sizing exactly */
+.ranking-canvas {
+    background: #F5F5F5;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 12px;
+}
+
+/* Slide Container - Same as PollCanvas */
+.ranking-slide-container {
+    background: #fff;
+    border: 2px solid transparent;
+    /* default transparent */
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+    box-sizing: border-box;
+}
+
+.ranking-slide-container.selected {
+    border-color: transparent !important;
+    box-shadow: inset 0 0 0 3px #6366F1 !important;
+}
+
+.ranking-slide-container:hover {
+    border-color: #4F46E5;
+}
+
+/* Header with Join Code and Logo - Same as PollCanvas */
+.ranking-canvas .canvas-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 20px 40px;
+}
+
+/* Centered Join Code Pill */
+.ranking-canvas .join-pill {
+    background: white;
+    border: 1px solid #E0E0E0;
+    border-radius: 30px;
+    padding: 10px 24px;
+    font-size: 14px;
+    color: #666;
+}
+
+.ranking-canvas .join-pill strong {
+    color: #1A1A1A;
+    font-weight: 600;
+}
+
+/* Mentimeter Logo - Top Right */
+.ranking-canvas .logo {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1A1A1A;
+}
+
+/* Canvas Content */
+.ranking-canvas-content {
+    flex: 1;
+    padding: 24px 50px 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Question Input - Same as PollCanvas */
+.ranking-canvas .canvas-question {
+    padding: 0;
+    margin-bottom: 24px;
+}
+
+.ranking-canvas .canvas-question h1 {
+    font-size: 32px;
+    font-weight: 400;
+    color: #080808;
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    line-height: 1.2;
+    text-align: left;
+}
+
+.ranking-canvas .canvas-question .question-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 32px;
+    font-weight: 400;
+    color: #080808;
+    resize: none;
+    font-family: Georgia, 'Times New Roman', serif;
+    line-height: 1.2;
+    text-align: left;
+    padding: 0;
+}
+
+.ranking-canvas .canvas-question .question-input::placeholder {
+    color: #1A1A1A;
+}
+
+/* Ranking Items Container */
+.ranking-items-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px 0;
+}
+
+/* Individual Ranking Item */
+.ranking-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.item-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.item-bar {
+    height: 6px;
+    border-radius: 3px;
+    width: 4px;
+    min-width: 4px;
+    transition: width 0.3s ease;
+}
+
+.item-bar-track {
+    height: 6px;
+    background: #F0F0F0;
+    border-radius: 3px;
+    margin-top: -6px;
+    position: relative;
+    z-index: -1;
+}
+
+/* Preview mode animations for ranking items */
+.canvas-animation-wrapper.preview-mode .ranking-item {
+    animation: slideInRight 0.4s ease-out forwards;
+    opacity: 0;
+}
+
+.canvas-animation-wrapper.preview-mode .ranking-item:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+.canvas-animation-wrapper.preview-mode .ranking-item:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.canvas-animation-wrapper.preview-mode .ranking-item:nth-child(3) {
+    animation-delay: 0.15s;
+}
+
+.canvas-animation-wrapper.preview-mode .ranking-item:nth-child(4) {
+    animation-delay: 0.2s;
+}
+
+.canvas-animation-wrapper.preview-mode .ranking-item:nth-child(5) {
+    animation-delay: 0.25s;
+}
+
+/* Response count indicator - bottom right */
+.ranking-canvas .response-indicator {
+    position: absolute;
+    bottom: 20px;
+    right: 24px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #1a1a1a;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.ranking-canvas .response-count-badge {
+    font-weight: 600;
+}
+
+.ranking-canvas .response-indicator svg {
+    opacity: 0.8;
+}
+
+/* Speaker Notes - Same as PollCanvas */
+.ranking-canvas .canvas-speaker-notes {
+    background: #FAFAFA;
+    border: 1px solid #E0E0E0;
+    border-radius: 12px;
+    padding: 16px 20px;
+    flex-shrink: 0;
+}
+
+.ranking-canvas .speaker-notes-header {
+    font-size: 13px;
+    font-weight: 600;
+    color: #666;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .ranking-slide-container {
+        min-height: 350px;
+        height: auto;
+    }
+
+    .ranking-canvas-content {
+        padding: 20px 24px;
+    }
+
+    .ranking-canvas .canvas-question h1,
+    .ranking-canvas .canvas-question .question-input {
+        font-size: 24px;
+    }
+
+    .ranking-canvas .logo {
+        display: none;
+    }
+}

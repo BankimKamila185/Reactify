@@ -1,76 +1,110 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Sidebar } from '../components/dashboard/Sidebar';
 import { DashboardHeader } from '../components/dashboard/DashboardHeader';
 import { PresentationCard } from '../components/dashboard/PresentationCard';
+import { pollApi } from '../api/poll.api';
+import { sessionApi } from '../api/session.api';
 import './MyPresentations.css';
 
 export const MyPresentations = () => {
+    const navigate = useNavigate();
     const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
-    const [sortBy, setSortBy] = useState('recent'); // 'recent', 'name', 'modified'
+    const [sortBy, setSortBy] = useState('recent'); // 'recent', 'name', 'created'
+    const [searchQuery, setSearchQuery] = useState('');
+    const [showSortDropdown, setShowSortDropdown] = useState(false);
 
-    // Sample presentations data (will be replaced with API data later)
-    const presentations = [
-        {
-            id: 1,
-            question: "Customer Satisfaction Survey 2024",
-            thumbnail: null,
-            modified: "2024-12-10",
-            created: "2024-12-01"
-        },
-        {
-            id: 2,
-            question: "Team Building Activities - Which one should we try next?",
-            thumbnail: null,
-            modified: "2024-12-09",
-            created: "2024-11-28"
-        },
-        {
-            id: 3,
-            question: "What's your favorite feature of our product?",
-            thumbnail: null,
-            modified: "2024-12-08",
-            created: "2024-11-25"
-        },
-        {
-            id: 4,
-            question: "Q4 2024 Company All-Hands Meeting Poll",
-            thumbnail: null,
-            modified: "2024-12-07",
-            created: "2024-11-20"
-        },
-        {
-            id: 5,
-            question: "Employee Engagement Survey - December 2024",
-            thumbnail: null,
-            modified: "2024-12-06",
-            created: "2024-11-15"
-        },
-        {
-            id: 6,
-            question: "Product Roadmap Priorities - Vote for your top choice",
-            thumbnail: null,
-            modified: "2024-12-05",
-            created: "2024-11-10"
-        },
-        {
-            id: 7,
-            question: "Office Holiday Party Planning - Food preferences",
-            thumbnail: null,
-            modified: "2024-12-04",
-            created: "2024-11-05"
-        },
-        {
-            id: 8,
-            question: "New Feature Feedback - Rating Scale",
-            thumbnail: null,
-            modified: "2024-12-03",
-            created: "2024-11-01"
+    // Live data state
+    const [presentations, setPresentations] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    // Load presentations from API on mount
+    useEffect(() => {
+        loadPresentations();
+    }, []);
+
+    const loadPresentations = async () => {
+        setIsLoading(true);
+        setError(null);
+        try {
+            const response = await pollApi.getMyPresentations();
+            if (response.success && response.data?.presentations) {
+                setPresentations(response.data.presentations);
+            }
+        } catch (err) {
+            console.error('Failed to load presentations:', err);
+            setError('Failed to load presentations. Please try again.');
+        } finally {
+            setIsLoading(false);
         }
-    ];
+    };
+
+    // Sort and filter presentations
+    const filteredPresentations = useMemo(() => {
+        let result = [...presentations];
+
+        // Filter by search query
+        if (searchQuery.trim()) {
+            const query = searchQuery.toLowerCase();
+            result = result.filter(p =>
+                (p.title || '').toLowerCase().includes(query) ||
+                (p.question || '').toLowerCase().includes(query)
+            );
+        }
+
+        // Sort based on selected option
+        switch (sortBy) {
+            case 'name':
+                result.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
+                break;
+            case 'created':
+                result.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                break;
+            case 'recent':
+            default:
+                result.sort((a, b) => new Date(b.updatedAt || b.createdAt) - new Date(a.updatedAt || a.createdAt));
+                break;
+        }
+
+        return result;
+    }, [presentations, sortBy, searchQuery]);
 
     const handleSortChange = (sortOption) => {
         setSortBy(sortOption);
-        // TODO: Implement actual sorting logic
+        setShowSortDropdown(false);
+    };
+
+    const handleNewPresentation = () => {
+        // Clear localStorage for a fresh session
+        localStorage.removeItem('currentSessionId');
+        localStorage.removeItem('currentSessionCode');
+        localStorage.removeItem('hostToken');
+        navigate('/poll/edit');
+    };
+
+    const handlePresentationClick = (presentation) => {
+        // Clear localStorage so the editor loads data from the database
+        localStorage.removeItem('currentSessionId');
+        localStorage.removeItem('currentSessionCode');
+        localStorage.removeItem('hostToken');
+
+        if (presentation.sessionId) {
+            navigate(`/poll/edit/${presentation.sessionId}`);
+        } else {
+            navigate('/poll/edit');
+        }
+    };
+
+    const handleDeletePresentation = async (presentationId, sessionId) => {
+        try {
+            if (sessionId) {
+                await sessionApi.deleteSession(sessionId);
+            }
+            setPresentations(prev => prev.filter(p => p.id !== presentationId && p.sessionId !== sessionId));
+        } catch (err) {
+            console.error('Failed to delete presentation:', err);
+        }
     };
 
     return (
@@ -85,11 +119,11 @@ export const MyPresentations = () => {
                     <div className="presentations-header">
                         <div className="presentations-title-section">
                             <h1 className="presentations-title">My presentations</h1>
-                            <p className="presentations-subtitle">{presentations.length} presentations</p>
+                            <p className="presentations-subtitle">{filteredPresentations.length} presentations</p>
                         </div>
 
                         <div className="presentations-actions">
-                            <button className="btn-new-presentation">
+                            <button className="btn-new-presentation" onClick={handleNewPresentation}>
                                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
                                     <path d="M9 3v12M3 9h12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
                                 </svg>
@@ -109,25 +143,43 @@ export const MyPresentations = () => {
                                     type="text"
                                     className="search-input"
                                     placeholder="Search presentations..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
                                 />
                             </div>
 
-                            <div className="filter-dropdown">
-                                <button className="filter-btn">
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                        <path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                                    </svg>
-                                    <span>Filter</span>
-                                </button>
-                            </div>
-
                             <div className="sort-dropdown">
-                                <button className="sort-btn">
+                                <button
+                                    className="sort-btn"
+                                    onClick={() => setShowSortDropdown(!showSortDropdown)}
+                                >
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                         <path d="M4 6l4-4 4 4M4 10l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
                                     <span>Sort: {sortBy === 'recent' ? 'Recently modified' : sortBy === 'name' ? 'Name' : 'Date created'}</span>
                                 </button>
+                                {showSortDropdown && (
+                                    <div className="sort-dropdown-menu">
+                                        <button
+                                            className={sortBy === 'recent' ? 'active' : ''}
+                                            onClick={() => handleSortChange('recent')}
+                                        >
+                                            Recently modified
+                                        </button>
+                                        <button
+                                            className={sortBy === 'name' ? 'active' : ''}
+                                            onClick={() => handleSortChange('name')}
+                                        >
+                                            Name
+                                        </button>
+                                        <button
+                                            className={sortBy === 'created' ? 'active' : ''}
+                                            onClick={() => handleSortChange('created')}
+                                        >
+                                            Date created
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         </div>
 
@@ -157,13 +209,29 @@ export const MyPresentations = () => {
                     </div>
 
                     {/* Presentations Grid */}
-                    {presentations.length > 0 ? (
+                    {isLoading ? (
+                        <div className="loading-state">
+                            <div className="loading-spinner"></div>
+                            <p>Loading presentations...</p>
+                        </div>
+                    ) : error ? (
+                        <div className="error-state">
+                            <p>{error}</p>
+                            <button onClick={loadPresentations} className="btn-retry">Retry</button>
+                        </div>
+                    ) : filteredPresentations.length > 0 ? (
                         <div className={`presentations-grid ${viewMode}`}>
-                            {presentations.map(presentation => (
+                            {filteredPresentations.map(presentation => (
                                 <PresentationCard
                                     key={presentation.id}
+                                    title={presentation.title}
                                     question={presentation.question}
                                     thumbnail={presentation.thumbnail}
+                                    createdAt={presentation.createdAt}
+                                    slideCount={presentation.pollCount || 1}
+                                    slideType={presentation.slideType}
+                                    onClick={() => handlePresentationClick(presentation)}
+                                    onDelete={() => handleDeletePresentation(presentation.id, presentation.sessionId)}
                                 />
                             ))}
                         </div>
@@ -175,14 +243,16 @@ export const MyPresentations = () => {
                                     <path d="M20 28h24M20 36h16" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" />
                                 </svg>
                             </div>
-                            <h3 className="empty-state-title">No presentations yet</h3>
-                            <p className="empty-state-text">Create your first presentation to get started</p>
-                            <button className="btn-create-first">
-                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                                    <path d="M9 3v12M3 9h12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                                </svg>
-                                <span>Create Presentation</span>
-                            </button>
+                            <h3 className="empty-state-title">{searchQuery ? 'No matching presentations' : 'No presentations yet'}</h3>
+                            <p className="empty-state-text">{searchQuery ? 'Try adjusting your search' : 'Create your first presentation to get started'}</p>
+                            {!searchQuery && (
+                                <button className="btn-create-first" onClick={handleNewPresentation}>
+                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                        <path d="M9 3v12M3 9h12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                                    </svg>
+                                    <span>Create Presentation</span>
+                                </button>
+                            )}
                         </div>
                     )}
                 </div>

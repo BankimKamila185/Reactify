@@ -187,9 +187,126 @@ export const setupSocketHandlers = (io) => {
             }
         });
 
+        // Reset poll (host) - clears all votes
+        socket.on('reset-poll', async (data) => {
+            try {
+                const { sessionId, pollId } = data;
+
+                // Delete all responses for this poll
+                await Response.deleteMany({ pollId });
+
+                // Reset option votes to 0
+                const poll = await Poll.findById(pollId);
+                if (poll?.options) {
+                    poll.options = poll.options.map(opt => ({
+                        ...opt.toObject(),
+                        votes: 0
+                    }));
+                    await poll.save();
+                }
+
+                // Broadcast reset to all clients
+                io.to(`session-${sessionId}`).emit('poll-reset', {
+                    pollId,
+                    results: {
+                        totalResponses: 0,
+                        options: poll?.options?.map(opt => ({
+                            id: opt.id,
+                            text: opt.text,
+                            votes: 0
+                        }))
+                    }
+                });
+
+                console.log(`Poll reset: ${pollId}`);
+            } catch (error) {
+                console.error('Reset poll error:', error);
+                socket.emit('error', { message: 'Failed to reset poll' });
+            }
+        });
+
+        // Lock/unlock poll (host)
+        socket.on('lock-poll', async (data) => {
+            try {
+                const { sessionId, pollId, isLocked } = data;
+
+                const poll = await Poll.findById(pollId);
+                if (poll) {
+                    poll.isLocked = isLocked !== undefined ? isLocked : !poll.isLocked;
+                    await poll.save();
+
+                    // Broadcast lock status to all clients
+                    io.to(`session-${sessionId}`).emit('poll-locked', {
+                        pollId,
+                        isLocked: poll.isLocked
+                    });
+
+                    console.log(`Poll ${poll.isLocked ? 'locked' : 'unlocked'}: ${pollId}`);
+                }
+            } catch (error) {
+                console.error('Lock poll error:', error);
+                socket.emit('error', { message: 'Failed to lock/unlock poll' });
+            }
+        });
+
+        // Reset all polls in session (host)
+        socket.on('reset-session', async (data) => {
+            try {
+                const { sessionId } = data;
+
+                // Get all polls for this session
+                const polls = await Poll.find({ sessionId });
+
+                // Delete all responses for all polls
+                await Response.deleteMany({
+                    pollId: { $in: polls.map(p => p._id) }
+                });
+
+                // Reset all option votes to 0
+                for (const poll of polls) {
+                    if (poll.options) {
+                        poll.options = poll.options.map(opt => ({
+                            ...opt.toObject(),
+                            votes: 0
+                        }));
+                        await poll.save();
+                    }
+                }
+
+                // Broadcast session reset to all clients
+                io.to(`session-${sessionId}`).emit('session-reset', {
+                    sessionId,
+                    pollsReset: polls.length
+                });
+
+                console.log(`Session reset: ${sessionId}, ${polls.length} polls`);
+            } catch (error) {
+                console.error('Reset session error:', error);
+                socket.emit('error', { message: 'Failed to reset session' });
+            }
+        });
+
         // Disconnect
-        socket.on('disconnect', () => {
+        socket.on('disconnect', async () => {
             console.log(`❌ Client disconnected: ${socket.id}`);
+
+            try {
+                // Find participant by socket ID and get their session
+                const participant = await Participant.findOne({ socketId: socket.id });
+                if (participant && participant.sessionId) {
+                    const sessionId = participant.sessionId;
+
+                    // Get updated participant count
+                    const remainingParticipants = await Participant.find({ sessionId });
+
+                    // Broadcast updated count to the session
+                    io.to(`session-${sessionId}`).emit('participant-left', {
+                        participantCount: remainingParticipants.length
+                    });
+                }
+            } catch (error) {
+                console.error('Disconnect cleanup error:', error);
+            }
         });
     });
 };

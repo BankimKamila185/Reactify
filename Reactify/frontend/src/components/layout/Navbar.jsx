@@ -1,16 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import reactifyLogo from '../../assets/icons/reactify-logo.svg';
 
 export const Navbar = () => {
     return (
         <nav className="bg-white shadow-sm border-b border-gray-200">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
-                    <Link to="/" className="flex items-center space-x-2">
-                        <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center">
-                            <span className="text-white font-bold text-xl">R</span>
-                        </div>
-                        <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                    <Link to="/" className="flex items-center space-x-3">
+                        <img
+                            src={reactifyLogo}
+                            alt="Reactify Logo"
+                            className="h-10 w-auto"
+                        />
+                        <span className="text-2xl font-bold text-gray-800">
                             Reactify
                         </span>
                     </Link>

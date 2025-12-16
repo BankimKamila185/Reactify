@@ -1,0 +1,277 @@
+.editor-header {
+    background: white;
+    border-bottom: 1px solid #E8E8E8;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    height: 56px;
+}
+
+/* Left Section */
+.header-left-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    min-width: 0;
+}
+
+.header-back-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    color: #1A1A1A;
+    transition: color 0.2s;
+}
+
+.header-back-btn:hover {
+    color: #5B7FFF;
+}
+
+.header-title-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.header-title-input {
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1A1A1A;
+    outline: none;
+    min-width: 120px;
+    max-width: 180px;
+    padding: 0;
+}
+
+.header-title-input::placeholder {
+    color: #1A1A1A;
+}
+
+.header-title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.save-status {
+    font-size: 11px;
+    color: #9CA3AF;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.save-status.saving {
+    color: #3B82F6;
+}
+
+.save-status.unsaved {
+    color: #F59E0B;
+}
+
+.save-spinner {
+    width: 10px;
+    height: 10px;
+    border: 2px solid #3B82F6;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.header-my-presentations {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #9CA3AF;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.header-my-presentations:hover {
+    color: #5B7FFF;
+}
+
+.header-my-presentations svg {
+    width: 12px;
+    height: 12px;
+}
+
+/* Center Section */
+.header-center-section {
+    flex: 0 0 auto;
+    position: relative;
+}
+
+.header-tabs {
+    display: flex;
+    gap: 24px;
+}
+
+.header-tab {
+    background: transparent;
+    border: none;
+    padding: 16px 4px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6B7280;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s;
+}
+
+.header-tab:hover {
+    color: #1A1A1A;
+}
+
+.header-tab.active {
+    color: #1A1A1A;
+}
+
+.header-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #1A1A1A;
+    border-radius: 1px;
+}
+
+.results-count {
+    font-size: 13px;
+    color: #6B7280;
+    font-weight: 400;
+}
+
+.header-tab.active .results-count {
+    color: #1A1A1A;
+}
+
+/* Right Section */
+.header-right-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.header-user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #86EFAC 0%, #4ADE80 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #166534;
+    cursor: pointer;
+    margin-right: 4px;
+}
+
+.header-icon-btn {
+    background: none;
+    border: 1px solid #E5E7EB;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #374151;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+.header-icon-btn:hover {
+    background: #F3F4F6;
+    border-color: #D1D5DB;
+}
+
+.header-share-btn {
+    background: white;
+    border: 1px solid #E5E7EB;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+.header-share-btn:hover {
+    background: #F9FAFB;
+    border-color: #D1D5DB;
+}
+
+.header-share-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+.header-start-btn {
+    background: #1A1A1A;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.header-start-btn:hover {
+    background: #374151;
+}
+
+.header-start-btn:disabled {
+    background: #9CA3AF;
+    cursor: not-allowed;
+}
+
+.header-start-btn:disabled:hover {
+    background: #9CA3AF;
+}
+
+/* Invite button with green background */
+.header-invite-btn {
+    background: #DCFCE7;
+    border-color: #DCFCE7;
+    color: #166534;
+}
+
+.header-invite-btn:hover {
+    background: #BBF7D0;
+    border-color: #BBF7D0;
+}

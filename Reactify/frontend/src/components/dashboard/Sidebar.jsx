@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import './Sidebar.css';
 
 // Import sidebar icons
+import ReactifyLogo from '../../assets/icons/reactify-logo.svg';
 import HomeIcon from '../../assets/icons/house-blank.svg';
 import UserIcon from '../../assets/icons/user.svg';
 import ShareIcon from '../../assets/icons/screen-share.svg';
@@ -15,7 +16,7 @@ export const Sidebar = () => {
     const mainMenuItems = [
         { id: 1, label: 'Home', path: '/dashboard', iconSrc: HomeIcon },
         { id: 2, label: 'My presentations', path: '/my-presentations', iconSrc: UserIcon },
-        { id: 3, label: 'Shared with me', path: '/shared', iconSrc: ShareIcon }
+        { id: 3, label: 'Shared with me', path: '/shared-with-me', iconSrc: ShareIcon }
     ];
 
     const teamMenuItems = [
@@ -35,10 +36,7 @@ export const Sidebar = () => {
             {/* Logo */}
             <div className="sidebar-logo-section">
                 <div className="sidebar-brand">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="32" height="32" rx="6" fill="#4169E1" />
-                        <rect x="8" y="8" width="16" height="16" rx="2" fill="#FF6B6B" />
-                    </svg>
+                    <img src={ReactifyLogo} alt="Reactify Logo" className="sidebar-logo" />
                 </div>
             </div>
 

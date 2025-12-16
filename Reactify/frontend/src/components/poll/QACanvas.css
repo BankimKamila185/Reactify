@@ -1,0 +1,248 @@
+.qa-canvas {
+    background: #F5F5F5;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 12px;
+}
+
+.qa-slide-container {
+    background: #FF6B6B;
+    border: 2px solid transparent;
+    /* default transparent */
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    transition: border-color 0.2s ease;
+    box-sizing: border-box;
+}
+
+.qa-slide-container.selected {
+    border-color: transparent !important;
+    box-shadow: inset 0 0 0 3px #6366F1 !important;
+}
+
+/* Header */
+.qa-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 20px 40px;
+}
+
+.qa-qr-code {
+    position: absolute;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.qa-qr-code img {
+    width: 64px;
+    height: 64px;
+    display: block;
+}
+
+.qa-join-pill {
+    background: white;
+    border: 1px solid #E0E0E0;
+    border-radius: 30px;
+    padding: 10px 24px;
+    font-size: 14px;
+    color: #666;
+}
+
+.qa-join-pill strong {
+    color: #1A1A1A;
+    font-weight: 600;
+}
+
+.qa-logo {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1A1A1A;
+}
+
+/* Content */
+.qa-content {
+    flex: 1;
+    padding: 24px 50px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.qa-title-area {
+    text-align: center;
+}
+
+.qa-title-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 32px;
+    font-weight: 400;
+    color: white;
+    resize: none;
+    font-family: Georgia, 'Times New Roman', serif;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.qa-title-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.qa-title-text {
+    font-size: 32px;
+    font-weight: 400;
+    color: white;
+    font-family: Georgia, 'Times New Roman', serif;
+    margin: 0;
+}
+
+/* Q&A List Preview */
+.qa-list-preview {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qa-questions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.qa-question-item {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.qa-upvote {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: #5B7FFF;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.qa-upvote svg {
+    color: #5B7FFF;
+}
+
+.qa-question-text {
+    flex: 1;
+    font-size: 15px;
+    color: #374151;
+}
+
+/* Placeholder */
+.qa-placeholder {
+    text-align: center;
+}
+
+.qa-icon {
+    margin-bottom: 16px;
+}
+
+.qa-placeholder-text {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+    margin-bottom: 32px;
+}
+
+.qa-sample-questions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.sample-question {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+}
+
+.sample-upvote {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Stats Badge */
+.qa-stats-badge {
+    position: absolute;
+    bottom: 20px;
+    right: 24px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 12px 16px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.stat-count {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Speaker Notes */
+.qa-speaker-notes {
+    background: #FAFAFA;
+    border: 1px solid #E0E0E0;
+    border-radius: 12px;
+    padding: 16px 20px;
+    flex-shrink: 0;
+}
+
+.qa-speaker-notes .speaker-notes-header {
+    font-size: 13px;
+    font-weight: 600;
+    color: #666;
+}

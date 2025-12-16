@@ -26,9 +26,9 @@ const FeatureIcon = ({ iconType }) => {
     return <img src={IconComponent} alt={iconType} className="feature-icon-svg" />;
 };
 
-export const FeatureCard = ({ iconType, name, color }) => {
+export const FeatureCard = ({ iconType, name, color, onClick }) => {
     return (
-        <div className="feature-card">
+        <div className="feature-card" onClick={onClick} style={{ cursor: onClick ? 'pointer' : 'default' }}>
             <div className="feature-icon-container" style={{ color: color }}>
                 <FeatureIcon iconType={iconType} />
             </div>
@@ -36,3 +36,4 @@ export const FeatureCard = ({ iconType, name, color }) => {
         </div>
     );
 };
+

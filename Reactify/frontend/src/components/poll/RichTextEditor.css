@@ -1,0 +1,152 @@
+.rich-text-editor {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #E8ECEF;
+    border-radius: 16px;
+    overflow: hidden;
+    background: white;
+    transition: border-color 0.2s;
+}
+
+.rich-text-editor:focus-within {
+    border-color: #5B7FFF;
+}
+
+/* Toolbar */
+.editor-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 16px;
+    border-bottom: 2px solid #F0F2F5;
+    background: #FAFBFC;
+    flex-wrap: wrap;
+}
+
+.toolbar-btn {
+    background: white;
+    border: 1.5px solid #E1E4E8;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #2C3E50;
+    transition: all 0.2s;
+}
+
+.toolbar-btn:hover {
+    background: #F6F8FA;
+    border-color: #5B7FFF;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(91, 127, 255, 0.15);
+}
+
+.suggest-btn {
+    font-weight: 500;
+}
+
+.suggest-btn svg {
+    color: #5B7FFF;
+}
+
+.toolbar-select {
+    background: white;
+    border: 1px solid #E8E8E8;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    color: #1A1A1A;
+    outline: none;
+}
+
+.toolbar-select:hover {
+    border-color: #D0D0D0;
+}
+
+.toolbar-divider {
+    width: 1px;
+    height: 20px;
+    background: #E8E8E8;
+    margin: 0 4px;
+}
+
+.icon-btn {
+    min-width: 32px;
+    justify-content: center;
+    padding: 6px 8px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.icon-btn strong,
+.icon-btn em,
+.icon-btn u,
+.icon-btn s {
+    font-style: normal;
+    text-decoration: none;
+}
+
+.icon-btn em {
+    font-style: italic;
+}
+
+.icon-btn u {
+    text-decoration: underline;
+}
+
+.icon-btn s {
+    text-decoration: line-through;
+}
+
+/* Editor Content */
+.editor-content {
+    min-height: 140px;
+    padding: 24px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #1A1A1A;
+    outline: none;
+    line-height: 1.4;
+    letter-spacing: -0.5px;
+}
+
+.editor-content:empty:before {
+    content: attr(data-placeholder);
+    color: #CBD5E0;
+    font-style: normal;
+}
+
+.editor-content:focus {
+    background: #FAFBFC;
+}
+
+/* Formatting styles */
+.editor-content strong {
+    font-weight: 700;
+}
+
+.editor-content em {
+    font-style: italic;
+}
+
+.editor-content u {
+    text-decoration: underline;
+}
+
+.editor-content a {
+    color: #5B7FFF;
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .editor-content {
+        font-size: 22px;
+        min-height: 100px;
+    }
+}

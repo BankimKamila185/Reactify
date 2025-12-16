@@ -1,13 +1,11 @@
 import Session from '../models/Session.js';
 import Participant from '../models/Participant.js';
 import Poll from '../models/Poll.js';
-import { generateToken } from '../middleware/auth.middleware.js';
-import { nanoid } from 'nanoid';
+import { nanoid, customAlphabet } from 'nanoid';
 
-// Generate unique 6-digit session code
-const generateSessionCode = () => {
-    return Math.floor(100000 + Math.random() * 900000).toString();
-};
+// Generate unique 8-digit session code using nanoid for better uniqueness
+const nanoidNumeric = customAlphabet('0123456789', 8);
+const generateSessionCode = () => nanoidNumeric();
 
 export const createSession = async (req, res) => {
     try {
@@ -40,8 +38,6 @@ export const createSession = async (req, res) => {
             currentPollIndex: 0
         });
 
-        const token = generateToken(hostId);
-
         res.status(201).json({
             success: true,
             data: {
@@ -50,9 +46,9 @@ export const createSession = async (req, res) => {
                     sessionCode: session.sessionCode,
                     title: session.title,
                     createdAt: session.createdAt,
-                    isActive: session.isActive
-                },
-                token
+                    isActive: session.isActive,
+                    hostId: hostId
+                }
             }
         });
     } catch (error) {
@@ -157,6 +153,86 @@ export const joinSession = async (req, res) => {
         res.status(500).json({
             success: false,
             error: { message: 'Failed to join session' }
+        });
+    }
+};
+
+// Delete session and all associated data
+export const deleteSession = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const session = await Session.findById(id);
+
+        if (!session) {
+            res.status(404).json({
+                success: false,
+                error: { message: 'Session not found' }
+            });
+            return;
+        }
+
+        // Delete all associated polls
+        await Poll.deleteMany({ sessionId: id });
+
+        // Delete all participants
+        await Participant.deleteMany({ sessionId: id });
+
+        // Delete the session
+        await Session.findByIdAndDelete(id);
+
+        res.json({
+            success: true,
+            data: { message: 'Session deleted successfully' }
+        });
+    } catch (error) {
+        console.error('Delete session error:', error);
+        res.status(500).json({
+            success: false,
+            error: { message: 'Failed to delete session' }
+        });
+    }
+};
+
+// Update session (e.g., title)
+export const updateSession = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { title } = req.body;
+
+        const session = await Session.findById(id);
+
+        if (!session) {
+            res.status(404).json({
+                success: false,
+                error: { message: 'Session not found' }
+            });
+            return;
+        }
+
+        if (title) {
+            session.title = title.trim();
+        }
+
+        await session.save();
+
+        res.json({
+            success: true,
+            data: {
+                session: {
+                    id: session._id,
+                    sessionCode: session.sessionCode,
+                    title: session.title,
+                    createdAt: session.createdAt,
+                    isActive: session.isActive
+                }
+            }
+        });
+    } catch (error) {
+        console.error('Update session error:', error);
+        res.status(500).json({
+            success: false,
+            error: { message: 'Failed to update session' }
         });
     }
 };

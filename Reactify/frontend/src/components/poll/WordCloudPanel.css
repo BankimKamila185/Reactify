@@ -1,0 +1,268 @@
+.word-cloud-panel {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f0;
+    gap: 12px;
+}
+
+.panel-back-btn,
+.panel-close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    padding: 4px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.panel-back-btn:hover,
+.panel-close-btn:hover {
+    background: #f5f5f5;
+    color: #333;
+}
+
+.panel-title {
+    flex: 1;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.panel-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+/* Word Cloud Section */
+.wc-section {
+    margin-bottom: 20px;
+}
+
+.wc-section-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+}
+
+/* Color Palette */
+.color-palette-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.color-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.color-dot:hover {
+    transform: scale(1.1);
+}
+
+.color-dot.active {
+    border-color: #333;
+}
+
+.add-color-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px dashed #ccc;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    transition: all 0.2s;
+}
+
+.add-color-btn:hover {
+    border-color: #5B7FFF;
+    color: #5B7FFF;
+}
+
+/* Inline setting row */
+.setting-row-inline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.setting-row-inline label {
+    font-size: 14px;
+    color: #666;
+}
+
+.wc-select {
+    padding: 8px 32px 8px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333;
+    background: white;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%23666' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+.wc-select:hover {
+    border-color: #5B7FFF;
+}
+
+.wc-select:focus {
+    outline: none;
+    border-color: #5B7FFF;
+    box-shadow: 0 0 0 3px rgba(91, 127, 255, 0.1);
+}
+
+/* Section Divider */
+.section-divider {
+    height: 1px;
+    background: #f0f0f0;
+    margin: 20px 0;
+}
+
+/* Show responses header */
+.show-responses-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.apply-to-all-btn {
+    padding: 6px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    background: white;
+    font-size: 12px;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.apply-to-all-btn:hover {
+    background: #f5f5f5;
+    border-color: #ccc;
+}
+
+/* Radio Options */
+.radio-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.radio-option input[type="radio"] {
+    display: none;
+}
+
+.radio-circle {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.radio-option input[type="radio"]:checked+.radio-circle {
+    border-color: #5B7FFF;
+    background: #5B7FFF;
+}
+
+.radio-option input[type="radio"]:checked+.radio-circle::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+}
+
+.radio-label {
+    font-size: 14px;
+    color: #333;
+}
+
+.recommended-badge {
+    padding: 2px 8px;
+    background: #E8E8E8;
+    border-radius: 4px;
+    font-size: 11px;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Color Picker Group */
+.color-picker-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.color-indicator {
+    font-size: 16px;
+}
+
+.color-input {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 2px;
+    cursor: pointer;
+}
+
+.color-input::-webkit-color-swatch-wrapper {
+    padding: 2px;
+}
+
+.color-input::-webkit-color-swatch {
+    border-radius: 4px;
+    border: none;
+}
+
+/* Legacy styles - hidden */
+.visualization-preview,
+.settings-section,
+.info-section {
+    display: none;
+}

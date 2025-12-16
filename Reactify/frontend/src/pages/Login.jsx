@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import './Login.css';
 
 export const Login = () => {
     const navigate = useNavigate();
+    const { login, loginWithGoogle, loading: authLoading } = useAuth();
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -32,19 +34,68 @@ export const Login = () => {
         setLoading(true);
 
         try {
-            // API call would go here
-            console.log('Login:', formData);
-            // navigate('/home');
+            await login(formData.email, formData.password);
+            navigate('/dashboard');
         } catch (err) {
-            setError('Login failed. Please try again.');
+            // Firebase error messages
+            const errorCode = err.code;
+            let errorMessage = 'Login failed. Please try again.';
+
+            switch (errorCode) {
+                case 'auth/user-not-found':
+                    errorMessage = 'No account found with this email address.';
+                    break;
+                case 'auth/wrong-password':
+                    errorMessage = 'Incorrect password.';
+                    break;
+                case 'auth/invalid-email':
+                    errorMessage = 'Invalid email address.';
+                    break;
+                case 'auth/too-many-requests':
+                    errorMessage = 'Too many failed attempts. Please try again later.';
+                    break;
+                case 'auth/invalid-credential':
+                    errorMessage = 'Invalid email or password.';
+                    break;
+                default:
+                    errorMessage = err.message || 'Login failed. Please try again.';
+            }
+
+            setError(errorMessage);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleGoogleLogin = async () => {
+        setError('');
+        setLoading(true);
+
+        try {
+            await loginWithGoogle();
+            navigate('/dashboard');
+        } catch (err) {
+            const errorCode = err.code;
+            let errorMessage = 'Google login failed. Please try again.';
+
+            if (errorCode === 'auth/popup-closed-by-user') {
+                errorMessage = 'Login cancelled.';
+            } else if (errorCode === 'auth/popup-blocked') {
+                errorMessage = 'Popup was blocked. Please allow popups for this site.';
+            }
+
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
     };
 
     const handleSocialLogin = (provider) => {
-        console.log(`${provider} login clicked`);
-        // Handle social login
+        if (provider === 'Google') {
+            handleGoogleLogin();
+        } else {
+            setError(`${provider} login is coming soon.`);
+        }
     };
 
     return (
@@ -129,7 +180,7 @@ export const Login = () => {
                         {/* Submit Button */}
                         <button
                             type="submit"
-                            disabled={loading}
+                            disabled={loading || authLoading}
                             className="btn-primary"
                         >
                             {loading ? 'Signing in...' : 'Sign In'}
@@ -145,6 +196,7 @@ export const Login = () => {
                             <button
                                 type="button"
                                 onClick={() => handleSocialLogin('Google')}
+                                disabled={loading || authLoading}
                                 className="btn-social"
                             >
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -158,6 +210,7 @@ export const Login = () => {
                             <button
                                 type="button"
                                 onClick={() => handleSocialLogin('Github')}
+                                disabled={loading || authLoading}
                                 className="btn-social"
                             >
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
