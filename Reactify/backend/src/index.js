@@ -31,11 +31,35 @@ const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS?.split(',') || [
 const app = express();
 const httpServer = createServer(app);
 
+// Dynamic CORS origin checker for both Express and Socket.IO
+const checkOrigin = (origin, callback) => {
+    // Allow requests with no origin (like mobile apps, curl, postman)
+    if (!origin) return callback(null, true);
+
+    // In development, allow all localhost origins
+    if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
+        return callback(null, true);
+    }
+
+    // Allow Firebase hosting domains (production)
+    if (origin.includes('.web.app') || origin.includes('.firebaseapp.com')) {
+        return callback(null, true);
+    }
+
+    // Check against allowed origins list from environment
+    if (ALLOWED_ORIGINS.includes(origin)) {
+        return callback(null, true);
+    }
+
+    callback(new Error('Not allowed by CORS'));
+};
+
 // Initialize Socket.IO with CORS and optimized settings for high concurrency
 const io = new Server(httpServer, {
     cors: {
-        origin: ALLOWED_ORIGINS,
-        methods: ['GET', 'POST']
+        origin: checkOrigin,
+        methods: ['GET', 'POST'],
+        credentials: true
     },
     // Optimizations for handling 700+ concurrent connections
     pingTimeout: 60000,           // 60 seconds before considering connection dead
@@ -52,24 +76,9 @@ const io = new Server(httpServer, {
 // Set Socket.IO instance for AI progress updates
 setIO(io);
 
-// Middleware - CORS with preflight handling
+// Middleware - CORS with preflight handling (uses shared checkOrigin function)
 const corsOptions = {
-    origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps, curl, postman)
-        if (!origin) return callback(null, true);
-
-        // In development, allow all localhost origins
-        if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
-            return callback(null, true);
-        }
-
-        // Check against allowed origins list
-        if (ALLOWED_ORIGINS.includes(origin)) {
-            return callback(null, true);
-        }
-
-        callback(new Error('Not allowed by CORS'));
-    },
+    origin: checkOrigin,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']

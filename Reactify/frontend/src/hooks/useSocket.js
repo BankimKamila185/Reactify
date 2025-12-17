@@ -12,23 +12,30 @@ export const useSocket = () => {
     useEffect(() => {
         // Create singleton socket if it doesn't exist
         if (!socketInstance) {
+            console.log('[Socket] Connecting to:', SOCKET_URL);
+
             socketInstance = io(SOCKET_URL, {
                 transports: ['websocket', 'polling'],
                 reconnection: true,
                 reconnectionDelay: 1000,
-                reconnectionAttempts: 5
+                reconnectionAttempts: 5,
+                withCredentials: true
             });
 
             socketInstance.on('connect', () => {
-                console.log('✅ Socket connected:', socketInstance.id);
+                console.log('[Socket] Connected successfully, ID:', socketInstance.id);
             });
 
-            socketInstance.on('disconnect', () => {
-                console.log('❌ Socket disconnected');
+            socketInstance.on('disconnect', (reason) => {
+                console.log('[Socket] Disconnected:', reason);
+            });
+
+            socketInstance.on('connect_error', (error) => {
+                console.error('[Socket] Connection error:', error.message);
             });
 
             socketInstance.on('error', (error) => {
-                console.error('Socket error:', error);
+                console.error('[Socket] Error:', error);
             });
         }
 
@@ -42,4 +49,3 @@ export const useSocket = () => {
 };
 
 export default useSocket;
-
