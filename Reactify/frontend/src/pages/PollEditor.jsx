@@ -514,6 +514,12 @@ export const PollEditor = () => {
         }
     }, [sessionId, presentationTitle, slides, pendingSessionCreation, createNewSession]);
 
+    // Keep latest autoSave reference to avoid dependency cycles in useEffect
+    const autoSaveRef = useRef(autoSave);
+    useEffect(() => {
+        autoSaveRef.current = autoSave;
+    }, [autoSave]);
+
     // Debounced auto-save when title or slides change
     useEffect(() => {
         // Skip on initial load
@@ -546,7 +552,10 @@ export const PollEditor = () => {
         console.log('[AutoSave] Starting 2-second countdown to auto-save...');
         saveTimeoutRef.current = setTimeout(() => {
             console.log('[AutoSave] 2 seconds elapsed, calling autoSave()...');
-            autoSave();
+            // Call the latest autoSave function from ref
+            if (autoSaveRef.current) {
+                autoSaveRef.current();
+            }
         }, 2000);
 
         // Cleanup
@@ -555,7 +564,7 @@ export const PollEditor = () => {
                 clearTimeout(saveTimeoutRef.current);
             }
         };
-    }, [presentationTitle, slides, autoSave]);
+    }, [presentationTitle, slides]); // Remove autoSave from dependencies
 
     // Cleanup on unmount
     useEffect(() => {
