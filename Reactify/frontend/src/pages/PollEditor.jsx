@@ -1039,6 +1039,18 @@ export const PollEditor = () => {
     // Start Presentation - Use existing session and create polls, then navigate to live results
     const handleStartPresentation = async () => {
         setIsStarting(true);
+
+        // Wait for any active auto-save to complete (simple spin-wait)
+        let attempts = 0;
+        while (isSavingRef.current && attempts < 20) {
+            console.log('[StartPresentation] Waiting for auto-save to complete...');
+            await new Promise(resolve => setTimeout(resolve, 200));
+            attempts++;
+        }
+
+        // Lock process
+        isSavingRef.current = true;
+
         try {
             // Create session on demand if pending
             let currentSessionId = sessionId;
@@ -1047,6 +1059,7 @@ export const PollEditor = () => {
                 if (!currentSessionId) {
                     console.error('Failed to create session for presentation');
                     setIsStarting(false);
+                    isSavingRef.current = false;
                     return;
                 }
             }
@@ -1056,33 +1069,56 @@ export const PollEditor = () => {
                 console.error('No session ID available');
                 setIsPresentationMode(true);
                 setIsStarting(false);
+                isSavingRef.current = false;
                 return;
             }
+
+            // Track any new poll IDs created during start
+            const slideIdToPollId = new Map();
 
             // Create polls only for slides that don't already have a pollId (avoid duplicates)
             for (const slide of slides) {
                 // Skip slides that already have a pollId (already saved to backend)
-                if (slide.pollId) {
+                if (slide.pollId && slide.pollId !== 'undefined') {
                     console.log('[StartPresentation] Skipping slide with existing pollId:', slide.pollId);
                     continue;
                 }
 
                 if (slide.question && slide.question.trim()) {
-                    await pollApi.createPoll(currentSessionId, {
-                        type: slide.type === 'multiple-choice' ? 'single-choice' : slide.type,
-                        question: slide.question,
-                        options: slide.options?.map(opt => ({ text: opt.text || `Option ${opt.id}` })) || [],
-                        // Pass type-specific data
-                        ...(slide.type === 'word-cloud' && { maxWordsPerParticipant: slide.maxWordsPerParticipant || 3 }),
-                        ...(slide.type === 'open-ended' && { maxCharacters: slide.maxCharacters || 500 }),
-                        ...(slide.type === 'scales' && { scaleConfig: slide.scaleConfig }),
-                        ...(slide.type === 'ranking' && { rankingItems: slide.rankingItems }),
-                        ...(slide.type === 'qa' && {
-                            allowAnonymous: slide.allowAnonymous ?? true,
-                            isModerated: slide.isModerated || false
-                        })
-                    });
+                    try {
+                        const result = await pollApi.createPoll(currentSessionId, {
+                            type: slide.type === 'multiple-choice' ? 'single-choice' : slide.type,
+                            question: slide.question,
+                            options: slide.options?.map(opt => ({ text: opt.text || `Option ${opt.id}` })) || [],
+                            // Pass type-specific data
+                            ...(slide.type === 'word-cloud' && { maxWordsPerParticipant: slide.maxWordsPerParticipant || 3 }),
+                            ...(slide.type === 'open-ended' && { maxCharacters: slide.maxCharacters || 500 }),
+                            ...(slide.type === 'scales' && { scaleConfig: slide.scaleConfig }),
+                            ...(slide.type === 'ranking' && { rankingItems: slide.rankingItems }),
+                            ...(slide.type === 'qa' && {
+                                allowAnonymous: slide.allowAnonymous ?? true,
+                                isModerated: slide.isModerated || false
+                            })
+                        });
+
+                        if (result.success && result.data?.poll?._id) {
+                            slideIdToPollId.set(slide.id, result.data.poll._id);
+                            console.log('[StartPresentation] Created poll for slide:', slide.id, result.data.poll._id);
+                        }
+                    } catch (err) {
+                        console.error('Error creating poll during start:', err);
+                    }
                 }
+            }
+
+            // Update state with any new poll IDs before navigating
+            if (slideIdToPollId.size > 0) {
+                setSlides(currentSlides => currentSlides.map(s => {
+                    if (slideIdToPollId.has(s.id)) {
+                        return { ...s, pollId: slideIdToPollId.get(s.id) };
+                    }
+                    return s;
+                }));
             }
 
             // Navigate to live results page for host view
@@ -1093,6 +1129,7 @@ export const PollEditor = () => {
             setIsPresentationMode(true);
         } finally {
             setIsStarting(false);
+            isSavingRef.current = false;
         }
     };
 
