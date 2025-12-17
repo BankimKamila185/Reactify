@@ -8,8 +8,6 @@ export const AudienceJoin = () => {
     const navigate = useNavigate();
     const { setSession } = useSessionStore();
     const [sessionCode, setSessionCode] = useState('');
-    const [step, setStep] = useState('code'); // 'code' or 'name'
-    const [name, setName] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -43,25 +41,15 @@ export const AudienceJoin = () => {
             return;
         }
 
-        if (step === 'code') {
-            // Move to name step
-            setStep('name');
-            return;
-        }
-
-        if (!name.trim()) {
-            setError('Please enter your name');
-            return;
-        }
-
         setLoading(true);
 
         try {
-            const response = await sessionApi.joinSession(cleanCode, { name: name.trim() });
+            // Join session directly with 'Anonymous' name
+            const response = await sessionApi.joinSession(cleanCode, { name: 'Anonymous' });
 
             // Store participant info
             localStorage.setItem('participantId', response.data.participant.id);
-            localStorage.setItem('participantName', response.data.participant.name);
+            localStorage.setItem('participantName', 'Anonymous');
 
             // Set session
             setSession({
@@ -98,37 +86,22 @@ export const AudienceJoin = () => {
                 {/* Main Content */}
                 <div className="join-content">
                     <h1 className="join-title">
-                        {step === 'code' ? 'Enter the code to join' : 'What\'s your name?'}
+                        Enter the code to join
                     </h1>
                     <p className="join-subtitle">
-                        {step === 'code'
-                            ? 'It\'s on the screen in front of you'
-                            : 'This will be visible to the presenter'
-                        }
+                        It's on the screen in front of you
                     </p>
 
                     <form onSubmit={handleJoin} className="join-form">
-                        {step === 'code' ? (
-                            <input
-                                type="text"
-                                className="code-input"
-                                placeholder="123 456"
-                                value={sessionCode}
-                                onChange={handleCodeChange}
-                                autoFocus
-                                autoComplete="off"
-                            />
-                        ) : (
-                            <input
-                                type="text"
-                                className="name-input"
-                                placeholder="Your name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                autoFocus
-                                autoComplete="off"
-                            />
-                        )}
+                        <input
+                            type="text"
+                            className="code-input"
+                            placeholder="123 456"
+                            value={sessionCode}
+                            onChange={handleCodeChange}
+                            autoFocus
+                            autoComplete="off"
+                        />
 
                         {error && (
                             <div className="join-error">
@@ -139,20 +112,10 @@ export const AudienceJoin = () => {
                         <button
                             type="submit"
                             className="join-button"
-                            disabled={loading || (step === 'code' && !sessionCode)}
+                            disabled={loading || !sessionCode}
                         >
-                            {loading ? 'Joining...' : step === 'code' ? 'Join' : 'Continue'}
+                            {loading ? 'Joining...' : 'Join'}
                         </button>
-
-                        {step === 'name' && (
-                            <button
-                                type="button"
-                                className="back-button"
-                                onClick={() => setStep('code')}
-                            >
-                                ← Back
-                            </button>
-                        )}
                     </form>
                 </div>
 
