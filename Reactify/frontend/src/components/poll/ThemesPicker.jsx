@@ -46,7 +46,7 @@ export const ThemesPicker = ({ currentTheme = 'default', onThemeChange, onClose 
                 borderColor: displayTheme?.primary
             }}>
                 <div className="preview-header" style={{ background: displayTheme?.secondary }}>
-                    <span style={{ color: displayTheme?.primary }}>menti.com | 123 456</span>
+                    <span style={{ color: displayTheme?.primary }}>reacti.com | 123 456</span>
                 </div>
                 <div className="preview-content">
                     <h4 style={{ color: displayTheme?.id?.includes('dark') || displayTheme?.id === 'midnight' ? '#FFF' : '#1A1A1A' }}>

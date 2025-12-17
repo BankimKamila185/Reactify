@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import QRCode from 'qrcode';
+import { useAuth } from '../../context/AuthContext';
 import './ShareModal.css';
 
 export const ShareModal = ({
@@ -12,12 +13,23 @@ export const ShareModal = ({
     presentationTitle = 'New presentation',
     initialTab = 'participants'
 }) => {
+    const { user } = useAuth();
     const [activeTab, setActiveTab] = useState(initialTab);
     const [copied, setCopied] = useState('');
     const [expirationDays, setExpirationDays] = useState('2');
     const [enableParticipation, setEnableParticipation] = useState(true);
     const [collaboratorEmail, setCollaboratorEmail] = useState('');
     const [qrCodeUrl, setQrCodeUrl] = useState('');
+
+    // Get user initials for avatar
+    const getUserInitials = () => {
+        const name = user?.displayName || user?.fullName || user?.email || 'User';
+        const parts = name.split(' ');
+        if (parts.length >= 2) {
+            return (parts[0][0] + parts[1][0]).toUpperCase();
+        }
+        return name.substring(0, 2).toUpperCase();
+    };
 
     // Update active tab when initialTab or isOpen changes
     useEffect(() => {
@@ -89,14 +101,12 @@ export const ShareModal = ({
     const handleExpirationChange = (days) => {
         setExpirationDays(days);
         // TODO: Save to backend when API is ready
-        console.log(`Session expiration set to ${days} days`);
     };
 
     // Handle participation toggle
     const handleParticipationToggle = (enabled) => {
         setEnableParticipation(enabled);
         // TODO: Save to backend when API is ready
-        console.log(`Participation ${enabled ? 'enabled' : 'disabled'}`);
     };
 
     // Generate embed code
@@ -161,7 +171,7 @@ export const ShareModal = ({
                                 <div className="share-row">
                                     <div>
                                         <label className="share-label-v2">QR code access</label>
-                                        <p className="share-description">Participants can join your Menti using this QR code.</p>
+                                        <p className="share-description">Participants can join your Reacti using this QR code.</p>
                                     </div>
                                     <button className="action-link" onClick={downloadQRCode}>
                                         Download
@@ -181,7 +191,7 @@ export const ShareModal = ({
                                     <div>
                                         <label className="share-label-v2">Set access code expiration</label>
                                         <p className="share-description">
-                                            Choose how long the code for your Menti is active. The code <strong>{formatJoinCode(joinCode)}</strong> expires <strong>in {expirationDays} days</strong>.
+                                            Choose how long the code for your Reacti is active. The code <strong>{formatJoinCode(joinCode)}</strong> expires <strong>in {expirationDays} days</strong>.
                                         </p>
                                     </div>
                                     <select
@@ -202,7 +212,7 @@ export const ShareModal = ({
                                 <div className="share-row">
                                     <div>
                                         <label className="share-label-v2">Enable participation</label>
-                                        <p className="share-description">Anyone with the link, voting code, or QR code can join and interact with your Menti.</p>
+                                        <p className="share-description">Anyone with the link, voting code, or QR code can join and interact with your Reacti.</p>
                                     </div>
                                     <label className="toggle-switch-v2">
                                         <input
@@ -220,7 +230,7 @@ export const ShareModal = ({
                                 <div className="share-row">
                                     <div>
                                         <label className="share-label-v2">Embed slides</label>
-                                        <p className="share-description">Use this code to embed your Menti online with live results</p>
+                                        <p className="share-description">Use this code to embed your Reacti online with live results</p>
                                     </div>
                                     <button className="action-link" onClick={() => copyToClipboard(getEmbedCode(), 'embed')}>
                                         {copied === 'embed' ? 'Copied!' : 'Copy code'}
@@ -238,7 +248,7 @@ export const ShareModal = ({
                                         <span className="access-icon">🌐</span>
                                         <div>
                                             <span className="access-type"><strong>Public</strong> (open for participants) ⭐</span>
-                                            <p className="share-description">Everyone with this link, including your participants, can access the Menti and its results.</p>
+                                            <p className="share-description">Everyone with this link, including your participants, can access the Reacti and its results.</p>
                                         </div>
                                     </div>
                                     <button className="action-link" onClick={() => copyToClipboard(participationLink, 'access')}>
@@ -270,12 +280,12 @@ export const ShareModal = ({
 
                             {/* Collaborators List */}
                             <div className="share-section-v2">
-                                <p className="collaborators-heading">These people can access this Menti.</p>
+                                <p className="collaborators-heading">These people can access this Reacti.</p>
                                 <div className="collaborator-item">
-                                    <div className="collaborator-avatar">BC</div>
+                                    <div className="collaborator-avatar">{getUserInitials()}</div>
                                     <div className="collaborator-info">
-                                        <span className="collaborator-name">Bankim Chandra Kamila (BTech CSE 2024-28) (me)</span>
-                                        <span className="collaborator-email">2024.bankimc@isu.ac.in</span>
+                                        <span className="collaborator-name">{user?.displayName || user?.fullName || 'User'} (me)</span>
+                                        <span className="collaborator-email">{user?.email || ''}</span>
                                     </div>
                                     <span className="collaborator-role">Owner</span>
                                 </div>
@@ -291,7 +301,7 @@ export const ShareModal = ({
                                         <span className="access-icon">🌐</span>
                                         <div>
                                             <span className="access-type"><strong>Public</strong> (open for participants) ⭐</span>
-                                            <p className="share-description">Everyone with this link, including your participants, can access the Menti and its results.</p>
+                                            <p className="share-description">Everyone with this link, including your participants, can access the Reacti and its results.</p>
                                         </div>
                                     </div>
                                     <button className="action-link" onClick={() => copyToClipboard(participationLink, 'access')}>

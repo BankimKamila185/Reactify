@@ -80,7 +80,7 @@ export const setupSocketHandlers = (io) => {
                 // Calculate updated results
                 let results = { totalResponses: responses.length };
 
-                if (poll?.type === 'single' || poll?.type === 'multiple') {
+                if (poll?.type === 'single-choice' || poll?.type === 'multiple-choice' || poll?.type === 'select-answer') {
                     const voteCounts = {};
 
                     responses.forEach(response => {

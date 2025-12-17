@@ -8,10 +8,12 @@ import { CreatePollModal } from '../components/poll/CreatePollModal';
 import { AIGenerateModal } from '../components/poll/AIGenerateModal';
 import { pollApi } from '../api/poll.api';
 import { sessionApi } from '../api/session.api';
+import { useAuth } from '../context/AuthContext';
 import './Dashboard.css';
 
 export const Dashboard = () => {
     const navigate = useNavigate();
+    const { user } = useAuth();
 
     // Modal state
     const [isPollModalOpen, setIsPollModalOpen] = useState(false);
@@ -109,7 +111,7 @@ export const Dashboard = () => {
         }
     };
 
-    // Handle "New Menti" button click
+    // Handle "New Reacti" button click
     const handleNewMenti = () => {
         // Clear any existing session data so a new session is created
         localStorage.removeItem('currentSessionId');
@@ -187,7 +189,7 @@ export const Dashboard = () => {
                 <div className="dashboard-content-new">
                     {/* Welcome Section */}
                     <section className="welcome-section">
-                        <h1 className="welcome-title">Welcome Bankim Chandra Kamila!</h1>
+                        <h1 className="welcome-title">Welcome {user?.displayName || user?.fullName || 'User'}!</h1>
 
                         {/* Action Buttons */}
                         <div className="action-buttons">
@@ -195,7 +197,7 @@ export const Dashboard = () => {
                                 className="btn-action btn-primary-action"
                                 onClick={handleNewMenti}
                             >
-                                <span>New Menti</span>
+                                <span>New Reacti</span>
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                     <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                                 </svg>

@@ -2,7 +2,7 @@
 
 ![Reactify Logo](https://img.shields.io/badge/Reactify-Interactive%20Polling-blue)
 
-A real-time interactive polling and feedback platform inspired by Mentimeter with AI-powered content generation.
+A real-time interactive polling and feedback platform inspired by Reactify with AI-powered content generation.
 
 ## 🌟 Features
 
@@ -13,7 +13,7 @@ A real-time interactive polling and feedback platform inspired by Mentimeter wit
 - **Animated Charts**: Beautiful,real-time result visualizations
 - **Easy Join**: Participants join sessions with simple 6-digit codes
 - **WebSocket Communication**: Instant updates using Socket.IO
-- **Modern UI**: Clean, Mentimeter-inspired design
+- **Modern UI**: Clean, Reactify-inspired design
 
 ## 🚀 Quick Start
 
@@ -227,5 +227,5 @@ MIT License - feel free to use this project for personal or commercial purposes.
 
 ## 🙏 Acknowledgments
 
-- Inspired by [Mentimeter](https://www.mentimeter.com/)
+- Inspired by [Reactify](https://www.reactify.com/)
 - Built with modern web technologies and best practices

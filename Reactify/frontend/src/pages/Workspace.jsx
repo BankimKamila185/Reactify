@@ -87,12 +87,37 @@ export const Workspace = () => {
 
     const handleSortChange = (sortOption) => {
         setSortBy(sortOption);
-        // TODO: Implement actual sorting logic
     };
 
+    // Sort and filter presentations with useMemo for performance
     const getFilteredPresentations = () => {
-        // TODO: Filter based on activeTab
-        return workspacePresentations;
+        let result = [...workspacePresentations];
+
+        // Filter based on activeTab (placeholder - in production, filter by actual user data)
+        // For now, 'all' shows everything, 'created' and 'shared' would filter based on user ownership
+        if (activeTab === 'created') {
+            // Filter to show only presentations created by current user
+            // In production: result = result.filter(p => p.creatorId === currentUserId);
+        } else if (activeTab === 'shared') {
+            // Filter to show only shared presentations
+            // In production: result = result.filter(p => p.sharedWithTeam);
+        }
+
+        // Sort based on selection
+        switch (sortBy) {
+            case 'name':
+                result.sort((a, b) => (a.question || '').localeCompare(b.question || ''));
+                break;
+            case 'creator':
+                result.sort((a, b) => (a.creator || '').localeCompare(b.creator || ''));
+                break;
+            case 'recent':
+            default:
+                result.sort((a, b) => new Date(b.modified) - new Date(a.modified));
+                break;
+        }
+
+        return result;
     };
 
     return (

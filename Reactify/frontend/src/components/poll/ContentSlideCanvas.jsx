@@ -15,7 +15,7 @@ export const TextCanvas = ({
         <div className="content-canvas text-canvas">
             <div className="canvas-header">
                 <div className="join-info">
-                    <span>Go to <strong>menti.com</strong></span>
+                    <span>Go to <strong>reacti.com</strong></span>
                     <span className="join-code">{joinCode}</span>
                 </div>
             </div>
@@ -75,7 +75,7 @@ export const ImageCanvas = ({
         <div className="content-canvas image-canvas">
             <div className="canvas-header">
                 <div className="join-info">
-                    <span>Go to <strong>menti.com</strong></span>
+                    <span>Go to <strong>reacti.com</strong></span>
                     <span className="join-code">{joinCode}</span>
                 </div>
             </div>
@@ -166,7 +166,7 @@ export const VideoCanvas = ({
         <div className="content-canvas video-canvas">
             <div className="canvas-header">
                 <div className="join-info">
-                    <span>Go to <strong>menti.com</strong></span>
+                    <span>Go to <strong>reacti.com</strong></span>
                     <span className="join-code">{joinCode}</span>
                 </div>
             </div>
@@ -233,7 +233,7 @@ export const InstructionsCanvas = ({
             <div className="canvas-header large">
                 <div className="join-info-large">
                     <span className="join-label">Go to</span>
-                    <span className="join-url">menti.com</span>
+                    <span className="join-url">reacti.com</span>
                     <span className="join-label">and use code</span>
                     <span className="join-code-large">{joinCode}</span>
                 </div>

@@ -46,7 +46,7 @@ export const PollCanvas = ({
     const textColor = isDarkBackground ? '#FFFFFF' : '#1A1A1A';
     const subtleTextColor = isDarkBackground ? 'rgba(255,255,255,0.7)' : '#666';
 
-    // Render Bar Chart visualization - Mentimeter style
+    // Render Bar Chart visualization - Reactify style
     const renderBarChart = () => (
         <div className="canvas-options-row">
             {options.map((option, index) => {
@@ -262,19 +262,19 @@ export const PollCanvas = ({
                 {/* Header with Join Code and Logo */}
                 <div className="canvas-header">
                     <div className="join-code-pill">
-                        <span>Join at <strong>menti.com</strong> | use code <strong>{joinCode || '...'}</strong></span>
+                        <span>Join at <strong>reacti.com</strong> | use code <strong>{joinCode || '...'}</strong></span>
                     </div>
                     {showQRCode && (
                         <div className="qr-code-container">
                             <img src={qrCodeUrl} alt="QR Code" className="qr-code-image" />
                         </div>
                     )}
-                    <div className="mentimeter-logo">
+                    <div className="reactify-logo">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                             <path d="M4 12L6 8L8 12L10 8V16H8V12L6 16L4 12V16H2V8L4 12Z" fill="#5B7FFF" />
                             <path d="M12 8h2v8h-2V8z" fill="#5B7FFF" />
                         </svg>
-                        <span>Mentimeter</span>
+                        <span>Reactify</span>
                     </div>
                 </div>
 

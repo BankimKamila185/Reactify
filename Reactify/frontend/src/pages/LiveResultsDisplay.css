@@ -1,5 +1,5 @@
-/* Mentimeter-style Fullscreen Presentation */
-.menti-presentation {
+/* Reactify-style Fullscreen Presentation */
+.reacti-presentation {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -7,14 +7,14 @@
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-.menti-presentation.loading {
+.reacti-presentation.loading {
     justify-content: center;
     align-items: center;
     gap: 20px;
     color: #fff;
 }
 
-.menti-loader {
+.reacti-loader {
     width: 40px;
     height: 40px;
     border: 3px solid rgba(255, 255, 255, 0.2);
@@ -30,7 +30,7 @@
 }
 
 /* Top Black Bar */
-.menti-top-bar {
+.reacti-top-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -39,7 +39,7 @@
     min-height: 56px;
 }
 
-.menti-close-btn {
+.reacti-close-btn {
     width: 32px;
     height: 32px;
     display: flex;
@@ -54,12 +54,12 @@
     transition: opacity 0.2s;
 }
 
-.menti-close-btn:hover {
+.reacti-close-btn:hover {
     opacity: 1;
 }
 
 /* Join Code Pill - Centered */
-.menti-join-pill {
+.reacti-join-pill {
     background: #fff;
     border-radius: 25px;
     padding: 10px 20px;
@@ -70,17 +70,17 @@
     gap: 8px;
 }
 
-.menti-join-pill strong {
+.reacti-join-pill strong {
     color: #1A1A1A;
 }
 
-.menti-code {
+.reacti-code {
     font-size: 16px;
     letter-spacing: 1px;
 }
 
 /* Logo and Fullscreen */
-.menti-logo {
+.reacti-logo {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -89,7 +89,7 @@
     font-weight: 600;
 }
 
-.menti-fullscreen-btn {
+.reacti-fullscreen-btn {
     background: transparent;
     border: none;
     color: #fff;
@@ -100,12 +100,12 @@
     transition: opacity 0.2s;
 }
 
-.menti-fullscreen-btn:hover {
+.reacti-fullscreen-btn:hover {
     opacity: 1;
 }
 
 /* White Content Area */
-.menti-content {
+.reacti-content {
     flex: 1;
     background: #fff;
     display: flex;
@@ -115,21 +115,21 @@
 }
 
 /* Main Content - Left side */
-.menti-main-content {
+.reacti-main-content {
     flex: 1;
     display: flex;
     flex-direction: column;
 }
 
 /* QR Section - Right side */
-.menti-qr-section {
+.reacti-qr-section {
     display: flex;
     align-items: flex-start;
     justify-content: flex-end;
     padding-left: 40px;
 }
 
-.menti-qr-code {
+.reacti-qr-code {
     width: 150px;
     height: 150px;
     border-radius: 8px;
@@ -137,7 +137,7 @@
 }
 
 /* Side Tools */
-.menti-side-tools {
+.reacti-side-tools {
     position: absolute;
     left: 20px;
     top: 50%;
@@ -147,7 +147,7 @@
     gap: 8px;
 }
 
-.menti-tool-btn {
+.reacti-tool-btn {
     width: 32px;
     height: 32px;
     display: flex;
@@ -162,14 +162,14 @@
     transition: all 0.2s;
 }
 
-.menti-tool-btn:hover,
-.menti-tool-btn.active {
+.reacti-tool-btn:hover,
+.reacti-tool-btn.active {
     background: #F3F4F6;
     color: #1A1A1A;
 }
 
 /* Question - Large Serif Font */
-.menti-question {
+.reacti-question {
     font-size: 42px;
     font-weight: 400;
     color: #1A1A1A;
@@ -180,7 +180,7 @@
 }
 
 /* Visualization Area */
-.menti-visualization {
+.reacti-visualization {
     flex: 1;
     display: flex;
     align-items: flex-end;
@@ -188,8 +188,8 @@
     padding: 0 60px;
 }
 
-/* Bar Chart - Mentimeter Style */
-.menti-bar-chart {
+/* Bar Chart - Reactify Style */
+.reacti-bar-chart {
     display: flex;
     align-items: flex-end;
     justify-content: center;
@@ -199,7 +199,7 @@
     padding-bottom: 20px;
 }
 
-.menti-bar-item {
+.reacti-bar-item {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -209,7 +209,7 @@
 }
 
 /* Vote Count */
-.menti-vote-count {
+.reacti-vote-count {
     font-size: 28px;
     font-weight: 400;
     color: #4B5563;
@@ -218,7 +218,7 @@
 }
 
 /* Growing Bar Wrapper */
-.menti-bar-wrapper {
+.reacti-bar-wrapper {
     flex: 1;
     width: 100%;
     display: flex;
@@ -227,7 +227,7 @@
 }
 
 /* The Actual Growing Bar */
-.menti-bar {
+.reacti-bar {
     width: 80%;
     max-width: 100px;
     border-radius: 4px 4px 0 0;
@@ -235,7 +235,7 @@
 }
 
 /* Colored Line Under Bar */
-.menti-bar-line {
+.reacti-bar-line {
     width: 100%;
     height: 4px;
     border-radius: 2px;
@@ -243,7 +243,7 @@
 }
 
 /* Option Label */
-.menti-option-label {
+.reacti-option-label {
     font-size: 16px;
     font-weight: 400;
     color: #1A1A1A;
@@ -254,7 +254,7 @@
 }
 
 /* No Poll State */
-.menti-no-poll {
+.reacti-no-poll {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -263,8 +263,8 @@
     font-size: 18px;
 }
 
-/* Bottom Black Bar - Always Visible like Mentimeter */
-.menti-bottom-bar {
+/* Bottom Black Bar - Always Visible like Reactify */
+.reacti-bottom-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -273,25 +273,25 @@
     min-height: 56px;
 }
 
-.menti-bottom-bar.visible {
+.reacti-bottom-bar.visible {
     /* Just ensures visibility class works but bar is always shown */
 }
 
-.menti-nav-left,
-.menti-nav-right {
+.reacti-nav-left,
+.reacti-nav-right {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-.menti-controls-center {
+.reacti-controls-center {
     display: flex;
     align-items: center;
     gap: 4px;
 }
 
 /* Navigation Buttons */
-.menti-nav-btn {
+.reacti-nav-btn {
     width: 36px;
     height: 36px;
     display: flex;
@@ -306,17 +306,17 @@
     transition: all 0.2s;
 }
 
-.menti-nav-btn:hover:not(:disabled) {
+.reacti-nav-btn:hover:not(:disabled) {
     background: rgba(255, 255, 255, 0.2);
 }
 
-.menti-nav-btn:disabled {
+.reacti-nav-btn:disabled {
     opacity: 0.3;
     cursor: not-allowed;
 }
 
 /* Pointer Button */
-.menti-pointer-btn {
+.reacti-pointer-btn {
     width: 36px;
     height: 36px;
     display: flex;
@@ -329,12 +329,12 @@
     transition: all 0.2s;
 }
 
-.menti-pointer-btn:hover {
+.reacti-pointer-btn:hover {
     color: #fff;
 }
 
 /* End Presentation Button */
-.menti-end-btn {
+.reacti-end-btn {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -348,12 +348,12 @@
     transition: all 0.2s;
 }
 
-.menti-end-btn:hover {
+.reacti-end-btn:hover {
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* Next Slide Button - Mentimeter style */
-.menti-next-slide-btn {
+/* Next Slide Button - Reactify style */
+.reacti-next-slide-btn {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -367,17 +367,17 @@
     transition: all 0.2s;
 }
 
-.menti-next-slide-btn:hover:not(:disabled) {
+.reacti-next-slide-btn:hover:not(:disabled) {
     background: rgba(255, 255, 255, 0.2);
 }
 
-.menti-next-slide-btn:disabled {
+.reacti-next-slide-btn:disabled {
     opacity: 0.3;
     cursor: not-allowed;
 }
 
 /* Control Buttons */
-.menti-control-btn {
+.reacti-control-btn {
     width: 36px;
     height: 36px;
     display: flex;
@@ -392,18 +392,18 @@
     transition: all 0.2s;
 }
 
-.menti-control-btn:hover {
+.reacti-control-btn:hover {
     background: rgba(255, 255, 255, 0.1);
     color: #fff;
 }
 
-.menti-control-btn.active {
+.reacti-control-btn.active {
     background: rgba(239, 68, 68, 0.3);
     color: #fff;
 }
 
 /* Thumbs Button */
-.menti-thumbs-btn {
+.reacti-thumbs-btn {
     width: 36px;
     height: 36px;
     display: flex;
@@ -417,12 +417,12 @@
     transition: all 0.2s;
 }
 
-.menti-thumbs-btn:hover {
+.reacti-thumbs-btn:hover {
     color: #fff;
 }
 
 /* Participant Count */
-.menti-participant-count {
+.reacti-participant-count {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -433,84 +433,84 @@
 
 /* Responsive */
 @media (max-width: 1024px) {
-    .menti-content {
+    .reacti-content {
         padding: 30px 40px 50px;
     }
 
-    .menti-question {
+    .reacti-question {
         font-size: 32px;
         margin-left: 20px;
     }
 
-    .menti-bar-chart {
+    .reacti-bar-chart {
         gap: 24px;
         height: 250px;
     }
 
-    .menti-side-tools {
+    .reacti-side-tools {
         left: 10px;
     }
 }
 
 @media (max-width: 768px) {
-    .menti-top-bar {
+    .reacti-top-bar {
         padding: 10px 12px;
     }
 
-    .menti-join-pill {
+    .reacti-join-pill {
         font-size: 12px;
         padding: 8px 14px;
     }
 
-    .menti-code {
+    .reacti-code {
         font-size: 14px;
     }
 
-    .menti-logo span {
+    .reacti-logo span {
         display: none;
     }
 
-    .menti-content {
+    .reacti-content {
         padding: 20px;
     }
 
-    .menti-side-tools {
+    .reacti-side-tools {
         display: none;
     }
 
-    .menti-question {
+    .reacti-question {
         font-size: 24px;
         margin: 0 0 30px 0;
     }
 
-    .menti-visualization {
+    .reacti-visualization {
         padding: 0;
     }
 
-    .menti-bar-chart {
+    .reacti-bar-chart {
         gap: 16px;
         height: 200px;
     }
 
-    .menti-bar-item {
+    .reacti-bar-item {
         max-width: 100px;
     }
 
-    .menti-vote-count {
+    .reacti-vote-count {
         font-size: 22px;
     }
 
-    .menti-option-label {
+    .reacti-option-label {
         font-size: 13px;
     }
 
-    .menti-bottom-bar {
+    .reacti-bottom-bar {
         padding: 10px 12px;
         flex-wrap: wrap;
         gap: 10px;
     }
 
-    .menti-controls-center {
+    .reacti-controls-center {
         order: 3;
         width: 100%;
         justify-content: center;
@@ -538,7 +538,7 @@
     padding: 0 4px;
 }
 
-.menti-control-btn {
+.reacti-control-btn {
     position: relative;
 }
 
@@ -676,11 +676,11 @@
 }
 
 /* ============================================
-   NEW MENTIMETER-STYLE CONTROLS
+   NEW reactify-STYLE CONTROLS
    ============================================ */
 
 /* Slide Counter */
-.menti-slide-counter {
+.reacti-slide-counter {
     color: rgba(255, 255, 255, 0.8);
     font-size: 14px;
     font-weight: 500;
@@ -688,7 +688,7 @@
 }
 
 /* Countdown Display */
-.menti-countdown-display {
+.reacti-countdown-display {
     background: #EF4444;
     color: white;
     font-size: 18px;
@@ -712,7 +712,7 @@
 }
 
 /* Results Hidden State */
-.menti-results-hidden {
+.reacti-results-hidden {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -721,19 +721,19 @@
     color: #9CA3AF;
 }
 
-.menti-results-hidden span {
+.reacti-results-hidden span {
     font-size: 64px;
     margin-bottom: 16px;
     opacity: 0.5;
 }
 
-.menti-results-hidden p {
+.reacti-results-hidden p {
     font-size: 18px;
     margin: 0;
 }
 
 /* Modal Overlay */
-.menti-modal-overlay {
+.reacti-modal-overlay {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.6);
@@ -745,7 +745,7 @@
 }
 
 /* Countdown Modal */
-.menti-countdown-modal {
+.reacti-countdown-modal {
     background: #1A1A1A;
     border-radius: 16px;
     padding: 24px;
@@ -753,13 +753,13 @@
     text-align: center;
 }
 
-.menti-countdown-modal h3 {
+.reacti-countdown-modal h3 {
     color: #fff;
     font-size: 18px;
     margin: 0 0 20px;
 }
 
-.menti-countdown-options {
+.reacti-countdown-options {
     display: flex;
     gap: 8px;
     justify-content: center;
@@ -767,7 +767,7 @@
     flex-wrap: wrap;
 }
 
-.menti-countdown-options button {
+.reacti-countdown-options button {
     background: rgba(255, 255, 255, 0.1);
     border: none;
     color: #fff;
@@ -779,12 +779,12 @@
     transition: all 0.2s;
 }
 
-.menti-countdown-options button:hover {
+.reacti-countdown-options button:hover {
     background: #3B82F6;
 }
 
 /* Reset Modal */
-.menti-reset-modal {
+.reacti-reset-modal {
     background: #1A1A1A;
     border-radius: 16px;
     padding: 24px;
@@ -792,20 +792,20 @@
     text-align: center;
 }
 
-.menti-reset-modal h3 {
+.reacti-reset-modal h3 {
     color: #fff;
     font-size: 18px;
     margin: 0 0 20px;
 }
 
-.menti-reset-options {
+.reacti-reset-options {
     display: flex;
     flex-direction: column;
     gap: 8px;
     margin-bottom: 16px;
 }
 
-.menti-reset-options button {
+.reacti-reset-options button {
     background: rgba(255, 255, 255, 0.1);
     border: none;
     color: #fff;
@@ -816,12 +816,12 @@
     transition: all 0.2s;
 }
 
-.menti-reset-options button:hover {
+.reacti-reset-options button:hover {
     background: #EF4444;
 }
 
 /* Modal Cancel Button */
-.menti-modal-cancel {
+.reacti-modal-cancel {
     background: transparent;
     border: none;
     color: #9CA3AF;
@@ -830,12 +830,12 @@
     padding: 8px 16px;
 }
 
-.menti-modal-cancel:hover {
+.reacti-modal-cancel:hover {
     color: #fff;
 }
 
 /* Join Instructions Overlay */
-.menti-join-overlay {
+.reacti-join-overlay {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.9);
@@ -845,13 +845,13 @@
     z-index: 1000;
 }
 
-.menti-join-content {
+.reacti-join-content {
     text-align: center;
     color: #fff;
     position: relative;
 }
 
-.menti-overlay-close {
+.reacti-overlay-close {
     position: absolute;
     top: -40px;
     right: -40px;
@@ -864,35 +864,35 @@
     transition: opacity 0.2s;
 }
 
-.menti-overlay-close:hover {
+.reacti-overlay-close:hover {
     opacity: 1;
 }
 
-.menti-join-content h2 {
+.reacti-join-content h2 {
     font-size: 36px;
     margin: 0 0 8px;
     font-weight: 400;
 }
 
-.menti-join-content p {
+.reacti-join-content p {
     font-size: 20px;
     margin: 0 0 16px;
     opacity: 0.7;
 }
 
-.menti-big-code {
+.reacti-big-code {
     font-size: 72px;
     font-weight: 700;
     letter-spacing: 8px;
     margin-bottom: 32px;
 }
 
-.menti-qr-placeholder {
+.reacti-qr-placeholder {
     display: flex;
     justify-content: center;
 }
 
-.menti-qr-placeholder img {
+.reacti-qr-placeholder img {
     width: 200px;
     height: 200px;
     border-radius: 12px;

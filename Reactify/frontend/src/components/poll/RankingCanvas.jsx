@@ -1,7 +1,7 @@
 import React from 'react';
 import './RankingCanvas.css';
 
-// Colors for ranking items (matching Mentimeter)
+// Colors for ranking items (matching Reactify)
 const itemColors = [
     '#5B7FFF', // Blue
     '#FF7B7B', // Coral/Red
@@ -40,13 +40,13 @@ export const RankingCanvas = ({
                 {/* Header */}
                 <div className="canvas-header">
                     <div className="join-pill">
-                        Join at <strong>menti.com</strong> | use code <strong>{joinCode}</strong>
+                        Join at <strong>reacti.com</strong> | use code <strong>{joinCode}</strong>
                     </div>
                     <div className="logo">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M4 12L8 6L12 12L16 6V18H12V12L8 18L4 12V18H0V6L4 12Z" fill="#5B7FFF" />
                         </svg>
-                        <span>Mentimeter</span>
+                        <span>Reactify</span>
                     </div>
                 </div>
 

@@ -165,9 +165,13 @@ export const Login = () => {
 
                         {/* Forgot Password Link */}
                         <div className="forgot-password">
-                            <Link to="/forgot-password" className="forgot-link">
+                            <button
+                                type="button"
+                                className="forgot-link"
+                                onClick={() => alert('Password reset functionality coming soon!')}
+                            >
                                 Forgot password?
-                            </Link>
+                            </button>
                         </div>
 
                         {/* Error Message */}

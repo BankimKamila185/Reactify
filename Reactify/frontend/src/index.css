@@ -61,7 +61,7 @@ body {
   }
 }
 
-/* Gradient backgrounds (Mentimeter style) */
+/* Gradient backgrounds (Reactify style) */
 .gradient-primary {
   background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
 }

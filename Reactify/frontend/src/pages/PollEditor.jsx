@@ -1680,7 +1680,7 @@ export const PollEditor = () => {
                 onGenerate={handleAIGenerate}
             />
 
-            {/* Fullscreen Presentation Mode - Mentimeter Style */}
+            {/* Fullscreen Presentation Mode - Reactify Style */}
             {isPresentationMode && (
                 <div className="presentation-fullscreen" style={{
                     position: 'fixed',
@@ -1735,15 +1735,15 @@ export const PollEditor = () => {
                                 fontSize: '16px',
                                 color: '#333'
                             }}>
-                                Join at <strong>menti.com</strong> | use code <strong>{joinCode}</strong>
+                                Join at <strong>reacti.com</strong> | use code <strong>{joinCode}</strong>
                             </div>
 
-                            {/* Mentimeter Logo */}
+                            {/* Reactify Logo */}
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <path d="M4 12L8 6L12 12L16 6V18H12V12L8 18L4 12V18H0V6L4 12Z" fill="#5B7FFF" />
                                 </svg>
-                                <span style={{ fontSize: '18px', fontWeight: '600', color: '#333' }}>Mentimeter</span>
+                                <span style={{ fontSize: '18px', fontWeight: '600', color: '#333' }}>Reactify</span>
                             </div>
                         </div>
 

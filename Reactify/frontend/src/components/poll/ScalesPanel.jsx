@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './ScalesPanel.css';
 
-// Colors for statements (matching Mentimeter)
+// Colors for statements (matching Reactify)
 const statementColors = [
     '#5B7FFF', // Blue
     '#FF7B7B', // Coral/Red

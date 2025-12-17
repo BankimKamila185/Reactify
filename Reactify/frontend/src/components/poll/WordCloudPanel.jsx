@@ -12,7 +12,7 @@ export const WordCloudPanel = ({
     onMaxWordsChange,
     profanityFilter = false,
     onProfanityFilterChange,
-    // New props for Mentimeter-style settings
+    // New props for Reactify-style settings
     numberOfResponses = 'unlimited',
     onNumberOfResponsesChange,
     showResponses = 'instant',

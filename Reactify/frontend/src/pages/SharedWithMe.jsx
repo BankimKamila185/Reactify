@@ -4,10 +4,12 @@ import { Sidebar } from '../components/dashboard/Sidebar';
 import { DashboardHeader } from '../components/dashboard/DashboardHeader';
 import { PresentationCard } from '../components/dashboard/PresentationCard';
 import { pollApi } from '../api/poll.api';
+import { useAuth } from '../context/AuthContext';
 import './SharedWithMe.css';
 
 export const SharedWithMe = () => {
     const navigate = useNavigate();
+    const { user } = useAuth();
     const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
     const [sortBy, setSortBy] = useState('recent'); // 'recent', 'name', 'owner'
     const [searchQuery, setSearchQuery] = useState('');
@@ -20,16 +22,17 @@ export const SharedWithMe = () => {
 
     // Load shared presentations from API on mount
     useEffect(() => {
-        loadSharedPresentations();
-    }, []);
+        if (user?.email) {
+            loadSharedPresentations();
+        }
+    }, [user]);
 
     const loadSharedPresentations = async () => {
         setIsLoading(true);
         setError(null);
         try {
-            // Get user email from Firebase Auth or localStorage
-            // For now, we'll use a placeholder - in production this comes from auth
-            const userEmail = localStorage.getItem('userEmail') || '';
+            // Get user email from Firebase Auth context
+            const userEmail = user?.email || '';
 
             const response = await pollApi.getSharedPresentations(userEmail);
             if (response.success && response.data?.presentations) {

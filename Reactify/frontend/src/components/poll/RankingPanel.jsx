@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './RankingPanel.css';
 
-// Colors for ranking items (matching Mentimeter)
+// Colors for ranking items (matching Reactify)
 const itemColors = [
     '#5B7FFF', // Blue
     '#FF7B7B', // Coral/Red

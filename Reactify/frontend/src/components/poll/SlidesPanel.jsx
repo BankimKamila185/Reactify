@@ -7,6 +7,7 @@ import scalesIcon from '../../assets/icons/scales.svg';
 import rankingIcon from '../../assets/icons/ranking.svg';
 import pinIcon from '../../assets/icons/pin.svg';
 import { NewSlidePopup } from './NewSlidePopup';
+import { useAuth } from '../../context/AuthContext';
 
 // Get icon based on slide type
 const getSlideIcon = (slideType) => {
@@ -68,10 +69,21 @@ export const SlidesPanel = ({
     onReorderSlides,
     onSlideTypeHover
 }) => {
+    const { user } = useAuth();
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [contextMenu, setContextMenu] = useState({ isOpen: false, slideId: null, x: 0, y: 0 });
     const [draggedSlideId, setDraggedSlideId] = useState(null);
     const [dragOverSlideId, setDragOverSlideId] = useState(null);
+
+    // Get user initials for badge
+    const getUserInitials = () => {
+        const name = user?.displayName || user?.fullName || user?.email || 'User';
+        const parts = name.split(' ');
+        if (parts.length >= 2) {
+            return (parts[0][0] + parts[1][0]).toUpperCase();
+        }
+        return name.substring(0, 2).toUpperCase();
+    };
 
     const handleNewSlideClick = () => {
         setIsPopupOpen(true);
@@ -217,7 +229,7 @@ export const SlidesPanel = ({
                                 />
                                 <span className="slide-type-label">{getTypeLabel(slide.type)}</span>
                             </div>
-                            <div className="slide-user-badge">BC</div>
+                            <div className="slide-user-badge">{getUserInitials()}</div>
 
                             {/* Quick action buttons */}
                             <div className="slide-actions">

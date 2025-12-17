@@ -218,7 +218,7 @@ export const SlideTemplatesPicker = ({ onSelectTemplate, onClose }) => {
                 {/* Header */}
                 <div className="picker-header">
                     <div className="header-tabs">
-                        <button className="header-tab active">Mentimeter templates</button>
+                        <button className="header-tab active">Reactify templates</button>
                         <button className="header-tab">
                             Workspace templates
                             <span className="pro-badge">Pro</span>

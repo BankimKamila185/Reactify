@@ -1,17 +1,33 @@
 import React, { useState } from 'react';
+import { useAuth } from '../../context/AuthContext';
 import './InviteCollaboratorsModal.css';
 
 export const InviteCollaboratorsModal = ({
     isOpen,
     onClose,
-    presentationTitle = 'New presentation'
+    presentationTitle = 'New presentation',
+    sessionId
 }) => {
+    const { user } = useAuth();
     const [collaboratorEmail, setCollaboratorEmail] = useState('');
     const [copied, setCopied] = useState('');
+    const [invitedEmails, setInvitedEmails] = useState([]);
+
+    // Get user initials for avatar
+    const getUserInitials = () => {
+        const name = user?.displayName || user?.fullName || user?.email || 'User';
+        const parts = name.split(' ');
+        if (parts.length >= 2) {
+            return (parts[0][0] + parts[1][0]).toUpperCase();
+        }
+        return name.substring(0, 2).toUpperCase();
+    };
 
     if (!isOpen) return null;
 
-    const presentationLink = `${window.location.origin}/poll/edit`;
+    const presentationLink = sessionId
+        ? `${window.location.origin}/poll/edit/${sessionId}`
+        : `${window.location.origin}/poll/edit`;
 
     const copyToClipboard = async (text, type) => {
         if (!text) return;
@@ -20,7 +36,7 @@ export const InviteCollaboratorsModal = ({
             setCopied(type);
             setTimeout(() => setCopied(''), 2000);
         } catch (err) {
-            console.error('Failed to copy:', err);
+            // Silently fail if clipboard access denied
         }
     };
 
@@ -31,8 +47,9 @@ export const InviteCollaboratorsModal = ({
         const emails = collaboratorEmail.split(/[\s,]+/).filter(e => e.includes('@'));
 
         if (emails.length > 0) {
-            console.log('Inviting collaborators:', emails);
-            // TODO: Send invitations via backend API
+            // TODO: Implement backend API call to send invitation emails
+            // For now, track invited emails locally and show success message
+            setInvitedEmails([...invitedEmails, ...emails]);
             alert(`Invitations sent to: ${emails.join(', ')}`);
             setCollaboratorEmail('');
         }
@@ -82,12 +99,12 @@ export const InviteCollaboratorsModal = ({
 
                     {/* Collaborators List */}
                     <div className="invite-section">
-                        <p className="collaborators-heading">These people can access this Menti.</p>
+                        <p className="collaborators-heading">These people can access this Reacti.</p>
                         <div className="collaborator-item">
-                            <div className="collaborator-avatar">BC</div>
+                            <div className="collaborator-avatar">{getUserInitials()}</div>
                             <div className="collaborator-info">
-                                <span className="collaborator-name">Bankim Chandra Kamila (BTech CSE 2024-28) (me)</span>
-                                <span className="collaborator-email">2024.bankimc@isu.ac.in</span>
+                                <span className="collaborator-name">{user?.displayName || user?.fullName || 'User'} (me)</span>
+                                <span className="collaborator-email">{user?.email || ''}</span>
                             </div>
                             <span className="collaborator-role">Owner</span>
                         </div>
@@ -103,7 +120,7 @@ export const InviteCollaboratorsModal = ({
                                 <span className="access-icon">🌐</span>
                                 <div>
                                     <span className="access-type"><strong>Public</strong> (open for participants) ⭐</span>
-                                    <p className="access-description">Everyone with this link, including your participants, can access the Menti and its results.</p>
+                                    <p className="access-description">Everyone with this link, including your participants, can access the Reacti and its results.</p>
                                 </div>
                             </div>
                             <button

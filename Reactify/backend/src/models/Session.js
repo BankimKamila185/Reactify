@@ -13,6 +13,12 @@ const SessionSchema = new Schema({
         type: String,
         required: true
     },
+    // User who created/owns the session
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: false // Made optional for backward compatibility
+    },
     title: {
         type: String,
         required: true

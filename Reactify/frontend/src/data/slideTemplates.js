@@ -519,7 +519,7 @@ export const slideTemplates = {
                 type: 'instructions',
                 question: 'How to Participate',
                 label: '',
-                additionalDetails: '1. Go to menti.com\n2. Enter the code shown on screen\n3. Answer the questions as they appear\n4. See your responses live!'
+                additionalDetails: '1. Go to reacti.com\n2. Enter the code shown on screen\n3. Answer the questions as they appear\n4. See your responses live!'
             }
         },
         {

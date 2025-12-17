@@ -95,14 +95,31 @@ export const SharedTemplates = () => {
 
     const handleSortChange = (sortOption) => {
         setSortBy(sortOption);
-        // TODO: Implement actual sorting logic
     };
 
     const getFilteredTemplates = () => {
-        if (categoryFilter === 'all') {
-            return sharedTemplates;
+        let result = [...sharedTemplates];
+
+        // Filter by category
+        if (categoryFilter !== 'all') {
+            result = result.filter(template => template.category === categoryFilter);
         }
-        return sharedTemplates.filter(template => template.category === categoryFilter);
+
+        // Sort based on selection
+        switch (sortBy) {
+            case 'name':
+                result.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+                break;
+            case 'popular':
+                result.sort((a, b) => (b.uses || 0) - (a.uses || 0));
+                break;
+            case 'recent':
+            default:
+                result.sort((a, b) => new Date(b.modified) - new Date(a.modified));
+                break;
+        }
+
+        return result;
     };
 
     return (

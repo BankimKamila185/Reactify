@@ -39,14 +39,14 @@ export const QACanvas = ({
                         </div>
                     )}
                     <div className="qa-join-pill">
-                        <span>Join at <strong>menti.com</strong> | use code <strong>{joinCode}</strong></span>
+                        <span>Join at <strong>reacti.com</strong> | use code <strong>{joinCode}</strong></span>
                     </div>
                     <div className="qa-logo">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                             <path d="M4 12L6 8L8 12L10 8V16H8V12L6 16L4 12V16H2V8L4 12Z" fill="#5B7FFF" />
                             <path d="M12 8h2v8h-2V8z" fill="#5B7FFF" />
                         </svg>
-                        <span>Mentimeter</span>
+                        <span>Reactify</span>
                     </div>
                 </div>
 

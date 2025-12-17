@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import ReactWordcloud from 'react-wordcloud';
 import './WordCloudCanvas.css';
 
-// Default words for preview when no responses yet (Mentimeter style)
+// Default words for preview when no responses yet (Reactify style)
 const defaultWords = [
     { text: 'creative', value: 80 },
     { text: 'fast', value: 65 },
@@ -13,8 +13,8 @@ const defaultWords = [
     { text: 'inspiration', value: 35 }
 ];
 
-// Mentimeter-style pastel color palette
-const mentimeterColors = [
+// Reactify-style pastel color palette
+const reactifyColors = [
     '#8B9DC3', // Soft blue-gray
     '#C9A7C7', // Soft mauve/pink
     '#D4A5A5', // Dusty rose
@@ -25,7 +25,7 @@ const mentimeterColors = [
 ];
 
 const options = {
-    colors: mentimeterColors,
+    colors: reactifyColors,
     enableTooltip: false,
     deterministic: true,
     fontFamily: 'Georgia, "Times New Roman", serif',
@@ -73,13 +73,13 @@ export const WordCloudCanvas = ({
                 {/* Header */}
                 <div className="canvas-header">
                     <div className="join-pill">
-                        Join at <strong>menti.com</strong> | use code <strong>{joinCode}</strong>
+                        Join at <strong>reacti.com</strong> | use code <strong>{joinCode}</strong>
                     </div>
                     <div className="logo">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M4 12L8 6L12 12L16 6V18H12V12L8 18L4 12V18H0V6L4 12Z" fill="#5B7FFF" />
                         </svg>
-                        <span>Mentimeter</span>
+                        <span>Reactify</span>
                     </div>
                 </div>
 

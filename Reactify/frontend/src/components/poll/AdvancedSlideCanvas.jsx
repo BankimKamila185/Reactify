@@ -16,7 +16,7 @@ export const GuessNumberCanvas = ({
         <div className="advanced-canvas guess-number-canvas">
             <div className="canvas-header">
                 <div className="join-info">
-                    <span>Go to <strong>menti.com</strong></span>
+                    <span>Go to <strong>reacti.com</strong></span>
                     <span className="join-code">{joinCode}</span>
                 </div>
             </div>
@@ -75,7 +75,7 @@ export const HundredPointsCanvas = ({
         <div className="advanced-canvas hundred-points-canvas">
             <div className="canvas-header">
                 <div className="join-info">
-                    <span>Go to <strong>menti.com</strong></span>
+                    <span>Go to <strong>reacti.com</strong></span>
                     <span className="join-code">{joinCode}</span>
                 </div>
             </div>
@@ -132,7 +132,7 @@ export const TwoByTwoGridCanvas = ({
         <div className="advanced-canvas grid-canvas">
             <div className="canvas-header">
                 <div className="join-info">
-                    <span>Go to <strong>menti.com</strong></span>
+                    <span>Go to <strong>reacti.com</strong></span>
                     <span className="join-code">{joinCode}</span>
                 </div>
             </div>
@@ -194,7 +194,7 @@ export const PinOnImageCanvas = ({
         <div className="advanced-canvas pin-image-canvas">
             <div className="canvas-header">
                 <div className="join-info">
-                    <span>Go to <strong>menti.com</strong></span>
+                    <span>Go to <strong>reacti.com</strong></span>
                     <span className="join-code">{joinCode}</span>
                 </div>
             </div>
@@ -256,7 +256,7 @@ export const QuickFormCanvas = ({
         <div className="advanced-canvas quick-form-canvas">
             <div className="canvas-header">
                 <div className="join-info">
-                    <span>Go to <strong>menti.com</strong></span>
+                    <span>Go to <strong>reacti.com</strong></span>
                     <span className="join-code">{joinCode}</span>
                 </div>
             </div>
@@ -293,7 +293,7 @@ export const SelectAnswerCanvas = ({
             <div className="canvas-header quiz-header">
                 <div className="quiz-badge">🏆 QUIZ</div>
                 <div className="join-info">
-                    <span>menti.com</span>
+                    <span>reacti.com</span>
                     <span className="join-code">{joinCode}</span>
                 </div>
             </div>
@@ -347,7 +347,7 @@ export const TypeAnswerCanvas = ({
             <div className="canvas-header quiz-header">
                 <div className="quiz-badge">🏆 QUIZ</div>
                 <div className="join-info">
-                    <span>menti.com</span>
+                    <span>reacti.com</span>
                     <span className="join-code">{joinCode}</span>
                 </div>
             </div>

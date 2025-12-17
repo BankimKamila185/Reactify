@@ -51,6 +51,7 @@ export const VotingView = () => {
     // Theme state - detect from poll or use default
     const [currentTheme, setCurrentTheme] = useState(themes.default);
 
+    // Initial session loading
     useEffect(() => {
         const initSession = async () => {
             if (!sessionId || sessionId === 'undefined') {
@@ -60,7 +61,11 @@ export const VotingView = () => {
 
             try {
                 const storedParticipantId = localStorage.getItem('participantId');
+
+                // If no participant ID, redirect to join page
                 if (!storedParticipantId) {
+                    // Store intended destination
+                    sessionStorage.setItem('joinDestination', `/vote/${sessionId}`);
                     navigate('/join');
                     return;
                 }
@@ -71,7 +76,6 @@ export const VotingView = () => {
                 if (response.success) {
                     setSession(response.data.session);
                     setPolls(response.data.polls);
-                    joinSession(storedParticipantId);
 
                     // Set theme from session if available
                     const themeId = response.data.session.theme || 'default';
@@ -87,6 +91,15 @@ export const VotingView = () => {
 
         initSession();
     }, [sessionId]);
+
+    // Join session when socket is ready and session is loaded
+    useEffect(() => {
+        const storedParticipantId = localStorage.getItem('participantId');
+        if (session && storedParticipantId && joinSession) {
+            console.log('Audience joining session room:', sessionId);
+            joinSession(storedParticipantId);
+        }
+    }, [session, joinSession, sessionId]);
 
     const currentPoll = polls[currentPollIndex];
 
@@ -145,7 +158,7 @@ export const VotingView = () => {
                 if (!openEndedInput.trim()) return;
                 await pollApi.submitOpenEndedResponse(currentPoll._id, {
                     participantId,
-                    response: openEndedInput.trim()
+                    text: openEndedInput.trim()
                 });
             }
             // Scales

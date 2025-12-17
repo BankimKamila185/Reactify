@@ -20,17 +20,44 @@ import {
     upvoteQuestion,
     markQuestionAnswered
 } from '../controllers/pollController.js';
+import { authMiddleware, optionalAuth } from '../middleware/auth.middleware.js';
 
 const router = express.Router();
 
+// ============================================
+// PROTECTED ROUTES (require authentication)
+// ============================================
+
 // GET /api/poll/my-presentations - Get user's presentations
-router.get('/my-presentations', getMyPresentations);
+router.get('/my-presentations', authMiddleware, getMyPresentations);
 
 // GET /api/poll/shared-presentations - Get presentations shared with the user
-router.get('/shared-presentations', getSharedPresentations);
+router.get('/shared-presentations', authMiddleware, getSharedPresentations);
 
 // POST /api/poll/session/:sessionId - Create new poll
-router.post('/session/:sessionId', createPoll);
+router.post('/session/:sessionId', authMiddleware, createPoll);
+
+// PUT /api/poll/:pollId - Update poll
+router.put('/:pollId', authMiddleware, updatePoll);
+
+// DELETE /api/poll/:pollId - Delete poll
+router.delete('/:pollId', authMiddleware, deletePoll);
+
+// POST /api/poll/:pollId/reset - Reset poll (clear votes)
+router.post('/:pollId/reset', authMiddleware, resetPoll);
+
+// POST /api/poll/:pollId/lock - Lock/unlock poll
+router.post('/:pollId/lock', authMiddleware, lockPoll);
+
+// POST /api/poll/session/:sessionId/reset - Reset all polls in session
+router.post('/session/:sessionId/reset', authMiddleware, resetSessionPolls);
+
+// PUT /api/poll/:pollId/qa/:questionId/answered - Mark question as answered
+router.put('/:pollId/qa/:questionId/answered', authMiddleware, markQuestionAnswered);
+
+// ============================================
+// PUBLIC ROUTES (for participants)
+// ============================================
 
 // GET /api/poll/session/:sessionId - Get all polls for a session
 router.get('/session/:sessionId', getSessionPolls);
@@ -38,29 +65,14 @@ router.get('/session/:sessionId', getSessionPolls);
 // GET /api/poll/:pollId/results - Get poll results
 router.get('/:pollId/results', getPollResults);
 
-// PUT /api/poll/:pollId - Update poll
-router.put('/:pollId', updatePoll);
-
-// DELETE /api/poll/:pollId - Delete poll
-router.delete('/:pollId', deletePoll);
-
 // POST /api/poll/:pollId/feedback - Submit feedback
 router.post('/:pollId/feedback', submitFeedback);
 
 // GET /api/poll/session/:sessionId/feedback - Get all feedback for session
 router.get('/session/:sessionId/feedback', getSessionFeedback);
 
-// POST /api/poll/:pollId/reset - Reset poll (clear votes)
-router.post('/:pollId/reset', resetPoll);
-
-// POST /api/poll/:pollId/lock - Lock/unlock poll
-router.post('/:pollId/lock', lockPoll);
-
-// POST /api/poll/session/:sessionId/reset - Reset all polls in session
-router.post('/session/:sessionId/reset', resetSessionPolls);
-
 // ============================================
-// NEW POLL TYPE ROUTES
+// PARTICIPANT SUBMISSION ROUTES
 // ============================================
 
 // POST /api/poll/:pollId/word-cloud - Submit word cloud response
@@ -81,8 +93,4 @@ router.post('/:pollId/qa', submitQAQuestion);
 // POST /api/poll/:pollId/qa/:questionId/upvote - Upvote a question
 router.post('/:pollId/qa/:questionId/upvote', upvoteQuestion);
 
-// PUT /api/poll/:pollId/qa/:questionId/answered - Mark question as answered
-router.put('/:pollId/qa/:questionId/answered', markQuestionAnswered);
-
 export default router;
-

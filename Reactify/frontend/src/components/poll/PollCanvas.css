@@ -90,8 +90,8 @@
     font-weight: 600;
 }
 
-/* Mentimeter Logo - Top Right */
-.mentimeter-logo {
+/* Reactify Logo - Top Right */
+.reactify-logo {
     position: absolute;
     right: 40px;
     top: 50%;
@@ -511,7 +511,7 @@
         font-size: 24px;
     }
 
-    .mentimeter-logo {
+    .reactify-logo {
         display: none;
     }
 }
