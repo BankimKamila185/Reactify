@@ -1,6 +1,7 @@
 import Session from '../models/Session.js';
 import Participant from '../models/Participant.js';
 import Poll from '../models/Poll.js';
+import Response from '../models/Response.js';
 import { nanoid, customAlphabet } from 'nanoid';
 
 // Generate unique 8-digit session code using nanoid for better uniqueness
@@ -33,6 +34,7 @@ export const createSession = async (req, res) => {
         const session = await Session.create({
             sessionCode,
             hostId,
+            userId: req.userId, // Store the authenticated user's ID
             title: title.trim(),
             isActive: true,
             currentPollIndex: 0
@@ -77,6 +79,34 @@ export const getSession = async (req, res) => {
         const polls = await Poll.find({ sessionId: session._id }).sort({ order: 1 });
         const participants = await Participant.find({ sessionId: session._id });
 
+        // Calculate vote counts for each poll from the Response collection
+        const pollsWithVotes = await Promise.all(polls.map(async (poll) => {
+            const pollObj = poll.toObject();
+
+            // Get all responses for this poll
+            const responses = await Response.find({ pollId: poll._id });
+
+            if (pollObj.options && pollObj.options.length > 0) {
+                // Count votes for each option
+                const voteCounts = {};
+                responses.forEach(response => {
+                    const answers = Array.isArray(response.answer) ? response.answer : [response.answer];
+                    answers.forEach(ans => {
+                        voteCounts[ans] = (voteCounts[ans] || 0) + 1;
+                    });
+                });
+
+                // Update options with vote counts
+                pollObj.options = pollObj.options.map(opt => ({
+                    ...opt,
+                    votes: voteCounts[opt.id] || 0
+                }));
+            }
+
+            pollObj.totalResponses = responses.length;
+            return pollObj;
+        }));
+
         res.json({
             success: true,
             data: {
@@ -88,7 +118,7 @@ export const getSession = async (req, res) => {
                     isActive: session.isActive,
                     currentPollIndex: session.currentPollIndex
                 },
-                polls,
+                polls: pollsWithVotes,
                 participants: participants.map(p => ({
                     id: p._id,
                     name: p.name,
@@ -172,6 +202,20 @@ export const deleteSession = async (req, res) => {
             return;
         }
 
+        // Verify ownership - user must be the owner or have edit permission
+        const isOwner = session.userId && session.userId.toString() === req.userId?.toString();
+        const hasEditPermission = session.sharedWith?.some(
+            share => share.email === req.firebaseUser?.email && share.permission === 'edit'
+        );
+
+        if (!isOwner && !hasEditPermission) {
+            res.status(403).json({
+                success: false,
+                error: { message: 'Not authorized to delete this session' }
+            });
+            return;
+        }
+
         // Delete all associated polls
         await Poll.deleteMany({ sessionId: id });
 
@@ -194,11 +238,11 @@ export const deleteSession = async (req, res) => {
     }
 };
 
-// Update session (e.g., title)
+// Update session (e.g., title, currentPollIndex)
 export const updateSession = async (req, res) => {
     try {
         const { id } = req.params;
-        const { title } = req.body;
+        const { title, currentPollIndex, isActive } = req.body;
 
         const session = await Session.findById(id);
 
@@ -210,9 +254,31 @@ export const updateSession = async (req, res) => {
             return;
         }
 
-        if (title) {
+        // Verify ownership - user must be the owner or have edit permission
+        const isOwner = session.userId && session.userId.toString() === req.userId?.toString();
+        const hasEditPermission = session.sharedWith?.some(
+            share => share.email === req.firebaseUser?.email && share.permission === 'edit'
+        );
+
+        if (!isOwner && !hasEditPermission) {
+            res.status(403).json({
+                success: false,
+                error: { message: 'Not authorized to update this session' }
+            });
+            return;
+        }
+
+        // Update allowed fields
+        if (title !== undefined) {
             session.title = title.trim();
         }
+        if (currentPollIndex !== undefined) {
+            session.currentPollIndex = currentPollIndex;
+        }
+        if (isActive !== undefined) {
+            session.isActive = isActive;
+        }
+        session.updatedAt = new Date();
 
         await session.save();
 
@@ -224,7 +290,9 @@ export const updateSession = async (req, res) => {
                     sessionCode: session.sessionCode,
                     title: session.title,
                     createdAt: session.createdAt,
-                    isActive: session.isActive
+                    updatedAt: session.updatedAt,
+                    isActive: session.isActive,
+                    currentPollIndex: session.currentPollIndex
                 }
             }
         });
