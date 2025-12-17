@@ -111,6 +111,7 @@ export const PollEditor = () => {
     const saveTimeoutRef = useRef(null);
     const isInitialLoad = useRef(true);
     const isUpdatingFromSave = useRef(false); // Track when updating slides from auto-save
+    const isSavingRef = useRef(false); // Lock to prevent parallel saves
 
     // Create session helper function - called on demand, not immediately on mount
     const createNewSession = async () => {
@@ -400,12 +401,29 @@ export const PollEditor = () => {
             return;
         }
 
+        // Prevent parallel execution
+        if (isSavingRef.current) {
+            console.log('[AutoSave] Skip - save already in progress');
+            return;
+        }
+
         // If session creation is pending, create it now
         let currentSessionId = sessionId;
         if (pendingSessionCreation && !sessionId) {
-            currentSessionId = await createNewSession();
-            if (!currentSessionId) {
-                console.error('Failed to create session for auto-save');
+            // Lock while creating session
+            isSavingRef.current = true;
+            setIsSaving(true);
+            try {
+                currentSessionId = await createNewSession();
+                if (!currentSessionId) {
+                    console.error('Failed to create session for auto-save');
+                    isSavingRef.current = false;
+                    setIsSaving(false);
+                    return;
+                }
+            } catch (err) {
+                isSavingRef.current = false;
+                setIsSaving(false);
                 return;
             }
         }
@@ -414,6 +432,7 @@ export const PollEditor = () => {
             return;
         }
 
+        isSavingRef.current = true;
         setIsSaving(true);
         try {
             // Save the session title
@@ -491,6 +510,7 @@ export const PollEditor = () => {
         } finally {
             console.log('[AutoSave] Finally block - setting isSaving to false');
             setIsSaving(false);
+            isSavingRef.current = false;
         }
     }, [sessionId, presentationTitle, slides, pendingSessionCreation, createNewSession]);
 
