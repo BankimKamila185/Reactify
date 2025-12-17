@@ -421,6 +421,9 @@ export const PollEditor = () => {
                 title: presentationTitle || 'New presentation'
             });
 
+            // Track which slides got new pollIds
+            const slideIdToPollId = new Map();
+
             // Save slides - update existing polls or create new ones
             for (let i = 0; i < slides.length; i++) {
                 const slide = slides[i];
@@ -451,7 +454,9 @@ export const PollEditor = () => {
                         console.log('[AutoSave] Creating new poll for slide');
                         const result = await pollApi.createPoll(currentSessionId, pollData);
                         if (result.success && result.data?.poll?._id) {
-                            // Store pollId directly on slide object (will be synced to state below)
+                            // Store pollId in map to update state later
+                            slideIdToPollId.set(slide.id, result.data.poll._id);
+                            // Also update local reference in case loop continues (though not needed for logic below)
                             slides[i].pollId = result.data.poll._id;
                             console.log('[AutoSave] Created poll with ID:', result.data.poll._id);
                         }
@@ -461,9 +466,19 @@ export const PollEditor = () => {
                 }
             }
 
-            // Update slides state with new pollIds (use flag to prevent re-triggering auto-save)
-            isUpdatingFromSave.current = true;
-            setSlides([...slides]);
+            // Update slides state safely using functional update to avoid overwriting user changes
+            if (slideIdToPollId.size > 0) {
+                isUpdatingFromSave.current = true;
+                setSlides(currentSlides => currentSlides.map(s => {
+                    if (slideIdToPollId.has(s.id)) {
+                        return { ...s, pollId: slideIdToPollId.get(s.id) };
+                    }
+                    return s;
+                }));
+            } else {
+                // Just to trigger saving specific flags if needed, or skip
+            }
+
             setTimeout(() => { isUpdatingFromSave.current = false; }, 100);
 
             setLastSaved(new Date());
