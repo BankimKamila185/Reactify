@@ -260,12 +260,28 @@ export const updateSession = async (req, res) => {
         }
 
         // Verify ownership - user must be the owner or have edit permission
-        const isOwner = session.userId && session.userId.toString() === req.userId?.toString();
+        let isOwner = session.userId && session.userId.toString() === req.userId?.toString();
+
+        // If not owner, check if the current owner actually exists
+        if (!isOwner && session.userId && req.userId) {
+            const SessionUser = await import('../models/User.js').then(m => m.default);
+            const ownerExists = await SessionUser.findById(session.userId);
+            if (!ownerExists) {
+                console.log(`[AuthFix] Session ${id} has invalid owner ${session.userId}, claiming for ${req.userId}`);
+                session.userId = req.userId;
+                isOwner = true;
+            }
+        }
+
         const hasEditPermission = session.sharedWith?.some(
             share => share.email === req.firebaseUser?.email && share.permission === 'edit'
         );
 
         if (!isOwner && !hasEditPermission) {
+            console.log(`[AuthDebug] 403 Forbidden for session ${id}`);
+            console.log(`[AuthDebug] Session Owner: ${session.userId}`);
+            console.log(`[AuthDebug] Request User:  ${req.userId}`);
+
             res.status(403).json({
                 success: false,
                 error: { message: 'Not authorized to update this session' }
