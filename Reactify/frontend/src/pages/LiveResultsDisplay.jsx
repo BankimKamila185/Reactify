@@ -367,11 +367,11 @@ export const LiveResultsDisplay = () => {
                     </button>
                     <button
                         className="reacti-next-slide-btn"
-                        onClick={handleNextPoll}
-                        disabled={currentPollIndex >= polls.length - 1}
-                        title="Next slide"
+                        onClick={currentPollIndex >= polls.length - 1 ? () => navigate('/dashboard') : handleNextPoll}
+                        disabled={false}
+                        title={currentPollIndex >= polls.length - 1 ? "End presentation" : "Next slide"}
                     >
-                        → Next slide
+                        {currentPollIndex >= polls.length - 1 ? 'End Presentation' : '→ Next slide'}
                     </button>
                 </div>
 
