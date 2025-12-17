@@ -254,6 +254,11 @@ export const updateSession = async (req, res) => {
             return;
         }
 
+        // If session has no owner (orphaned/guest) and user is authenticated, claim ownership
+        if (!session.userId && req.userId) {
+            session.userId = req.userId;
+        }
+
         // Verify ownership - user must be the owner or have edit permission
         const isOwner = session.userId && session.userId.toString() === req.userId?.toString();
         const hasEditPermission = session.sharedWith?.some(

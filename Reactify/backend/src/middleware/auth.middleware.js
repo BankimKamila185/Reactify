@@ -25,7 +25,15 @@ export const authMiddleware = async (req, res, next) => {
                 req.userId = user._id;
                 req.firebaseUser = decodedToken;
             } else {
-                // User not synced yet, store Firebase data for sync endpoint
+                // User not synced yet, auto-create them to ensure consistency
+                console.log('User not found in DB, auto-creating from token:', decodedToken.email);
+                const newUser = await User.create({
+                    email: decodedToken.email,
+                    firebaseUid: decodedToken.uid,
+                    fullName: decodedToken.name || decodedToken.email.split('@')[0],
+                    photoURL: decodedToken.picture
+                });
+                req.userId = newUser._id;
                 req.firebaseUser = decodedToken;
             }
 
