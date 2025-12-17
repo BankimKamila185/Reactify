@@ -367,7 +367,7 @@ export const LiveResultsDisplay = () => {
                     </button>
                     <button
                         className="reacti-next-slide-btn"
-                        onClick={currentPollIndex >= polls.length - 1 ? () => navigate(`/poll/edit/${sessionId}`) : handleNextPoll}
+                        onClick={currentPollIndex >= polls.length - 1 ? () => { endSession(); navigate(`/poll/edit/${sessionId}`); } : handleNextPoll}
                         disabled={false}
                         title={currentPollIndex >= polls.length - 1 ? "End presentation" : "Next slide"}
                     >

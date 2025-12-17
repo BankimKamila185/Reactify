@@ -39,6 +39,7 @@ export const VotingView = () => {
     });
     const [participantId, setParticipantId] = useState(null);
     const [showReaction, setShowReaction] = useState(false);
+    const [isSessionEnded, setIsSessionEnded] = useState(false);
 
     // State for different poll types
     const [wordCloudInput, setWordCloudInput] = useState('');
@@ -50,6 +51,23 @@ export const VotingView = () => {
 
     // Theme state - detect from poll or use default
     const [currentTheme, setCurrentTheme] = useState(themes.default);
+
+    const socket = useRealtime(sessionId).socket || window.socket;
+
+    useEffect(() => {
+        if (!socket) return;
+
+        const handleSessionEnded = () => {
+            console.log('Session ended event received');
+            setIsSessionEnded(true);
+        };
+
+        socket.on('session-ended', handleSessionEnded);
+
+        return () => {
+            socket.off('session-ended', handleSessionEnded);
+        };
+    }, [socket]);
 
     // Initial session loading
     useEffect(() => {
@@ -100,6 +118,34 @@ export const VotingView = () => {
             joinSession(storedParticipantId);
         }
     }, [session, joinSession, sessionId]);
+
+    if (isSessionEnded) {
+        return (
+            <div className="min-h-screen flex flex-col items-center justify-center p-6 text-center" style={{ backgroundColor: currentTheme?.background || '#f8f9fa' }}>
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full"
+                >
+                    <div className="mb-6 text-blue-500">
+                        <svg className="w-20 h-20 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h1 className="text-3xl font-bold mb-4 text-gray-800">Presentation Ended</h1>
+                    <p className="text-gray-600 text-lg mb-8">
+                        Thank you for your participation! The host has ended the session.
+                    </p>
+                    <button
+                        onClick={() => navigate('/join')}
+                        className="w-full py-3 px-6 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors"
+                    >
+                        Join Another Session
+                    </button>
+                </motion.div>
+            </div>
+        );
+    }
 
     const currentPoll = polls[currentPollIndex];
 
